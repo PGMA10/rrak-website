@@ -1,25 +1,68 @@
-import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useState, useEffect } from "react";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
+import { useToast } from "@/hooks/use-toast";
+import { apiRequest, queryClient } from "@/lib/queryClient";
 import type { Lead, NewsletterSubscriber, PrintQuoteRequest, ConsultationBooking } from "@shared/schema";
 
 export default function Admin() {
   const [password, setPassword] = useState("");
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const { toast } = useToast();
+
+  // Check if already authenticated
+  const { data: authStatus, isLoading: authLoading } = useQuery<{ success: boolean; isAuthenticated: boolean }>({
+    queryKey: ["/api/admin/status"],
+  });
+
+  const loginMutation = useMutation({
+    mutationFn: async (password: string) => {
+      const res = await apiRequest("POST", "/api/admin/login", { password });
+      return res.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/status"] });
+      toast({
+        title: "Login successful",
+        description: "Welcome to the admin dashboard",
+      });
+    },
+    onError: (error: any) => {
+      toast({
+        title: "Login failed",
+        description: error.message || "Invalid password",
+        variant: "destructive",
+      });
+    },
+  });
 
   const handleLogin = () => {
-    // Simple password protection - you can change this password
-    if (password === "admin123") {
-      setIsAuthenticated(true);
-    } else {
-      alert("Incorrect password");
+    if (!password) {
+      toast({
+        title: "Password required",
+        description: "Please enter a password",
+        variant: "destructive",
+      });
+      return;
     }
+    loginMutation.mutate(password);
   };
 
-  if (!isAuthenticated) {
+  if (authLoading) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen bg-muted/20">
+        <Card className="w-full max-w-md">
+          <CardContent className="p-8 text-center">
+            <p className="text-muted-foreground">Loading...</p>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  if (!authStatus?.isAuthenticated) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-muted/20">
         <Card className="w-full max-w-md">
@@ -33,18 +76,17 @@ export default function Admin() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleLogin()}
+              disabled={loginMutation.isPending}
               data-testid="input-password"
             />
             <Button 
               onClick={handleLogin} 
               className="w-full"
+              disabled={loginMutation.isPending}
               data-testid="button-login"
             >
-              Login
+              {loginMutation.isPending ? "Logging in..." : "Login"}
             </Button>
-            <p className="text-xs text-muted-foreground text-center">
-              Default password: admin123
-            </p>
           </CardContent>
         </Card>
       </div>
@@ -55,6 +97,8 @@ export default function Admin() {
 }
 
 function AdminDashboard() {
+  const { toast } = useToast();
+
   const { data: leads } = useQuery<{ success: boolean; data: Lead[] }>({
     queryKey: ["/api/admin/leads"],
   });
@@ -71,6 +115,20 @@ function AdminDashboard() {
     queryKey: ["/api/admin/consultation-bookings"],
   });
 
+  const logoutMutation = useMutation({
+    mutationFn: async () => {
+      const res = await apiRequest("POST", "/api/admin/logout", {});
+      return res.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/status"] });
+      toast({
+        title: "Logged out",
+        description: "You have been logged out successfully",
+      });
+    },
+  });
+
   const formatDate = (date: string | Date) => {
     return new Date(date).toLocaleString();
   };
@@ -81,9 +139,20 @@ function AdminDashboard() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between gap-4 h-16 md:h-20">
             <h1 className="text-xl font-bold text-foreground">Admin Dashboard</h1>
-            <a href="/" className="text-sm font-medium text-muted-foreground hover:text-foreground">
-              Back to Site
-            </a>
+            <div className="flex items-center gap-4">
+              <a href="/" className="text-sm font-medium text-muted-foreground hover:text-foreground">
+                Back to Site
+              </a>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={() => logoutMutation.mutate()}
+                disabled={logoutMutation.isPending}
+                data-testid="button-logout"
+              >
+                Logout
+              </Button>
+            </div>
           </div>
         </div>
       </header>

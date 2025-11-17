@@ -1,4 +1,4 @@
-import type { Express } from "express";
+import type { Express, Request, Response, NextFunction } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import {
@@ -14,7 +14,71 @@ import {
   sendConsultationNotification,
 } from "./email";
 
+// Auth middleware for admin routes
+function requireAuth(req: Request, res: Response, next: NextFunction) {
+  if (req.session && req.session.isAdmin) {
+    next();
+  } else {
+    res.status(401).json({ success: false, error: "Unauthorized" });
+  }
+}
+
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Admin login
+  app.post("/api/admin/login", async (req, res) => {
+    try {
+      const { password } = req.body;
+      const adminPassword = process.env.ADMIN_PASSWORD;
+      
+      if (!adminPassword) {
+        console.error("ADMIN_PASSWORD not configured");
+        res.status(500).json({ success: false, error: "Server configuration error" });
+        return;
+      }
+      
+      if (password === adminPassword) {
+        // Regenerate session to prevent session fixation attacks
+        req.session.regenerate((err) => {
+          if (err) {
+            console.error("Session regeneration failed:", err);
+            res.status(500).json({ success: false, error: "Login failed" });
+            return;
+          }
+          
+          req.session.isAdmin = true;
+          res.json({ success: true });
+        });
+      } else {
+        res.status(401).json({ success: false, error: "Invalid password" });
+      }
+    } catch (error: any) {
+      console.error("Error logging in:", error);
+      res.status(500).json({ 
+        success: false, 
+        error: "Login failed" 
+      });
+    }
+  });
+
+  // Admin logout
+  app.post("/api/admin/logout", async (req, res) => {
+    req.session.destroy((err) => {
+      if (err) {
+        console.error("Error logging out:", error);
+        res.status(500).json({ success: false, error: "Logout failed" });
+      } else {
+        res.json({ success: true });
+      }
+    });
+  });
+
+  // Check auth status
+  app.get("/api/admin/status", async (req, res) => {
+    res.json({ 
+      success: true, 
+      isAuthenticated: !!(req.session && req.session.isAdmin) 
+    });
+  });
   // Submit lead (general contact form)
   app.post("/api/submit-lead", async (req, res) => {
     try {
@@ -91,8 +155,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Admin routes - get all submissions
-  app.get("/api/admin/leads", async (req, res) => {
+  // Admin routes - get all submissions (protected)
+  app.get("/api/admin/leads", requireAuth, async (req, res) => {
     try {
       const leads = await storage.getAllLeads();
       res.json({ success: true, data: leads });
@@ -105,7 +169,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/admin/newsletter-subscribers", async (req, res) => {
+  app.get("/api/admin/newsletter-subscribers", requireAuth, async (req, res) => {
     try {
       const subscribers = await storage.getAllNewsletterSubscribers();
       res.json({ success: true, data: subscribers });
@@ -118,7 +182,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/admin/quote-requests", async (req, res) => {
+  app.get("/api/admin/quote-requests", requireAuth, async (req, res) => {
     try {
       const requests = await storage.getAllPrintQuoteRequests();
       res.json({ success: true, data: requests });
@@ -131,7 +195,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/admin/consultation-bookings", async (req, res) => {
+  app.get("/api/admin/consultation-bookings", requireAuth, async (req, res) => {
     try {
       const bookings = await storage.getAllConsultationBookings();
       res.json({ success: true, data: bookings });
