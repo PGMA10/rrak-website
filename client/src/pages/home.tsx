@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Clock, CheckCircle2, Mail, TrendingUp, Eye, Calendar } from "lucide-react";
-import postcardImage from "@assets/generated_images/Direct_mail_postcard_mockup_65424768.png";
+import postcardImage from "@assets/BackFront Example-2_1763355311870.png";
 
 function CountdownTimer() {
   const [timeLeft, setTimeLeft] = useState({
@@ -157,6 +157,9 @@ export default function Home() {
                     data-testid="img-postcard-mockup"
                   />
                 </div>
+                <p className="text-center text-sm text-muted-foreground mt-4 uppercase tracking-wide" data-testid="text-postcard-description">
+                  Premium Stock 12x9 Postcard
+                </p>
               </div>
             </div>
           </div>
