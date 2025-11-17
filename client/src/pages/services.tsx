@@ -22,6 +22,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { 
   insertPrintQuoteRequestSchema, 
@@ -548,6 +550,7 @@ function EmailMarketingWaitlistCard() {
       email: "",
       name: "",
       businessName: "",
+      serviceType: "",
     },
   });
 
@@ -588,19 +591,44 @@ function EmailMarketingWaitlistCard() {
       </CardHeader>
       <CardContent>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit((data) => submitMutation.mutate(data))} className="space-y-3">
+          <form onSubmit={form.handleSubmit((data) => submitMutation.mutate(data))} className="space-y-4">
             <FormField
               control={form.control}
-              name="email"
+              name="serviceType"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="space-y-2">
+                  <FormLabel>I'm interested in:</FormLabel>
                   <FormControl>
-                    <Input
-                      type="email"
-                      placeholder="Your email"
-                      {...field}
-                      data-testid="input-email-marketing-email"
-                    />
+                    <RadioGroup
+                      onValueChange={field.onChange}
+                      value={field.value}
+                      className="flex flex-col space-y-1"
+                    >
+                      <FormItem className="flex items-center space-x-2 space-y-0">
+                        <FormControl>
+                          <RadioGroupItem value="Newsletter" data-testid="radio-newsletter" />
+                        </FormControl>
+                        <FormLabel className="font-normal cursor-pointer">Newsletter</FormLabel>
+                      </FormItem>
+                      <FormItem className="flex items-center space-x-2 space-y-0">
+                        <FormControl>
+                          <RadioGroupItem value="Promotional campaigns" data-testid="radio-promotional" />
+                        </FormControl>
+                        <FormLabel className="font-normal cursor-pointer">Promotional campaigns</FormLabel>
+                      </FormItem>
+                      <FormItem className="flex items-center space-x-2 space-y-0">
+                        <FormControl>
+                          <RadioGroupItem value="Cold outreach" data-testid="radio-cold-outreach" />
+                        </FormControl>
+                        <FormLabel className="font-normal cursor-pointer">Cold outreach</FormLabel>
+                      </FormItem>
+                      <FormItem className="flex items-center space-x-2 space-y-0">
+                        <FormControl>
+                          <RadioGroupItem value="Not sure yet" data-testid="radio-not-sure" />
+                        </FormControl>
+                        <FormLabel className="font-normal cursor-pointer">Not sure yet</FormLabel>
+                      </FormItem>
+                    </RadioGroup>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -614,10 +642,27 @@ function EmailMarketingWaitlistCard() {
                   <FormControl>
                     <Input
                       type="text"
-                      placeholder="Your name (optional)"
+                      placeholder="Your name"
                       {...field}
                       value={field.value || ""}
                       data-testid="input-email-marketing-name"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      type="email"
+                      placeholder="Email"
+                      {...field}
+                      data-testid="input-email-marketing-email"
                     />
                   </FormControl>
                   <FormMessage />
@@ -642,14 +687,19 @@ function EmailMarketingWaitlistCard() {
                 </FormItem>
               )}
             />
-            <Button
-              type="submit"
-              className="w-full"
-              disabled={submitMutation.isPending}
-              data-testid="button-join-email-marketing-waitlist"
-            >
-              {submitMutation.isPending ? "Joining..." : "Join Waitlist"}
-            </Button>
+            <div className="space-y-2">
+              <Button
+                type="submit"
+                className="w-full"
+                disabled={submitMutation.isPending}
+                data-testid="button-join-email-marketing-waitlist"
+              >
+                {submitMutation.isPending ? "Joining..." : "Join Email Marketing Waitlist"}
+              </Button>
+              <p className="text-xs text-center text-muted-foreground" data-testid="text-early-bird-email">
+                Join the waitlist to be first in line when we launch + get exclusive early-bird pricing
+              </p>
+            </div>
           </form>
         </Form>
       </CardContent>
