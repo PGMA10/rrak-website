@@ -6,12 +6,16 @@ import {
   insertNewsletterSubscriberSchema,
   insertPrintQuoteRequestSchema,
   insertConsultationBookingSchema,
+  insertEmailMarketingWaitlistSchema,
+  insertPrintMaterialsWaitlistSchema,
 } from "@shared/schema";
 import {
   sendLeadNotification,
   sendNewsletterNotification,
   sendQuoteRequestNotification,
   sendConsultationNotification,
+  sendEmailMarketingWaitlistNotification,
+  sendPrintMaterialsWaitlistNotification,
 } from "./email";
 
 // Auth middleware for admin routes
@@ -155,6 +159,44 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Email Marketing Waitlist
+  app.post("/api/email-marketing-waitlist", async (req, res) => {
+    try {
+      const validatedData = insertEmailMarketingWaitlistSchema.parse(req.body);
+      const entry = await storage.createEmailMarketingWaitlist(validatedData);
+      
+      // Send email notification
+      await sendEmailMarketingWaitlistNotification(entry);
+      
+      res.json({ success: true, data: entry });
+    } catch (error: any) {
+      console.error("Error adding to email marketing waitlist:", error);
+      res.status(400).json({ 
+        success: false, 
+        error: error.message || "Failed to join waitlist" 
+      });
+    }
+  });
+
+  // Print Materials Waitlist
+  app.post("/api/print-materials-waitlist", async (req, res) => {
+    try {
+      const validatedData = insertPrintMaterialsWaitlistSchema.parse(req.body);
+      const entry = await storage.createPrintMaterialsWaitlist(validatedData);
+      
+      // Send email notification
+      await sendPrintMaterialsWaitlistNotification(entry);
+      
+      res.json({ success: true, data: entry });
+    } catch (error: any) {
+      console.error("Error adding to print materials waitlist:", error);
+      res.status(400).json({ 
+        success: false, 
+        error: error.message || "Failed to join waitlist" 
+      });
+    }
+  });
+
   // Admin routes - get all submissions (protected)
   app.get("/api/admin/leads", requireAuth, async (req, res) => {
     try {
@@ -204,6 +246,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ 
         success: false, 
         error: "Failed to fetch bookings" 
+      });
+    }
+  });
+
+  app.get("/api/admin/email-marketing-waitlist", requireAuth, async (req, res) => {
+    try {
+      const entries = await storage.getAllEmailMarketingWaitlist();
+      res.json({ success: true, data: entries });
+    } catch (error: any) {
+      console.error("Error fetching email marketing waitlist:", error);
+      res.status(500).json({ 
+        success: false, 
+        error: "Failed to fetch waitlist" 
+      });
+    }
+  });
+
+  app.get("/api/admin/print-materials-waitlist", requireAuth, async (req, res) => {
+    try {
+      const entries = await storage.getAllPrintMaterialsWaitlist();
+      res.json({ success: true, data: entries });
+    } catch (error: any) {
+      console.error("Error fetching print materials waitlist:", error);
+      res.status(500).json({ 
+        success: false, 
+        error: "Failed to fetch waitlist" 
       });
     }
   });

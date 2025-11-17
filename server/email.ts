@@ -163,3 +163,57 @@ export async function sendConsultationNotification(booking: {
     console.error("Failed to send consultation notification:", error);
   }
 }
+
+export async function sendEmailMarketingWaitlistNotification(entry: {
+  email: string;
+  name?: string | null;
+  businessName?: string | null;
+}) {
+  try {
+    const { client, fromEmail } = await getResendClient();
+    
+    await client.emails.send({
+      from: fromEmail,
+      to: fromEmail,
+      subject: `New Email Marketing Waitlist Signup from Rute Reach AK`,
+      html: `
+        <h2>New Email Marketing Waitlist Signup</h2>
+        <p><strong>Email:</strong> ${entry.email}</p>
+        ${entry.name ? `<p><strong>Name:</strong> ${entry.name}</p>` : ""}
+        ${entry.businessName ? `<p><strong>Business:</strong> ${entry.businessName}</p>` : ""}
+        <p><em>Joined at: ${new Date().toLocaleString()}</em></p>
+      `,
+    });
+    
+    console.log("Email marketing waitlist notification sent successfully");
+  } catch (error) {
+    console.error("Failed to send email marketing waitlist notification:", error);
+  }
+}
+
+export async function sendPrintMaterialsWaitlistNotification(entry: {
+  email: string;
+  name?: string | null;
+  businessName?: string | null;
+}) {
+  try {
+    const { client, fromEmail } = await getResendClient();
+    
+    await client.emails.send({
+      from: fromEmail,
+      to: fromEmail,
+      subject: `New Print Materials Waitlist Signup from Rute Reach AK`,
+      html: `
+        <h2>New Print Materials Waitlist Signup</h2>
+        <p><strong>Email:</strong> ${entry.email}</p>
+        ${entry.name ? `<p><strong>Name:</strong> ${entry.name}</p>` : ""}
+        ${entry.businessName ? `<p><strong>Business:</strong> ${entry.businessName}</p>` : ""}
+        <p><em>Joined at: ${new Date().toLocaleString()}</em></p>
+      `,
+    });
+    
+    console.log("Print materials waitlist notification sent successfully");
+  } catch (error) {
+    console.error("Failed to send print materials waitlist notification:", error);
+  }
+}
