@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Clock, CheckCircle2, Mail, TrendingUp, Eye, Calendar } from "lucide-react";
 import postcardImage from "@assets/BackFront Example-2_1763355311870.png";
+import logo from "@assets/Mail and Map Connection Logo_1763412132703.png";
 
 function CountdownTimer() {
   const [timeLeft, setTimeLeft] = useState({
@@ -66,8 +67,8 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between gap-4 h-16 md:h-20">
             <div className="flex items-center">
-              <a href="/" className="text-xl font-bold text-foreground hover:text-primary transition-colors duration-200" data-testid="text-logo">
-                Your Brand
+              <a href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity duration-200" data-testid="link-logo">
+                <img src={logo} alt="Rute Reach AK" className="h-10 md:h-12 w-auto" />
               </a>
             </div>
             <nav className="hidden md:flex flex-wrap items-center space-x-8">

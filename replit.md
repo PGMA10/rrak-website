@@ -1,6 +1,36 @@
 # Overview
 
-This is a modern full-stack web application built with React, Express, and TypeScript. The project uses a monorepo structure with separate client and server directories, featuring a clean, minimal design system based on shadcn/ui components and Tailwind CSS. The application is currently a starter template with a simple homepage and routing setup, designed to be extended with custom features.
+This is a high-converting landing page and lead management system for **Rute Reach AK**, an Anchorage, Alaska direct mail marketing service. The application is built with React, Express, and TypeScript, featuring a clean, professional design system based on shadcn/ui components and Tailwind CSS.
+
+## Business Information
+
+**Business Name:** Rute Reach AK  
+**Location:** Anchorage, Alaska  
+**Services:** Direct mail marketing, shared mail campaigns, landing page design, print services  
+**Logo:** Mail and Map Connection Logo (mailbox + location pin with circuit lines)
+
+## Campaign Details
+
+- **Shared Mailer Campaign:** Reach 5,000+ customers for $600 (vs. $4,000 solo)
+- **Mail Date:** January 5, 2026
+- **Design Finalization Deadline:** December 26, 2025
+- **Payment Terms:** 50% deposit to start, 50% due before launch (for landing pages)
+
+## Website Structure
+
+5-page website with full backend:
+1. **Home** - Hero with countdown timer to Dec 26 deadline
+2. **Services** - Shared mailer, landing pages, print services, marketing consultation
+3. **About** - Company information and mission
+4. **Blog** - Marketing insights and tips
+5. **Contact** - Lead capture form
+
+## Admin System
+
+- Secure admin dashboard at `/admin`
+- Session-based authentication with PostgreSQL storage
+- Four management tabs: Leads, Newsletter Subscribers, Quote Requests, Consultation Bookings
+- Email notifications via Resend integration
 
 # User Preferences
 
