@@ -4,6 +4,8 @@ import {
   newsletterSubscribers,
   printQuoteRequests,
   consultationBookings,
+  emailMarketingWaitlist,
+  printMaterialsWaitlist,
   type Lead,
   type InsertLead,
   type NewsletterSubscriber,
@@ -12,6 +14,10 @@ import {
   type InsertPrintQuoteRequest,
   type ConsultationBooking,
   type InsertConsultationBooking,
+  type EmailMarketingWaitlist,
+  type InsertEmailMarketingWaitlist,
+  type PrintMaterialsWaitlist,
+  type InsertPrintMaterialsWaitlist,
 } from "@shared/schema";
 import { desc } from "drizzle-orm";
 
@@ -31,6 +37,14 @@ export interface IStorage {
   // Consultation Bookings
   createConsultationBooking(data: InsertConsultationBooking): Promise<ConsultationBooking>;
   getAllConsultationBookings(): Promise<ConsultationBooking[]>;
+  
+  // Email Marketing Waitlist
+  createEmailMarketingWaitlist(data: InsertEmailMarketingWaitlist): Promise<EmailMarketingWaitlist>;
+  getAllEmailMarketingWaitlist(): Promise<EmailMarketingWaitlist[]>;
+  
+  // Print Materials Waitlist
+  createPrintMaterialsWaitlist(data: InsertPrintMaterialsWaitlist): Promise<PrintMaterialsWaitlist>;
+  getAllPrintMaterialsWaitlist(): Promise<PrintMaterialsWaitlist[]>;
 }
 
 export class PostgresStorage implements IStorage {
@@ -72,6 +86,26 @@ export class PostgresStorage implements IStorage {
 
   async getAllConsultationBookings(): Promise<ConsultationBooking[]> {
     return db.select().from(consultationBookings).orderBy(desc(consultationBookings.createdAt));
+  }
+
+  // Email Marketing Waitlist
+  async createEmailMarketingWaitlist(data: InsertEmailMarketingWaitlist): Promise<EmailMarketingWaitlist> {
+    const [entry] = await db.insert(emailMarketingWaitlist).values(data).returning();
+    return entry;
+  }
+
+  async getAllEmailMarketingWaitlist(): Promise<EmailMarketingWaitlist[]> {
+    return db.select().from(emailMarketingWaitlist).orderBy(desc(emailMarketingWaitlist.createdAt));
+  }
+
+  // Print Materials Waitlist
+  async createPrintMaterialsWaitlist(data: InsertPrintMaterialsWaitlist): Promise<PrintMaterialsWaitlist> {
+    const [entry] = await db.insert(printMaterialsWaitlist).values(data).returning();
+    return entry;
+  }
+
+  async getAllPrintMaterialsWaitlist(): Promise<PrintMaterialsWaitlist[]> {
+    return db.select().from(printMaterialsWaitlist).orderBy(desc(printMaterialsWaitlist.createdAt));
   }
 }
 

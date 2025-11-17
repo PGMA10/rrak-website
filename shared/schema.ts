@@ -90,3 +90,45 @@ export const insertConsultationBookingSchema = createInsertSchema(consultationBo
 
 export type InsertConsultationBooking = z.infer<typeof insertConsultationBookingSchema>;
 export type ConsultationBooking = typeof consultationBookings.$inferSelect;
+
+// Email Marketing Waitlist table
+export const emailMarketingWaitlist = pgTable("email_marketing_waitlist", {
+  id: serial("id").primaryKey(),
+  email: varchar("email", { length: 255 }).notNull().unique(),
+  name: varchar("name", { length: 255 }),
+  businessName: varchar("business_name", { length: 255 }),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const insertEmailMarketingWaitlistSchema = createInsertSchema(emailMarketingWaitlist).omit({
+  id: true,
+  createdAt: true,
+}).extend({
+  email: z.string().email("Invalid email address"),
+  name: z.string().optional(),
+  businessName: z.string().optional(),
+});
+
+export type InsertEmailMarketingWaitlist = z.infer<typeof insertEmailMarketingWaitlistSchema>;
+export type EmailMarketingWaitlist = typeof emailMarketingWaitlist.$inferSelect;
+
+// Print Materials Waitlist table
+export const printMaterialsWaitlist = pgTable("print_materials_waitlist", {
+  id: serial("id").primaryKey(),
+  email: varchar("email", { length: 255 }).notNull().unique(),
+  name: varchar("name", { length: 255 }),
+  businessName: varchar("business_name", { length: 255 }),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const insertPrintMaterialsWaitlistSchema = createInsertSchema(printMaterialsWaitlist).omit({
+  id: true,
+  createdAt: true,
+}).extend({
+  email: z.string().email("Invalid email address"),
+  name: z.string().optional(),
+  businessName: z.string().optional(),
+});
+
+export type InsertPrintMaterialsWaitlist = z.infer<typeof insertPrintMaterialsWaitlistSchema>;
+export type PrintMaterialsWaitlist = typeof printMaterialsWaitlist.$inferSelect;

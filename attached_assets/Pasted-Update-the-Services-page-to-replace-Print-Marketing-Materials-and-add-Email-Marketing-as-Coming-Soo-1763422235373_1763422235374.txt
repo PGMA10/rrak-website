@@ -1,0 +1,82 @@
+Update the Services page to replace Print Marketing Materials and add Email Marketing as "Coming Soon" services with waitlist forms.
+Remove the current Print Marketing Materials detailed section and replace with:
+
+Section: Coming Soon Services
+Create two side-by-side cards (stack on mobile):
+Card 1: Email Marketing Campaigns
+Headline: "Email Marketing Campaigns"
+Subheadline: "Coming Soon"
+Description: "Reach your customers directly with newsletters, promotional campaigns, and cold outreach that converts. Professional copywriting and design included."
+Waitlist Form:
+
+What type of email campaign interests you most? (Radio buttons)
+
+Newsletter (regular updates to existing customers)
+Promotional campaigns (sales, special offers, seasonal promos)
+Cold outreach (reaching new potential customers)
+Not sure yet / want to learn more
+
+
+Name (text input)
+Email (email input)
+Business Name (optional, text input)
+
+Button: "Join Email Marketing Waitlist"
+Below button: "Join the waitlist to be first in line when we launch + get exclusive early-bird pricing"
+
+Card 2: Print Marketing Materials
+Headline: "Print Marketing Materials"
+Subheadline: "Coming Soon"
+Description: "High-quality printing for all your marketing needs. We handle design, print coordination, and delivery to your business."
+Waitlist Form:
+
+Which print materials interest you most? (Checkboxes - allow multiple)
+
+Flyers
+Door Hangers
+Business Cards
+Brochures
+Banners
+Yard Signs
+Promotional Products (pens, water bottles, stickers, etc.)
+Other: _________ (text input)
+
+
+What industry is your business in? (Dropdown)
+
+Home Services
+Restaurants/Food
+Retail
+Professional Services
+Real Estate
+Fitness/Wellness
+Beauty/Salon
+Other
+
+
+Estimated quantity per order? (Dropdown)
+
+100-250
+250-500
+500-1000
+1000+
+Not sure yet
+
+
+What's your typical need? (Dropdown)
+
+One-time project
+Ongoing (monthly/quarterly)
+As needed
+Not sure yet
+
+
+Name (text input)
+Email (email input)
+Business Name (optional, text input)
+
+Button: "Join Print Materials Waitlist"
+Below button: "Join the waitlist to be first in line when we launch + get exclusive early-bird pricing"
+
+Both forms should submit to the appropriate API endpoints (/api/email-marketing-waitlist and /api/print-materials-waitlist) that were set up with the CRM backend earlier.
+Style the cards with the brand navy and orange colors. Make them visually distinct as "coming soon" but still professional and exciting.
