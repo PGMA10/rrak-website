@@ -355,8 +355,11 @@ export default function Home() {
                   <span>5,000+ households</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-primary" />
-                  <span>Professional design included</span>
+                  <CheckCircle2 className="w-4 h-4 text-primary flex-shrink-0" />
+                  <div className="flex flex-col">
+                    <span className="font-semibold text-foreground">Everything Included</span>
+                    <span className="text-xs">Design + Print + Mail</span>
+                  </div>
                 </div>
               </div>
             </div>
