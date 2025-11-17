@@ -146,25 +146,29 @@ export default function Services() {
                     </Button>
                   </div>
                   
-                  {/* Right - Postcard Mockup with Reflection */}
-                  <div className="flex items-center justify-center bg-muted/30 rounded-lg p-8">
-                    <div className="relative w-full max-w-md">
-                      <img 
-                        src={postcardMockup} 
-                        alt="Direct mail postcard example showing multiple local businesses"
-                        className="w-full h-auto rounded-md shadow-2xl"
-                        data-testid="img-postcard-mockup"
-                      />
-                      <div 
-                        className="absolute inset-x-0 -bottom-6 h-20 opacity-30"
-                        style={{
-                          background: 'linear-gradient(to bottom, rgba(0,0,0,0.15), transparent)',
-                          filter: 'blur(8px)',
-                          transform: 'scaleY(-1)',
-                          maskImage: 'linear-gradient(to bottom, black 0%, transparent 100%)',
-                          WebkitMaskImage: 'linear-gradient(to bottom, black 0%, transparent 100%)'
-                        }}
-                      />
+                  {/* Right - Postcard Mockup with 3D Shadow */}
+                  <div className="flex items-end justify-center bg-gradient-to-b from-muted/40 to-muted/60 rounded-lg p-12 pb-16">
+                    <div className="relative w-full max-w-md" style={{ perspective: '1000px' }}>
+                      <div style={{ transform: 'rotateX(2deg)' }}>
+                        <img 
+                          src={postcardMockup} 
+                          alt="Direct mail postcard example showing multiple local businesses"
+                          className="w-full h-auto rounded-sm"
+                          style={{
+                            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.4), 0 10px 20px -5px rgba(0, 0, 0, 0.3)'
+                          }}
+                          data-testid="img-postcard-mockup"
+                        />
+                        <div 
+                          className="absolute inset-x-0 -bottom-1 h-32 rounded-sm"
+                          style={{
+                            background: 'radial-gradient(ellipse at center, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.3) 40%, transparent 70%)',
+                            filter: 'blur(10px)',
+                            transform: 'translateY(10px) scaleY(0.3)',
+                            zIndex: -1
+                          }}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
