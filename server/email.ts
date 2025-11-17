@@ -168,6 +168,7 @@ export async function sendEmailMarketingWaitlistNotification(entry: {
   email: string;
   name?: string | null;
   businessName?: string | null;
+  serviceType?: string | null;
 }) {
   try {
     const { client, fromEmail } = await getResendClient();
@@ -181,6 +182,7 @@ export async function sendEmailMarketingWaitlistNotification(entry: {
         <p><strong>Email:</strong> ${entry.email}</p>
         ${entry.name ? `<p><strong>Name:</strong> ${entry.name}</p>` : ""}
         ${entry.businessName ? `<p><strong>Business:</strong> ${entry.businessName}</p>` : ""}
+        ${entry.serviceType ? `<p><strong>Service Type:</strong> ${entry.serviceType}</p>` : ""}
         <p><em>Joined at: ${new Date().toLocaleString()}</em></p>
       `,
     });
@@ -195,6 +197,11 @@ export async function sendPrintMaterialsWaitlistNotification(entry: {
   email: string;
   name?: string | null;
   businessName?: string | null;
+  materialTypes?: string | null;
+  otherMaterialType?: string | null;
+  industry?: string | null;
+  quantity?: string | null;
+  typicalNeed?: string | null;
 }) {
   try {
     const { client, fromEmail } = await getResendClient();
@@ -208,6 +215,11 @@ export async function sendPrintMaterialsWaitlistNotification(entry: {
         <p><strong>Email:</strong> ${entry.email}</p>
         ${entry.name ? `<p><strong>Name:</strong> ${entry.name}</p>` : ""}
         ${entry.businessName ? `<p><strong>Business:</strong> ${entry.businessName}</p>` : ""}
+        ${entry.materialTypes ? `<p><strong>Material Types:</strong> ${entry.materialTypes}</p>` : ""}
+        ${entry.otherMaterialType ? `<p><strong>Other Material Type:</strong> ${entry.otherMaterialType}</p>` : ""}
+        ${entry.industry ? `<p><strong>Industry:</strong> ${entry.industry}</p>` : ""}
+        ${entry.quantity ? `<p><strong>Quantity:</strong> ${entry.quantity}</p>` : ""}
+        ${entry.typicalNeed ? `<p><strong>Typical Need:</strong> ${entry.typicalNeed}</p>` : ""}
         <p><em>Joined at: ${new Date().toLocaleString()}</em></p>
       `,
     });

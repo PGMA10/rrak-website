@@ -709,6 +709,7 @@ function EmailMarketingWaitlistCard() {
 
 function PrintMaterialsWaitlistCard() {
   const { toast } = useToast();
+  const [selectedMaterials, setSelectedMaterials] = useState<string[]>([]);
   
   const printMaterialsSchema = insertPrintMaterialsWaitlistSchema.extend({
     email: z.string().email("Invalid email address"),
@@ -722,8 +723,32 @@ function PrintMaterialsWaitlistCard() {
       email: "",
       name: "",
       businessName: "",
+      materialTypes: "",
+      otherMaterialType: "",
+      industry: "",
+      quantity: "",
+      typicalNeed: "",
     },
   });
+
+  const materialOptions = [
+    { id: "flyers", label: "Flyers" },
+    { id: "door-hangers", label: "Door Hangers" },
+    { id: "business-cards", label: "Business Cards" },
+    { id: "brochures", label: "Brochures" },
+    { id: "banners", label: "Banners" },
+    { id: "yard-signs", label: "Yard Signs" },
+    { id: "promotional-products", label: "Promotional Products" },
+    { id: "other", label: "Other" },
+  ];
+
+  const handleMaterialToggle = (materialId: string) => {
+    const newSelected = selectedMaterials.includes(materialId)
+      ? selectedMaterials.filter(m => m !== materialId)
+      : [...selectedMaterials, materialId];
+    setSelectedMaterials(newSelected);
+    form.setValue("materialTypes", newSelected.join(", "));
+  };
 
   const submitMutation = useMutation({
     mutationFn: async (data: PrintMaterialsWaitlistForm) => {
@@ -762,24 +787,127 @@ function PrintMaterialsWaitlistCard() {
       </CardHeader>
       <CardContent>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit((data) => submitMutation.mutate(data))} className="space-y-3">
+          <form onSubmit={form.handleSubmit((data) => submitMutation.mutate(data))} className="space-y-4">
+            <FormItem>
+              <FormLabel>What materials do you need? (select all that apply)</FormLabel>
+              <div className="grid grid-cols-2 gap-2 mt-2">
+                {materialOptions.map((option) => (
+                  <div key={option.id} className="flex items-center space-x-2">
+                    <Checkbox
+                      id={option.id}
+                      checked={selectedMaterials.includes(option.id)}
+                      onCheckedChange={() => handleMaterialToggle(option.id)}
+                      data-testid={`checkbox-material-${option.id}`}
+                    />
+                    <label
+                      htmlFor={option.id}
+                      className="text-sm font-medium leading-none cursor-pointer"
+                    >
+                      {option.label}
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </FormItem>
+
+            {selectedMaterials.includes("other") && (
+              <FormField
+                control={form.control}
+                name="otherMaterialType"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input
+                        type="text"
+                        placeholder="Please specify other material type"
+                        {...field}
+                        value={field.value || ""}
+                        data-testid="input-other-material-type"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            )}
+
             <FormField
               control={form.control}
-              name="email"
+              name="industry"
               render={({ field }) => (
                 <FormItem>
-                  <FormControl>
-                    <Input
-                      type="email"
-                      placeholder="Your email"
-                      {...field}
-                      data-testid="input-print-materials-email"
-                    />
-                  </FormControl>
+                  <FormLabel>Industry</FormLabel>
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <FormControl>
+                      <SelectTrigger data-testid="select-industry">
+                        <SelectValue placeholder="Select your industry" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="Home Services">Home Services</SelectItem>
+                      <SelectItem value="Restaurants/Food">Restaurants/Food</SelectItem>
+                      <SelectItem value="Retail">Retail</SelectItem>
+                      <SelectItem value="Professional Services">Professional Services</SelectItem>
+                      <SelectItem value="Real Estate">Real Estate</SelectItem>
+                      <SelectItem value="Fitness/Wellness">Fitness/Wellness</SelectItem>
+                      <SelectItem value="Beauty/Salon">Beauty/Salon</SelectItem>
+                      <SelectItem value="Other">Other</SelectItem>
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}
             />
+
+            <FormField
+              control={form.control}
+              name="quantity"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Quantity</FormLabel>
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <FormControl>
+                      <SelectTrigger data-testid="select-quantity">
+                        <SelectValue placeholder="Select quantity range" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="100-250">100-250</SelectItem>
+                      <SelectItem value="250-500">250-500</SelectItem>
+                      <SelectItem value="500-1000">500-1000</SelectItem>
+                      <SelectItem value="1000+">1000+</SelectItem>
+                      <SelectItem value="Not sure yet">Not sure yet</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="typicalNeed"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Typical need</FormLabel>
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <FormControl>
+                      <SelectTrigger data-testid="select-typical-need">
+                        <SelectValue placeholder="Select typical need" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="One-time">One-time</SelectItem>
+                      <SelectItem value="Ongoing">Ongoing</SelectItem>
+                      <SelectItem value="As needed">As needed</SelectItem>
+                      <SelectItem value="Not sure yet">Not sure yet</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             <FormField
               control={form.control}
               name="name"
@@ -788,7 +916,7 @@ function PrintMaterialsWaitlistCard() {
                   <FormControl>
                     <Input
                       type="text"
-                      placeholder="Your name (optional)"
+                      placeholder="Your name"
                       {...field}
                       value={field.value || ""}
                       data-testid="input-print-materials-name"
@@ -798,6 +926,25 @@ function PrintMaterialsWaitlistCard() {
                 </FormItem>
               )}
             />
+
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      type="email"
+                      placeholder="Email"
+                      {...field}
+                      data-testid="input-print-materials-email"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             <FormField
               control={form.control}
               name="businessName"
@@ -816,14 +963,20 @@ function PrintMaterialsWaitlistCard() {
                 </FormItem>
               )}
             />
-            <Button
-              type="submit"
-              className="w-full"
-              disabled={submitMutation.isPending}
-              data-testid="button-join-print-materials-waitlist"
-            >
-              {submitMutation.isPending ? "Joining..." : "Join Waitlist"}
-            </Button>
+
+            <div className="space-y-2">
+              <Button
+                type="submit"
+                className="w-full"
+                disabled={submitMutation.isPending}
+                data-testid="button-join-print-materials-waitlist"
+              >
+                {submitMutation.isPending ? "Joining..." : "Join Print Materials Waitlist"}
+              </Button>
+              <p className="text-xs text-center text-muted-foreground" data-testid="text-early-bird-print">
+                Join the waitlist to be first in line when we launch + get exclusive early-bird pricing
+              </p>
+            </div>
           </form>
         </Form>
       </CardContent>
