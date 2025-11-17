@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Clock, CheckCircle2, Mail, TrendingUp, Eye, Calendar } from "lucide-react";
 import postcardImage from "@assets/BackFront Example-2_1763355311870.png";
-import logo from "@assets/Mail and Map Connection Logo_1763412132703.png";
+import logo from "@assets/Untitled design-5_1763412376461.png";
 
 function CountdownTimer() {
   const [timeLeft, setTimeLeft] = useState({

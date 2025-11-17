@@ -22,7 +22,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { insertLeadSchema, type InsertLead } from "@shared/schema";
 import { apiRequest } from "@/lib/queryClient";
-import logo from "@assets/Mail and Map Connection Logo_1763412132703.png";
+import logo from "@assets/Untitled design-5_1763412376461.png";
 
 export default function Contact() {
   const { toast } = useToast();

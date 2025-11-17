@@ -1,4 +1,4 @@
-import logo from "@assets/Mail and Map Connection Logo_1763412132703.png";
+import logo from "@assets/Untitled design-5_1763412376461.png";
 
 export default function About() {
   return (
