@@ -149,16 +149,17 @@ export default function Home() {
               </div>
 
               <div className="relative">
-                <div className="relative rounded-md overflow-hidden shadow-2xl">
+                <div className="relative rounded-md overflow-hidden shadow-2xl group">
                   <img 
                     src={postcardImage} 
                     alt="Direct mail postcard mockup" 
-                    className="w-full h-auto"
+                    className="w-full h-auto relative z-10"
                     data-testid="img-postcard-mockup"
                   />
+                  <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white/50 via-white/25 to-transparent dark:from-white/30 dark:via-white/15 pointer-events-none z-20 rounded-b-md"></div>
                 </div>
                 <p className="text-center text-sm text-muted-foreground mt-4 uppercase tracking-wide" data-testid="text-postcard-description">
-                  Premium Stock 12x9 Postcard
+                  12x9 Premium Stock Postcard
                 </p>
               </div>
             </div>
