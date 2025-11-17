@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Form,
@@ -22,8 +23,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { insertPrintQuoteRequestSchema, type InsertPrintQuoteRequest } from "@shared/schema";
+import { 
+  insertPrintQuoteRequestSchema, 
+  type InsertPrintQuoteRequest,
+  insertEmailMarketingWaitlistSchema,
+  insertPrintMaterialsWaitlistSchema,
+} from "@shared/schema";
 import { apiRequest } from "@/lib/queryClient";
+import { z } from "zod";
 import { ArrowRight, Check, Mail, Printer, Globe, Megaphone, FileText, DoorClosed, CreditCard, Flag, BookOpen, SignpostBig, Sticker, Frame } from "lucide-react";
 import postcardMockup from "@assets/BackFront Example-2_1763363158551.png";
 import logo from "@assets/Untitled design-5_1763412376461.png";
@@ -204,25 +211,24 @@ export default function Services() {
 
                 <Card 
                   className="hover-elevate cursor-pointer" 
-                  onClick={() => scrollToSection('print-materials')}
-                  data-testid="card-service-print-materials"
+                  onClick={() => scrollToSection('coming-soon')}
+                  data-testid="card-service-coming-soon"
                 >
                   <CardHeader>
                     <div className="p-3 rounded-md bg-primary/10 w-fit">
                       <Printer className="h-6 w-6 text-primary" />
                     </div>
                     <div className="text-right absolute top-6 right-6">
-                      <p className="text-xs text-muted-foreground">Pricing</p>
-                      <p className="text-lg font-bold text-foreground">Custom</p>
+                      <Badge className="bg-primary/10 text-primary border-primary/20">Coming Soon</Badge>
                     </div>
-                    <CardTitle className="mt-4">Print Marketing</CardTitle>
+                    <CardTitle className="mt-4">Upcoming Services</CardTitle>
                     <CardDescription>
-                      Flyers, door hangers, business cards, banners, and more. 24-hour quote turnaround.
+                      Email marketing campaigns and print materials. Join our waitlist for early access.
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <Button variant="outline" className="w-full" data-testid="button-get-quote">
-                      Get a Quote <ArrowRight className="ml-2 h-4 w-4" />
+                    <Button variant="outline" className="w-full" data-testid="button-join-waitlist">
+                      Join Waitlist <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
                   </CardContent>
                 </Card>
@@ -259,7 +265,7 @@ export default function Services() {
         {/* Detailed Service Sections */}
         <SharedMailerSection />
         <SoloCampaignsSection />
-        <PrintMaterialsSection />
+        <ComingSoonServicesSection />
         <LandingPagesSection />
       </main>
 
@@ -503,385 +509,275 @@ function SoloCampaignsSection() {
   );
 }
 
-function PrintMaterialsSection() {
+function ComingSoonServicesSection() {
+  return (
+    <section id="coming-soon" className="py-20 md:py-24 border-b bg-background">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="space-y-8">
+          <div className="text-center">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+              Coming Soon Services
+            </h2>
+            <p className="text-lg text-muted-foreground">
+              Be the first to know when these services launch. Join the waitlist and get exclusive early access.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+            <EmailMarketingWaitlistCard />
+            <PrintMaterialsWaitlistCard />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function EmailMarketingWaitlistCard() {
   const { toast } = useToast();
   
-  const form = useForm<InsertPrintQuoteRequest>({
-    resolver: zodResolver(insertPrintQuoteRequestSchema),
+  const emailMarketingSchema = insertEmailMarketingWaitlistSchema.extend({
+    email: z.string().email("Invalid email address"),
+  });
+  
+  type EmailMarketingWaitlistForm = z.infer<typeof emailMarketingSchema>;
+
+  const form = useForm<EmailMarketingWaitlistForm>({
+    resolver: zodResolver(emailMarketingSchema),
     defaultValues: {
-      name: "",
       email: "",
-      phone: "",
+      name: "",
       businessName: "",
-      materialType: "",
-      quantity: "",
-      timeline: "",
-      message: "",
     },
   });
 
   const submitMutation = useMutation({
-    mutationFn: async (data: InsertPrintQuoteRequest) => {
-      const res = await apiRequest("POST", "/api/request-quote", data);
+    mutationFn: async (data: EmailMarketingWaitlistForm) => {
+      const res = await apiRequest("POST", "/api/email-marketing-waitlist", data);
       return res.json();
     },
     onSuccess: () => {
       toast({
-        title: "Quote Request Submitted!",
-        description: "We'll send you a detailed quote within 24 hours.",
+        title: "You're on the list!",
+        description: "We'll notify you when Email Marketing services launch.",
       });
       form.reset();
     },
     onError: (error: any) => {
       toast({
         title: "Error",
-        description: error.message || "Failed to submit quote request. Please try again.",
+        description: error.message || "Failed to join waitlist. Please try again.",
         variant: "destructive",
       });
     },
   });
 
   return (
-    <section id="print-materials" className="py-20 md:py-24 border-b bg-background">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="space-y-8">
-          <div>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Print Marketing Materials
-            </h2>
-            <p className="text-lg text-muted-foreground mb-6">
-              We handle the complete process: design, copywriting, print coordination, and delivery. You focus on your business - we'll make you look great.
-            </p>
-          </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {/* Flyers Card */}
-            <Card className="group hover-elevate active-elevate-2 cursor-pointer transition-all duration-300 overflow-hidden" data-testid="card-print-flyers">
-              <CardContent className="p-6">
-                <div className="flex flex-col items-center text-center space-y-3">
-                  <FileText className="h-10 w-10 text-primary" />
-                  <div>
-                    <h3 className="font-semibold text-foreground">Flyers</h3>
-                    <p className="text-xs text-muted-foreground">(8.5×11")</p>
-                  </div>
-                  <div className="h-24 w-full bg-muted/30 rounded-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <Printer className="h-8 w-8 text-muted-foreground/50" />
-                  </div>
-                  <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 space-y-1">
-                    <p className="text-xs font-medium text-foreground">Perfect For:</p>
-                    <p className="text-xs text-muted-foreground leading-relaxed">Event promotions, sales announcements, menu inserts, neighborhood distribution</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Door Hangers Card */}
-            <Card className="group hover-elevate active-elevate-2 cursor-pointer transition-all duration-300 overflow-hidden" data-testid="card-print-door-hangers">
-              <CardContent className="p-6">
-                <div className="flex flex-col items-center text-center space-y-3">
-                  <DoorClosed className="h-10 w-10 text-primary" />
-                  <div>
-                    <h3 className="font-semibold text-foreground">Door Hangers</h3>
-                  </div>
-                  <div className="h-24 w-full bg-muted/30 rounded-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <Printer className="h-8 w-8 text-muted-foreground/50" />
-                  </div>
-                  <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 space-y-1">
-                    <p className="text-xs font-medium text-foreground">Perfect For:</p>
-                    <p className="text-xs text-muted-foreground leading-relaxed">Home services (HVAC, plumbing, lawn care), restaurant delivery menus, real estate</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Business Cards Card */}
-            <Card className="group hover-elevate active-elevate-2 cursor-pointer transition-all duration-300 overflow-hidden" data-testid="card-print-business-cards">
-              <CardContent className="p-6">
-                <div className="flex flex-col items-center text-center space-y-3">
-                  <CreditCard className="h-10 w-10 text-primary" />
-                  <div>
-                    <h3 className="font-semibold text-foreground">Business Cards</h3>
-                    <p className="text-xs text-muted-foreground">(500+)</p>
-                  </div>
-                  <div className="h-24 w-full bg-muted/30 rounded-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <Printer className="h-8 w-8 text-muted-foreground/50" />
-                  </div>
-                  <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 space-y-1">
-                    <p className="text-xs font-medium text-foreground">Perfect For:</p>
-                    <p className="text-xs text-muted-foreground leading-relaxed">Networking events, customer handouts, leaving with quotes/estimates</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Banners Card */}
-            <Card className="group hover-elevate active-elevate-2 cursor-pointer transition-all duration-300 overflow-hidden" data-testid="card-print-banners">
-              <CardContent className="p-6">
-                <div className="flex flex-col items-center text-center space-y-3">
-                  <Flag className="h-10 w-10 text-primary" />
-                  <div>
-                    <h3 className="font-semibold text-foreground">Banners</h3>
-                    <p className="text-xs text-muted-foreground">(Vinyl)</p>
-                  </div>
-                  <div className="h-24 w-full bg-muted/30 rounded-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <Printer className="h-8 w-8 text-muted-foreground/50" />
-                  </div>
-                  <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 space-y-1">
-                    <p className="text-xs font-medium text-foreground">Perfect For:</p>
-                    <p className="text-xs text-muted-foreground leading-relaxed">Trade shows, grand openings, storefront displays, event backdrops</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Brochures Card */}
-            <Card className="group hover-elevate active-elevate-2 cursor-pointer transition-all duration-300 overflow-hidden" data-testid="card-print-brochures">
-              <CardContent className="p-6">
-                <div className="flex flex-col items-center text-center space-y-3">
-                  <BookOpen className="h-10 w-10 text-primary" />
-                  <div>
-                    <h3 className="font-semibold text-foreground">Brochures</h3>
-                    <p className="text-xs text-muted-foreground">(Tri-fold/Bi-fold)</p>
-                  </div>
-                  <div className="h-24 w-full bg-muted/30 rounded-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <Printer className="h-8 w-8 text-muted-foreground/50" />
-                  </div>
-                  <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 space-y-1">
-                    <p className="text-xs font-medium text-foreground">Perfect For:</p>
-                    <p className="text-xs text-muted-foreground leading-relaxed">Service menus, product catalogs, welcome packets, information guides</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Yard Signs Card */}
-            <Card className="group hover-elevate active-elevate-2 cursor-pointer transition-all duration-300 overflow-hidden" data-testid="card-print-yard-signs">
-              <CardContent className="p-6">
-                <div className="flex flex-col items-center text-center space-y-3">
-                  <SignpostBig className="h-10 w-10 text-primary" />
-                  <div>
-                    <h3 className="font-semibold text-foreground">Yard Signs</h3>
-                    <p className="text-xs text-muted-foreground">(Corrugated + Stakes)</p>
-                  </div>
-                  <div className="h-24 w-full bg-muted/30 rounded-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <Printer className="h-8 w-8 text-muted-foreground/50" />
-                  </div>
-                  <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 space-y-1">
-                    <p className="text-xs font-medium text-foreground">Perfect For:</p>
-                    <p className="text-xs text-muted-foreground leading-relaxed">Real estate, political campaigns, event directionals, garage sales</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Stickers Card */}
-            <Card className="group hover-elevate active-elevate-2 cursor-pointer transition-all duration-300 overflow-hidden" data-testid="card-print-stickers">
-              <CardContent className="p-6">
-                <div className="flex flex-col items-center text-center space-y-3">
-                  <Sticker className="h-10 w-10 text-primary" />
-                  <div>
-                    <h3 className="font-semibold text-foreground">Stickers</h3>
-                    <p className="text-xs text-muted-foreground">(Custom Die-Cut)</p>
-                  </div>
-                  <div className="h-24 w-full bg-muted/30 rounded-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <Printer className="h-8 w-8 text-muted-foreground/50" />
-                  </div>
-                  <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 space-y-1">
-                    <p className="text-xs font-medium text-foreground">Perfect For:</p>
-                    <p className="text-xs text-muted-foreground leading-relaxed">Product packaging, laptop/window branding, promotional giveaways, sealing envelopes</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Window Clings Card */}
-            <Card className="group hover-elevate active-elevate-2 cursor-pointer transition-all duration-300 overflow-hidden" data-testid="card-print-window-clings">
-              <CardContent className="p-6">
-                <div className="flex flex-col items-center text-center space-y-3">
-                  <Frame className="h-10 w-10 text-primary" />
-                  <div>
-                    <h3 className="font-semibold text-foreground">Window Clings/Decals</h3>
-                  </div>
-                  <div className="h-24 w-full bg-muted/30 rounded-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <Printer className="h-8 w-8 text-muted-foreground/50" />
-                  </div>
-                  <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 space-y-1">
-                    <p className="text-xs font-medium text-foreground">Perfect For:</p>
-                    <p className="text-xs text-muted-foreground leading-relaxed">Storefront hours, seasonal promotions, privacy branding</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          <div className="bg-muted/30 border border-muted rounded-md p-4 flex items-start gap-3">
-            <div className="text-2xl">📦</div>
-            <p className="text-sm text-muted-foreground">
-              <span className="font-medium text-foreground">Distribution not included</span> - materials delivered to your business location
-            </p>
-          </div>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Request a Quote</CardTitle>
-              <CardDescription>Tell us what you need and we'll send you a detailed quote within 24 hours</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Form {...form}>
-                <form onSubmit={form.handleSubmit((data) => submitMutation.mutate(data))} className="space-y-4">
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <FormField
-                      control={form.control}
-                      name="name"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Name</FormLabel>
-                          <FormControl>
-                            <Input placeholder="Your name" {...field} data-testid="input-quote-name" />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="email"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Email</FormLabel>
-                          <FormControl>
-                            <Input type="email" placeholder="your@email.com" {...field} data-testid="input-quote-email" />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <FormField
-                      control={form.control}
-                      name="phone"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Phone (Optional)</FormLabel>
-                          <FormControl>
-                            <Input placeholder="(907) 555-1234" {...field} value={field.value || ""} data-testid="input-quote-phone" />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="businessName"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Business Name (Optional)</FormLabel>
-                          <FormControl>
-                            <Input placeholder="Your business" {...field} value={field.value || ""} data-testid="input-quote-business" />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <FormField
-                      control={form.control}
-                      name="materialType"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Material Type (Optional)</FormLabel>
-                          <Select onValueChange={field.onChange} value={field.value || ""}>
-                            <FormControl>
-                              <SelectTrigger data-testid="select-material-type">
-                                <SelectValue placeholder="Select type" />
-                              </SelectTrigger>
-                            </FormControl>
-                            <SelectContent>
-                              <SelectItem value="flyers">Flyers</SelectItem>
-                              <SelectItem value="door-hangers">Door Hangers</SelectItem>
-                              <SelectItem value="business-cards">Business Cards</SelectItem>
-                              <SelectItem value="banners">Banners</SelectItem>
-                              <SelectItem value="brochures">Brochures</SelectItem>
-                              <SelectItem value="yard-signs">Yard Signs</SelectItem>
-                              <SelectItem value="stickers">Stickers</SelectItem>
-                              <SelectItem value="window-clings">Window Clings/Decals</SelectItem>
-                              <SelectItem value="other">Other</SelectItem>
-                            </SelectContent>
-                          </Select>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="quantity"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Quantity (Optional)</FormLabel>
-                          <FormControl>
-                            <Input placeholder="e.g., 500, 1000" {...field} value={field.value || ""} data-testid="input-quote-quantity" />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  <FormField
-                    control={form.control}
-                    name="timeline"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Timeline (Optional)</FormLabel>
-                        <FormControl>
-                          <Input placeholder="e.g., Needed by January 15" {...field} value={field.value || ""} data-testid="input-quote-timeline" />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="message"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Additional Details (Optional)</FormLabel>
-                        <FormControl>
-                          <Textarea 
-                            placeholder="Any specific requirements, design notes, or questions..."
-                            className="resize-none"
-                            rows={4}
-                            {...field}
-                            value={field.value || ""}
-                            data-testid="textarea-quote-message"
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <Button 
-                    type="submit" 
-                    size="lg" 
-                    className="w-full"
-                    disabled={submitMutation.isPending}
-                    data-testid="button-submit-quote"
-                  >
-                    {submitMutation.isPending ? "Submitting..." : "Request Quote"}
-                  </Button>
-                </form>
-              </Form>
-            </CardContent>
-          </Card>
+    <Card className="hover-elevate" data-testid="card-email-marketing-waitlist">
+      <CardHeader>
+        <div className="flex items-start justify-between gap-3 mb-2">
+          <Mail className="h-8 w-8 text-primary flex-shrink-0" data-testid="icon-email-marketing" />
+          <Badge className="bg-primary/10 text-primary border-primary/20" data-testid="badge-coming-soon-email">
+            Coming Soon
+          </Badge>
         </div>
-      </div>
-    </section>
+        <CardTitle className="text-2xl" data-testid="title-email-marketing">Email Marketing</CardTitle>
+        <CardDescription data-testid="description-email-marketing">
+          Automated email campaigns that nurture leads and drive repeat business. Perfect for staying top-of-mind with your customers.
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit((data) => submitMutation.mutate(data))} className="space-y-3">
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      type="email"
+                      placeholder="Your email"
+                      {...field}
+                      data-testid="input-email-marketing-email"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      type="text"
+                      placeholder="Your name (optional)"
+                      {...field}
+                      value={field.value || ""}
+                      data-testid="input-email-marketing-name"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="businessName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      type="text"
+                      placeholder="Business name (optional)"
+                      {...field}
+                      value={field.value || ""}
+                      data-testid="input-email-marketing-business"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button
+              type="submit"
+              className="w-full"
+              disabled={submitMutation.isPending}
+              data-testid="button-join-email-marketing-waitlist"
+            >
+              {submitMutation.isPending ? "Joining..." : "Join Waitlist"}
+            </Button>
+          </form>
+        </Form>
+      </CardContent>
+    </Card>
+  );
+}
+
+function PrintMaterialsWaitlistCard() {
+  const { toast } = useToast();
+  
+  const printMaterialsSchema = insertPrintMaterialsWaitlistSchema.extend({
+    email: z.string().email("Invalid email address"),
+  });
+  
+  type PrintMaterialsWaitlistForm = z.infer<typeof printMaterialsSchema>;
+
+  const form = useForm<PrintMaterialsWaitlistForm>({
+    resolver: zodResolver(printMaterialsSchema),
+    defaultValues: {
+      email: "",
+      name: "",
+      businessName: "",
+    },
+  });
+
+  const submitMutation = useMutation({
+    mutationFn: async (data: PrintMaterialsWaitlistForm) => {
+      const res = await apiRequest("POST", "/api/print-materials-waitlist", data);
+      return res.json();
+    },
+    onSuccess: () => {
+      toast({
+        title: "You're on the list!",
+        description: "We'll notify you when Print Materials services launch.",
+      });
+      form.reset();
+    },
+    onError: (error: any) => {
+      toast({
+        title: "Error",
+        description: error.message || "Failed to join waitlist. Please try again.",
+        variant: "destructive",
+      });
+    },
+  });
+
+  return (
+    <Card className="hover-elevate" data-testid="card-print-materials-waitlist">
+      <CardHeader>
+        <div className="flex items-start justify-between gap-3 mb-2">
+          <Printer className="h-8 w-8 text-primary flex-shrink-0" data-testid="icon-print-materials" />
+          <Badge className="bg-primary/10 text-primary border-primary/20" data-testid="badge-coming-soon-print">
+            Coming Soon
+          </Badge>
+        </div>
+        <CardTitle className="text-2xl" data-testid="title-print-materials">Print Materials</CardTitle>
+        <CardDescription data-testid="description-print-materials">
+          High-quality printing for flyers, business cards, brochures, and more. We handle design, print coordination, and delivery.
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit((data) => submitMutation.mutate(data))} className="space-y-3">
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      type="email"
+                      placeholder="Your email"
+                      {...field}
+                      data-testid="input-print-materials-email"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      type="text"
+                      placeholder="Your name (optional)"
+                      {...field}
+                      value={field.value || ""}
+                      data-testid="input-print-materials-name"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="businessName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      type="text"
+                      placeholder="Business name (optional)"
+                      {...field}
+                      value={field.value || ""}
+                      data-testid="input-print-materials-business"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button
+              type="submit"
+              className="w-full"
+              disabled={submitMutation.isPending}
+              data-testid="button-join-print-materials-waitlist"
+            >
+              {submitMutation.isPending ? "Joining..." : "Join Waitlist"}
+            </Button>
+          </form>
+        </Form>
+      </CardContent>
+    </Card>
   );
 }
 
