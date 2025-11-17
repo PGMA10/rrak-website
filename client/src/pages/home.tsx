@@ -119,7 +119,7 @@ export default function Home() {
               <div className="space-y-8">
                 <div className="space-y-4">
                   <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight" data-testid="hero-headline">
-                    Get 5,000+ Anchorage Customers to See Your Business - Without the $4,000 Price Tag
+                    Reach 5,000 Anchorage Households for $600 - <span className="text-primary">We Handle Everything</span>
                   </h1>
                   <p className="text-lg md:text-xl text-muted-foreground leading-relaxed" data-testid="hero-subheadline">
                     Shared direct mail campaign mailing January 5, 2026. Reserve your industry-exclusive slot before designs finalize December 26.
@@ -347,12 +347,18 @@ export default function Home() {
               </Button>
               <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-muted-foreground">
                 <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-primary" />
-                  <span>Industry exclusive</span>
+                  <CheckCircle2 className="w-4 h-4 text-primary flex-shrink-0" />
+                  <div className="flex flex-col">
+                    <span className="font-semibold text-foreground">Industry Exclusivity</span>
+                    <span className="text-xs">1 business per industry.</span>
+                  </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-primary" />
-                  <span>5,000+ households</span>
+                  <CheckCircle2 className="w-4 h-4 text-primary flex-shrink-0" />
+                  <div className="flex flex-col">
+                    <span className="font-semibold text-foreground">5,000 Households</span>
+                    <span className="text-xs">per route</span>
+                  </div>
                 </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 text-primary flex-shrink-0" />
