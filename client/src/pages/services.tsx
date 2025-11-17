@@ -787,8 +787,8 @@ function LandingPagesSection() {
                 <div className="flex items-start gap-3">
                   <Check className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
                   <div>
-                    <p className="font-medium">Fast Turnaround</p>
-                    <p className="text-sm text-muted-foreground">1-2 weeks from approval</p>
+                    <p className="font-medium">QR Code Provided</p>
+                    <p className="text-sm text-muted-foreground">Get a scannable QR code linking to your landing page for use in direct mail, flyers, or event materials</p>
                   </div>
                 </div>
               </div>
@@ -826,23 +826,69 @@ function LandingPagesSection() {
               <CardTitle>Pricing</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="space-y-4 mb-6">
+              <div className="space-y-6 mb-6">
                 <div>
-                  <div className="flex items-baseline gap-2">
+                  <div className="flex items-baseline gap-2 mb-2">
                     <span className="text-2xl font-bold text-foreground">$750-$1,500</span>
                   </div>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-sm text-muted-foreground mb-3">
                     Price depends on complexity and features
                   </p>
+                  <div className="bg-background p-4 rounded-md">
+                    <p className="text-sm font-semibold text-foreground mb-1">Payment Terms:</p>
+                    <p className="text-sm text-muted-foreground">50% deposit required to start, 50% due before launch</p>
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  <p className="text-sm font-semibold text-foreground">What's included at each tier:</p>
+                  
+                  <div className="bg-background p-4 rounded-md space-y-3">
+                    <div>
+                      <p className="text-sm font-semibold text-foreground mb-2">Basic ($750):</p>
+                      <ul className="text-sm text-muted-foreground space-y-1 ml-4">
+                        <li>• Single-page design (5-7 sections)</li>
+                        <li>• Mobile-optimized and fast-loading</li>
+                        <li>• Contact form integration</li>
+                        <li>• QR code for easy sharing</li>
+                        <li>• Basic SEO setup</li>
+                      </ul>
+                    </div>
+
+                    <div>
+                      <p className="text-sm font-semibold text-foreground mb-2">Standard ($1,100):</p>
+                      <ul className="text-sm text-muted-foreground space-y-1 ml-4">
+                        <li>• Everything in Basic, plus:</li>
+                        <li>• Custom graphics and imagery</li>
+                        <li>• Video embed capability</li>
+                        <li>• Lead magnet integration (PDF download, etc.)</li>
+                        <li>• Email marketing platform connection</li>
+                      </ul>
+                    </div>
+
+                    <div>
+                      <p className="text-sm font-semibold text-foreground mb-2">Premium ($1,500):</p>
+                      <ul className="text-sm text-muted-foreground space-y-1 ml-4">
+                        <li>• Everything in Standard, plus:</li>
+                        <li>• Booking system integration</li>
+                        <li>• Multi-step forms</li>
+                        <li>• Advanced animations and interactions</li>
+                        <li>• A/B testing setup</li>
+                        <li>• Priority turnaround (1 week)</li>
+                      </ul>
+                    </div>
+                  </div>
                 </div>
               </div>
+
               <div className="bg-background p-4 rounded-md mb-6">
                 <p className="text-sm font-medium mb-2">Book a consultation to discuss:</p>
                 <ul className="text-sm text-muted-foreground space-y-1">
                   <li>• Your campaign goals and target audience</li>
-                  <li>• Design preferences and branding</li>
-                  <li>• Features needed (forms, video, etc.)</li>
+                  <li>• Design preferences and branding requirements</li>
+                  <li>• Features needed (forms, video, booking, etc.)</li>
                   <li>• Timeline and launch date</li>
+                  <li>• How you'll drive traffic (direct mail, social media, events, etc.)</li>
                 </ul>
               </div>
               <div className="aspect-video w-full bg-muted rounded-md flex items-center justify-center mb-4">
