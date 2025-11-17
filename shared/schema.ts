@@ -97,6 +97,7 @@ export const emailMarketingWaitlist = pgTable("email_marketing_waitlist", {
   email: varchar("email", { length: 255 }).notNull().unique(),
   name: varchar("name", { length: 255 }),
   businessName: varchar("business_name", { length: 255 }),
+  serviceType: varchar("service_type", { length: 255 }),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
@@ -107,6 +108,7 @@ export const insertEmailMarketingWaitlistSchema = createInsertSchema(emailMarket
   email: z.string().email("Invalid email address"),
   name: z.string().optional(),
   businessName: z.string().optional(),
+  serviceType: z.string().optional(),
 });
 
 export type InsertEmailMarketingWaitlist = z.infer<typeof insertEmailMarketingWaitlistSchema>;
@@ -118,6 +120,11 @@ export const printMaterialsWaitlist = pgTable("print_materials_waitlist", {
   email: varchar("email", { length: 255 }).notNull().unique(),
   name: varchar("name", { length: 255 }),
   businessName: varchar("business_name", { length: 255 }),
+  materialTypes: text("material_types"),
+  otherMaterialType: varchar("other_material_type", { length: 255 }),
+  industry: varchar("industry", { length: 255 }),
+  quantity: varchar("quantity", { length: 100 }),
+  typicalNeed: varchar("typical_need", { length: 100 }),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
@@ -128,6 +135,11 @@ export const insertPrintMaterialsWaitlistSchema = createInsertSchema(printMateri
   email: z.string().email("Invalid email address"),
   name: z.string().optional(),
   businessName: z.string().optional(),
+  materialTypes: z.string().optional(),
+  otherMaterialType: z.string().optional(),
+  industry: z.string().optional(),
+  quantity: z.string().optional(),
+  typicalNeed: z.string().optional(),
 });
 
 export type InsertPrintMaterialsWaitlist = z.infer<typeof insertPrintMaterialsWaitlistSchema>;
