@@ -25,7 +25,7 @@ import { useToast } from "@/hooks/use-toast";
 import { insertPrintQuoteRequestSchema, type InsertPrintQuoteRequest } from "@shared/schema";
 import { apiRequest } from "@/lib/queryClient";
 import { ArrowRight, Check, Mail, Printer, Globe, Megaphone } from "lucide-react";
-import postcardMockup from "@assets/generated_images/Direct_mail_postcard_mockup_a092c416.png";
+import postcardMockup from "@assets/BackFront Example-2_1763363158551.png";
 
 export default function Services() {
   const scrollToSection = (id: string) => {
@@ -147,17 +147,20 @@ export default function Services() {
                   </div>
                   
                   {/* Right - Postcard Mockup with Reflection */}
-                  <div className="flex items-center justify-center">
+                  <div className="flex items-center justify-center bg-muted/30 rounded-lg p-8">
                     <div className="relative w-full max-w-md">
                       <img 
                         src={postcardMockup} 
-                        alt="Direct mail postcard example"
-                        className="w-full h-auto rounded-md shadow-lg"
+                        alt="Direct mail postcard example showing multiple local businesses"
+                        className="w-full h-auto rounded-md shadow-2xl"
                         data-testid="img-postcard-mockup"
                       />
                       <div 
-                        className="absolute inset-x-0 -bottom-2 h-16 bg-gradient-to-b from-foreground/5 to-transparent blur-md -z-10 scale-y-[-1] opacity-40"
+                        className="absolute inset-x-0 -bottom-6 h-20 opacity-30"
                         style={{
+                          background: 'linear-gradient(to bottom, rgba(0,0,0,0.15), transparent)',
+                          filter: 'blur(8px)',
+                          transform: 'scaleY(-1)',
                           maskImage: 'linear-gradient(to bottom, black 0%, transparent 100%)',
                           WebkitMaskImage: 'linear-gradient(to bottom, black 0%, transparent 100%)'
                         }}
