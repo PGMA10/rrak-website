@@ -25,6 +25,7 @@ import { useToast } from "@/hooks/use-toast";
 import { insertPrintQuoteRequestSchema, type InsertPrintQuoteRequest } from "@shared/schema";
 import { apiRequest } from "@/lib/queryClient";
 import { ArrowRight, Check, Mail, Printer, Globe, Megaphone } from "lucide-react";
+import postcardMockup from "@assets/generated_images/Direct_mail_postcard_mockup_a092c416.png";
 
 export default function Services() {
   const scrollToSection = (id: string) => {
@@ -99,124 +100,150 @@ export default function Services() {
             </div>
 
             {/* Service Cards Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {/* Hero Card - Shared Mailer */}
+            <div className="space-y-6">
+              {/* Hero Card - Shared Mailer (Full Width) */}
               <Card 
-                className="md:col-span-2 lg:row-span-2 hover-elevate cursor-pointer border-primary/20" 
+                className="hover-elevate cursor-pointer border-primary/20 overflow-visible" 
                 onClick={() => scrollToSection('shared-mailer')}
                 data-testid="card-service-shared-mailer"
               >
-                <CardHeader>
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="p-3 rounded-md bg-primary/10">
-                      <Mail className="h-8 w-8 text-primary" />
+                <div className="grid md:grid-cols-2 gap-6 p-6">
+                  {/* Left Content */}
+                  <div className="space-y-6">
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="p-3 rounded-md bg-primary/10">
+                        <Mail className="h-8 w-8 text-primary" />
+                      </div>
+                      <div className="text-right">
+                        <p className="text-sm text-muted-foreground">Starting at</p>
+                        <p className="text-3xl font-bold text-primary">$600</p>
+                      </div>
                     </div>
-                    <div className="text-right">
-                      <p className="text-sm text-muted-foreground">Starting at</p>
-                      <p className="text-3xl font-bold text-primary">$600</p>
+                    <div>
+                      <h3 className="text-2xl font-bold text-foreground mb-3">
+                        Shared Direct Mail Campaigns
+                      </h3>
+                      <p className="text-base text-muted-foreground">
+                        Reach 5,000 Anchorage households for a fraction of the cost. Industry-exclusive slots mean no competition in your mailer.
+                      </p>
+                    </div>
+                    <ul className="space-y-3">
+                      <li className="flex items-start gap-2">
+                        <Check className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                        <span className="text-sm text-muted-foreground">Industry exclusivity - 1 business per industry</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <Check className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                        <span className="text-sm text-muted-foreground">5,000 households per route</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <Check className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                        <span className="text-sm text-muted-foreground">We handle design, print, and mailing</span>
+                      </li>
+                    </ul>
+                    <Button className="w-full md:w-auto" data-testid="button-learn-more-shared-mailer">
+                      Learn More <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </div>
+                  
+                  {/* Right - Postcard Mockup with Reflection */}
+                  <div className="flex items-center justify-center">
+                    <div className="relative w-full max-w-md">
+                      <img 
+                        src={postcardMockup} 
+                        alt="Direct mail postcard example"
+                        className="w-full h-auto rounded-md shadow-lg"
+                        data-testid="img-postcard-mockup"
+                      />
+                      <div 
+                        className="absolute inset-x-0 -bottom-2 h-16 bg-gradient-to-b from-foreground/5 to-transparent blur-md -z-10 scale-y-[-1] opacity-40"
+                        style={{
+                          maskImage: 'linear-gradient(to bottom, black 0%, transparent 100%)',
+                          WebkitMaskImage: 'linear-gradient(to bottom, black 0%, transparent 100%)'
+                        }}
+                      />
                     </div>
                   </div>
-                  <CardTitle className="text-2xl mt-4">Shared Direct Mail Campaigns</CardTitle>
-                  <CardDescription className="text-base">
-                    Reach 5,000 Anchorage households for a fraction of the cost. Industry-exclusive slots mean no competition in your mailer.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <ul className="space-y-2">
-                    <li className="flex items-start gap-2">
-                      <Check className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-                      <span className="text-sm text-muted-foreground">Industry exclusivity - 1 business per industry</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <Check className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-                      <span className="text-sm text-muted-foreground">5,000 households per route</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <Check className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-                      <span className="text-sm text-muted-foreground">We handle design, print, and mailing</span>
-                    </li>
-                  </ul>
-                  <Button className="w-full" data-testid="button-learn-more-shared-mailer">
-                    Learn More <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
-                </CardContent>
+                </div>
               </Card>
 
-              {/* Medium Cards */}
-              <Card 
-                className="hover-elevate cursor-pointer" 
-                onClick={() => scrollToSection('solo-campaigns')}
-                data-testid="card-service-solo-campaigns"
-              >
-                <CardHeader>
-                  <div className="p-3 rounded-md bg-primary/10 w-fit">
-                    <Megaphone className="h-6 w-6 text-primary" />
-                  </div>
-                  <div className="text-right absolute top-6 right-6">
-                    <p className="text-xs text-muted-foreground">Starting at</p>
-                    <p className="text-xl font-bold text-foreground">$2,500</p>
-                  </div>
-                  <CardTitle className="mt-4">Solo Direct Mail</CardTitle>
-                  <CardDescription>
-                    Your business only. Full creative control. Premium postcard stock.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <Button variant="outline" className="w-full" data-testid="button-learn-more-solo">
-                    Learn More <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
-                </CardContent>
-              </Card>
+              {/* Other Service Cards in Row */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <Card 
+                  className="hover-elevate cursor-pointer" 
+                  onClick={() => scrollToSection('solo-campaigns')}
+                  data-testid="card-service-solo-campaigns"
+                >
+                  <CardHeader>
+                    <div className="p-3 rounded-md bg-primary/10 w-fit">
+                      <Megaphone className="h-6 w-6 text-primary" />
+                    </div>
+                    <div className="text-right absolute top-6 right-6">
+                      <p className="text-xs text-muted-foreground">Starting at</p>
+                      <p className="text-xl font-bold text-foreground">$2,500</p>
+                    </div>
+                    <CardTitle className="mt-4">Solo Direct Mail</CardTitle>
+                    <CardDescription>
+                      Your business only. Full creative control. Premium postcard stock.
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <Button variant="outline" className="w-full" data-testid="button-learn-more-solo">
+                      Learn More <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </CardContent>
+                </Card>
 
-              <Card 
-                className="hover-elevate cursor-pointer" 
-                onClick={() => scrollToSection('print-materials')}
-                data-testid="card-service-print-materials"
-              >
-                <CardHeader>
-                  <div className="p-3 rounded-md bg-primary/10 w-fit">
-                    <Printer className="h-6 w-6 text-primary" />
-                  </div>
-                  <div className="text-right absolute top-6 right-6">
-                    <p className="text-xs text-muted-foreground">Pricing</p>
-                    <p className="text-lg font-bold text-foreground">Custom</p>
-                  </div>
-                  <CardTitle className="mt-4">Print Marketing</CardTitle>
-                  <CardDescription>
-                    Flyers, door hangers, business cards, banners, and more. 24-hour quote turnaround.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <Button variant="outline" className="w-full" data-testid="button-get-quote">
-                    Get a Quote <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
-                </CardContent>
-              </Card>
+                <Card 
+                  className="hover-elevate cursor-pointer" 
+                  onClick={() => scrollToSection('print-materials')}
+                  data-testid="card-service-print-materials"
+                >
+                  <CardHeader>
+                    <div className="p-3 rounded-md bg-primary/10 w-fit">
+                      <Printer className="h-6 w-6 text-primary" />
+                    </div>
+                    <div className="text-right absolute top-6 right-6">
+                      <p className="text-xs text-muted-foreground">Pricing</p>
+                      <p className="text-lg font-bold text-foreground">Custom</p>
+                    </div>
+                    <CardTitle className="mt-4">Print Marketing</CardTitle>
+                    <CardDescription>
+                      Flyers, door hangers, business cards, banners, and more. 24-hour quote turnaround.
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <Button variant="outline" className="w-full" data-testid="button-get-quote">
+                      Get a Quote <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </CardContent>
+                </Card>
 
-              <Card 
-                className="hover-elevate cursor-pointer" 
-                onClick={() => scrollToSection('landing-pages')}
-                data-testid="card-service-landing-pages"
-              >
-                <CardHeader>
-                  <div className="p-3 rounded-md bg-primary/10 w-fit">
-                    <Globe className="h-6 w-6 text-primary" />
-                  </div>
-                  <div className="text-right absolute top-6 right-6">
-                    <p className="text-xs text-muted-foreground">Starting at</p>
-                    <p className="text-xl font-bold text-foreground">$750</p>
-                  </div>
-                  <CardTitle className="mt-4">Landing Pages</CardTitle>
-                  <CardDescription>
-                    Custom landing pages optimized for conversions. Perfect for campaigns and promotions.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <Button variant="outline" className="w-full" data-testid="button-book-consultation">
-                    Book Consultation <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
-                </CardContent>
-              </Card>
+                <Card 
+                  className="hover-elevate cursor-pointer" 
+                  onClick={() => scrollToSection('landing-pages')}
+                  data-testid="card-service-landing-pages"
+                >
+                  <CardHeader>
+                    <div className="p-3 rounded-md bg-primary/10 w-fit">
+                      <Globe className="h-6 w-6 text-primary" />
+                    </div>
+                    <div className="text-right absolute top-6 right-6">
+                      <p className="text-xs text-muted-foreground">Starting at</p>
+                      <p className="text-xl font-bold text-foreground">$750</p>
+                    </div>
+                    <CardTitle className="mt-4">Landing Pages</CardTitle>
+                    <CardDescription>
+                      Custom landing pages optimized for conversions. Perfect for campaigns and promotions.
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <Button variant="outline" className="w-full" data-testid="button-book-consultation">
+                      Book Consultation <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </CardContent>
+                </Card>
+              </div>
             </div>
           </div>
         </section>
