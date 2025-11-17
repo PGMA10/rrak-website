@@ -1,4 +1,4 @@
-export default function Home() {
+export default function Blog() {
   return (
     <div className="flex flex-col min-h-screen">
       <header className="sticky top-0 z-50 backdrop-blur-sm bg-background/80 border-b">
@@ -12,7 +12,7 @@ export default function Home() {
             <nav className="hidden md:flex flex-wrap items-center space-x-8">
               <a 
                 href="/" 
-                className="text-sm font-medium text-foreground hover:text-primary transition-colors duration-200"
+                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200"
                 data-testid="link-nav-home"
               >
                 Home
@@ -33,7 +33,7 @@ export default function Home() {
               </a>
               <a 
                 href="/blog" 
-                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200"
+                className="text-sm font-medium text-foreground hover:text-primary transition-colors duration-200"
                 data-testid="link-nav-blog"
               >
                 Blog
@@ -54,10 +54,10 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-24">
           <div className="text-center space-y-8">
             <h2 className="text-4xl md:text-5xl font-bold text-foreground" data-testid="text-heading">
-              Welcome
+              Blog
             </h2>
             <p className="text-base leading-relaxed text-muted-foreground max-w-2xl mx-auto" data-testid="text-description">
-              This is a clean, minimal starter template. Start building your application by editing the components.
+              Read our latest articles and insights.
             </p>
           </div>
         </div>
