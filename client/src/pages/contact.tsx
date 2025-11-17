@@ -1,4 +1,64 @@
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
+import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useToast } from "@/hooks/use-toast";
+import { insertLeadSchema, type InsertLead } from "@shared/schema";
+import { apiRequest } from "@/lib/queryClient";
+
 export default function Contact() {
+  const { toast } = useToast();
+  
+  const form = useForm<InsertLead>({
+    resolver: zodResolver(insertLeadSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      phone: "",
+      businessName: "",
+      serviceInterest: "",
+      message: "",
+    },
+  });
+
+  const submitMutation = useMutation({
+    mutationFn: async (data: InsertLead) => {
+      const res = await apiRequest("POST", "/api/submit-lead", data);
+      return res.json();
+    },
+    onSuccess: () => {
+      toast({
+        title: "Message Sent!",
+        description: "We'll get back to you within 24 hours.",
+      });
+      form.reset();
+    },
+    onError: (error: any) => {
+      toast({
+        title: "Error",
+        description: error.message || "Failed to send message. Please try again.",
+        variant: "destructive",
+      });
+    },
+  });
+
   return (
     <div className="flex flex-col min-h-screen">
       <header className="sticky top-0 z-50 backdrop-blur-sm bg-background/80 border-b">
@@ -50,15 +110,135 @@ export default function Contact() {
         </div>
       </header>
 
-      <main className="flex-1">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-24">
-          <div className="text-center space-y-8">
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground" data-testid="text-heading">
-              Contact Us
-            </h2>
-            <p className="text-base leading-relaxed text-muted-foreground max-w-2xl mx-auto" data-testid="text-description">
-              Get in touch with our team.
-            </p>
+      <main className="flex-1 py-16 md:py-20 lg:py-24">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="space-y-8">
+            <div className="text-center space-y-4">
+              <h1 className="text-4xl md:text-5xl font-bold text-foreground" data-testid="heading-contact">
+                Get Started Today
+              </h1>
+              <p className="text-lg text-muted-foreground">
+                Reserve your spot in the January 5th Anchorage direct mail campaign
+              </p>
+            </div>
+
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit((data) => submitMutation.mutate(data))} className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Name *</FormLabel>
+                        <FormControl>
+                          <Input placeholder="John Doe" {...field} data-testid="input-name" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Email *</FormLabel>
+                        <FormControl>
+                          <Input type="email" placeholder="john@example.com" {...field} data-testid="input-email" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <FormField
+                    control={form.control}
+                    name="phone"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Phone</FormLabel>
+                        <FormControl>
+                          <Input placeholder="(907) 555-1234" {...field} value={field.value || ""} data-testid="input-phone" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="businessName"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Business Name</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Your Business" {...field} value={field.value || ""} data-testid="input-business" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
+                <FormField
+                  control={form.control}
+                  name="serviceInterest"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Service Interest</FormLabel>
+                      <Select onValueChange={field.onChange} value={field.value || ""}>
+                        <FormControl>
+                          <SelectTrigger data-testid="select-service">
+                            <SelectValue placeholder="Select a service" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="shared-campaign">Shared Direct Mail Campaign</SelectItem>
+                          <SelectItem value="solo-campaign">Solo Campaign</SelectItem>
+                          <SelectItem value="consultation">Free Consultation</SelectItem>
+                          <SelectItem value="other">Other</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="message"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Message</FormLabel>
+                      <FormControl>
+                        <Textarea 
+                          placeholder="Tell us about your business and marketing goals..."
+                          className="resize-none min-h-[120px]"
+                          {...field}
+                          value={field.value || ""}
+                          data-testid="textarea-message"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <Button 
+                  type="submit" 
+                  size="lg" 
+                  className="w-full text-lg font-bold"
+                  disabled={submitMutation.isPending}
+                  data-testid="button-submit"
+                >
+                  {submitMutation.isPending ? "Sending..." : "Reserve Your Slot Now"}
+                </Button>
+              </form>
+            </Form>
           </div>
         </div>
       </main>
