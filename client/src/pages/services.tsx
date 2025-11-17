@@ -24,7 +24,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { insertPrintQuoteRequestSchema, type InsertPrintQuoteRequest } from "@shared/schema";
 import { apiRequest } from "@/lib/queryClient";
-import { ArrowRight, Check, Mail, Printer, Globe, Megaphone } from "lucide-react";
+import { ArrowRight, Check, Mail, Printer, Globe, Megaphone, FileText, DoorClosed, CreditCard, Flag, BookOpen, SignpostBig, Sticker, Frame } from "lucide-react";
 import postcardMockup from "@assets/BackFront Example-2_1763363158551.png";
 import logo from "@assets/Untitled design-5_1763412376461.png";
 
@@ -549,38 +549,177 @@ function PrintMaterialsSection() {
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
               Print Marketing Materials
             </h2>
-            <p className="text-lg text-muted-foreground">
-              High-quality printing for all your marketing needs. 24-hour quote turnaround.
+            <p className="text-lg text-muted-foreground mb-6">
+              We handle the complete process: design, copywriting, print coordination, and delivery. You focus on your business - we'll make you look great.
             </p>
           </div>
 
-          <Card>
-            <CardHeader>
-              <CardTitle>What We Print</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                <div className="text-center p-4 rounded-md bg-muted/50">
-                  <p className="font-medium">Flyers</p>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {/* Flyers Card */}
+            <Card className="group hover-elevate active-elevate-2 cursor-pointer transition-all duration-300 overflow-hidden" data-testid="card-print-flyers">
+              <CardContent className="p-6">
+                <div className="flex flex-col items-center text-center space-y-3">
+                  <FileText className="h-10 w-10 text-primary" />
+                  <div>
+                    <h3 className="font-semibold text-foreground">Flyers</h3>
+                    <p className="text-xs text-muted-foreground">(8.5×11")</p>
+                  </div>
+                  <div className="h-24 w-full bg-muted/30 rounded-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <Printer className="h-8 w-8 text-muted-foreground/50" />
+                  </div>
+                  <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 space-y-1">
+                    <p className="text-xs font-medium text-foreground">Perfect For:</p>
+                    <p className="text-xs text-muted-foreground leading-relaxed">Event promotions, sales announcements, menu inserts, neighborhood distribution</p>
+                  </div>
                 </div>
-                <div className="text-center p-4 rounded-md bg-muted/50">
-                  <p className="font-medium">Door Hangers</p>
+              </CardContent>
+            </Card>
+
+            {/* Door Hangers Card */}
+            <Card className="group hover-elevate active-elevate-2 cursor-pointer transition-all duration-300 overflow-hidden" data-testid="card-print-door-hangers">
+              <CardContent className="p-6">
+                <div className="flex flex-col items-center text-center space-y-3">
+                  <DoorClosed className="h-10 w-10 text-primary" />
+                  <div>
+                    <h3 className="font-semibold text-foreground">Door Hangers</h3>
+                  </div>
+                  <div className="h-24 w-full bg-muted/30 rounded-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <Printer className="h-8 w-8 text-muted-foreground/50" />
+                  </div>
+                  <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 space-y-1">
+                    <p className="text-xs font-medium text-foreground">Perfect For:</p>
+                    <p className="text-xs text-muted-foreground leading-relaxed">Home services (HVAC, plumbing, lawn care), restaurant delivery menus, real estate</p>
+                  </div>
                 </div>
-                <div className="text-center p-4 rounded-md bg-muted/50">
-                  <p className="font-medium">Business Cards</p>
+              </CardContent>
+            </Card>
+
+            {/* Business Cards Card */}
+            <Card className="group hover-elevate active-elevate-2 cursor-pointer transition-all duration-300 overflow-hidden" data-testid="card-print-business-cards">
+              <CardContent className="p-6">
+                <div className="flex flex-col items-center text-center space-y-3">
+                  <CreditCard className="h-10 w-10 text-primary" />
+                  <div>
+                    <h3 className="font-semibold text-foreground">Business Cards</h3>
+                    <p className="text-xs text-muted-foreground">(500+)</p>
+                  </div>
+                  <div className="h-24 w-full bg-muted/30 rounded-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <Printer className="h-8 w-8 text-muted-foreground/50" />
+                  </div>
+                  <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 space-y-1">
+                    <p className="text-xs font-medium text-foreground">Perfect For:</p>
+                    <p className="text-xs text-muted-foreground leading-relaxed">Networking events, customer handouts, leaving with quotes/estimates</p>
+                  </div>
                 </div>
-                <div className="text-center p-4 rounded-md bg-muted/50">
-                  <p className="font-medium">Banners</p>
+              </CardContent>
+            </Card>
+
+            {/* Banners Card */}
+            <Card className="group hover-elevate active-elevate-2 cursor-pointer transition-all duration-300 overflow-hidden" data-testid="card-print-banners">
+              <CardContent className="p-6">
+                <div className="flex flex-col items-center text-center space-y-3">
+                  <Flag className="h-10 w-10 text-primary" />
+                  <div>
+                    <h3 className="font-semibold text-foreground">Banners</h3>
+                    <p className="text-xs text-muted-foreground">(Vinyl)</p>
+                  </div>
+                  <div className="h-24 w-full bg-muted/30 rounded-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <Printer className="h-8 w-8 text-muted-foreground/50" />
+                  </div>
+                  <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 space-y-1">
+                    <p className="text-xs font-medium text-foreground">Perfect For:</p>
+                    <p className="text-xs text-muted-foreground leading-relaxed">Trade shows, grand openings, storefront displays, event backdrops</p>
+                  </div>
                 </div>
-                <div className="text-center p-4 rounded-md bg-muted/50">
-                  <p className="font-medium">Brochures</p>
+              </CardContent>
+            </Card>
+
+            {/* Brochures Card */}
+            <Card className="group hover-elevate active-elevate-2 cursor-pointer transition-all duration-300 overflow-hidden" data-testid="card-print-brochures">
+              <CardContent className="p-6">
+                <div className="flex flex-col items-center text-center space-y-3">
+                  <BookOpen className="h-10 w-10 text-primary" />
+                  <div>
+                    <h3 className="font-semibold text-foreground">Brochures</h3>
+                    <p className="text-xs text-muted-foreground">(Tri-fold/Bi-fold)</p>
+                  </div>
+                  <div className="h-24 w-full bg-muted/30 rounded-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <Printer className="h-8 w-8 text-muted-foreground/50" />
+                  </div>
+                  <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 space-y-1">
+                    <p className="text-xs font-medium text-foreground">Perfect For:</p>
+                    <p className="text-xs text-muted-foreground leading-relaxed">Service menus, product catalogs, welcome packets, information guides</p>
+                  </div>
                 </div>
-                <div className="text-center p-4 rounded-md bg-muted/50">
-                  <p className="font-medium">Yard Signs</p>
+              </CardContent>
+            </Card>
+
+            {/* Yard Signs Card */}
+            <Card className="group hover-elevate active-elevate-2 cursor-pointer transition-all duration-300 overflow-hidden" data-testid="card-print-yard-signs">
+              <CardContent className="p-6">
+                <div className="flex flex-col items-center text-center space-y-3">
+                  <SignpostBig className="h-10 w-10 text-primary" />
+                  <div>
+                    <h3 className="font-semibold text-foreground">Yard Signs</h3>
+                    <p className="text-xs text-muted-foreground">(Corrugated + Stakes)</p>
+                  </div>
+                  <div className="h-24 w-full bg-muted/30 rounded-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <Printer className="h-8 w-8 text-muted-foreground/50" />
+                  </div>
+                  <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 space-y-1">
+                    <p className="text-xs font-medium text-foreground">Perfect For:</p>
+                    <p className="text-xs text-muted-foreground leading-relaxed">Real estate, political campaigns, event directionals, garage sales</p>
+                  </div>
                 </div>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+
+            {/* Stickers Card */}
+            <Card className="group hover-elevate active-elevate-2 cursor-pointer transition-all duration-300 overflow-hidden" data-testid="card-print-stickers">
+              <CardContent className="p-6">
+                <div className="flex flex-col items-center text-center space-y-3">
+                  <Sticker className="h-10 w-10 text-primary" />
+                  <div>
+                    <h3 className="font-semibold text-foreground">Stickers</h3>
+                    <p className="text-xs text-muted-foreground">(Custom Die-Cut)</p>
+                  </div>
+                  <div className="h-24 w-full bg-muted/30 rounded-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <Printer className="h-8 w-8 text-muted-foreground/50" />
+                  </div>
+                  <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 space-y-1">
+                    <p className="text-xs font-medium text-foreground">Perfect For:</p>
+                    <p className="text-xs text-muted-foreground leading-relaxed">Product packaging, laptop/window branding, promotional giveaways, sealing envelopes</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Window Clings Card */}
+            <Card className="group hover-elevate active-elevate-2 cursor-pointer transition-all duration-300 overflow-hidden" data-testid="card-print-window-clings">
+              <CardContent className="p-6">
+                <div className="flex flex-col items-center text-center space-y-3">
+                  <Frame className="h-10 w-10 text-primary" />
+                  <div>
+                    <h3 className="font-semibold text-foreground">Window Clings/Decals</h3>
+                  </div>
+                  <div className="h-24 w-full bg-muted/30 rounded-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <Printer className="h-8 w-8 text-muted-foreground/50" />
+                  </div>
+                  <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 space-y-1">
+                    <p className="text-xs font-medium text-foreground">Perfect For:</p>
+                    <p className="text-xs text-muted-foreground leading-relaxed">Storefront hours, seasonal promotions, privacy branding</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          <div className="bg-muted/30 border border-muted rounded-md p-4 flex items-start gap-3">
+            <div className="text-2xl">📦</div>
+            <p className="text-sm text-muted-foreground">
+              <span className="font-medium text-foreground">Distribution not included</span> - materials delivered to your business location
+            </p>
+          </div>
 
           <Card>
             <CardHeader>
@@ -668,6 +807,8 @@ function PrintMaterialsSection() {
                               <SelectItem value="banners">Banners</SelectItem>
                               <SelectItem value="brochures">Brochures</SelectItem>
                               <SelectItem value="yard-signs">Yard Signs</SelectItem>
+                              <SelectItem value="stickers">Stickers</SelectItem>
+                              <SelectItem value="window-clings">Window Clings/Decals</SelectItem>
                               <SelectItem value="other">Other</SelectItem>
                             </SelectContent>
                           </Select>
