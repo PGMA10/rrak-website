@@ -266,8 +266,8 @@ export default function Services() {
         {/* Detailed Service Sections */}
         <SharedMailerSection />
         <SoloCampaignsSection />
-        <ComingSoonServicesSection />
         <LandingPagesSection />
+        <ComingSoonServicesSection />
       </main>
 
       <footer className="border-t bg-background">
