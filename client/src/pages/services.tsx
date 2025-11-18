@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
@@ -709,7 +708,6 @@ function EmailMarketingWaitlistCard() {
 
 function PrintMaterialsWaitlistCard() {
   const { toast } = useToast();
-  const [selectedMaterials, setSelectedMaterials] = useState<string[]>([]);
   
   const printMaterialsSchema = insertPrintMaterialsWaitlistSchema.extend({
     email: z.string().email("Invalid email address"),
@@ -723,7 +721,7 @@ function PrintMaterialsWaitlistCard() {
       email: "",
       name: "",
       businessName: "",
-      materialTypes: "",
+      materialTypes: [],
       otherMaterialType: "",
       industry: "",
       quantity: "",
@@ -742,12 +740,24 @@ function PrintMaterialsWaitlistCard() {
     { id: "other", label: "Other" },
   ];
 
-  const handleMaterialToggle = (materialId: string) => {
-    const newSelected = selectedMaterials.includes(materialId)
-      ? selectedMaterials.filter(m => m !== materialId)
-      : [...selectedMaterials, materialId];
-    setSelectedMaterials(newSelected);
-    form.setValue("materialTypes", newSelected.join(", "));
+  const selectedMaterials = form.watch("materialTypes") || [];
+
+  const handleMaterialToggle = (materialId: string, checked: boolean) => {
+    const currentValue = form.getValues("materialTypes") || [];
+    const currentSet = new Set(currentValue);
+    
+    if (checked) {
+      currentSet.add(materialId);
+    } else {
+      currentSet.delete(materialId);
+    }
+    
+    const newSelected = Array.from(currentSet);
+    form.setValue("materialTypes", newSelected, { 
+      shouldValidate: true, 
+      shouldDirty: true, 
+      shouldTouch: true 
+    });
   };
 
   const submitMutation = useMutation({
@@ -788,27 +798,36 @@ function PrintMaterialsWaitlistCard() {
       <CardContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit((data) => submitMutation.mutate(data))} className="space-y-4">
-            <FormItem>
-              <FormLabel>What materials do you need? (select all that apply)</FormLabel>
-              <div className="grid grid-cols-2 gap-2 mt-2">
-                {materialOptions.map((option) => (
-                  <div key={option.id} className="flex items-center space-x-2">
-                    <Checkbox
-                      id={option.id}
-                      checked={selectedMaterials.includes(option.id)}
-                      onCheckedChange={() => handleMaterialToggle(option.id)}
-                      data-testid={`checkbox-material-${option.id}`}
-                    />
-                    <label
-                      htmlFor={option.id}
-                      className="text-sm font-medium leading-none cursor-pointer"
-                    >
-                      {option.label}
-                    </label>
-                  </div>
-                ))}
-              </div>
-            </FormItem>
+            <FormField
+              control={form.control}
+              name="materialTypes"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>What materials do you need? (select all that apply)</FormLabel>
+                  <FormControl>
+                    <div className="grid grid-cols-2 gap-2 mt-2">
+                      {materialOptions.map((option) => (
+                        <div key={option.id} className="flex items-center space-x-2">
+                          <Checkbox
+                            id={option.id}
+                            checked={(field.value || []).includes(option.id)}
+                            onCheckedChange={(checked) => handleMaterialToggle(option.id, checked === true)}
+                            data-testid={`checkbox-material-${option.id}`}
+                          />
+                          <label
+                            htmlFor={option.id}
+                            className="text-sm font-medium leading-none cursor-pointer"
+                          >
+                            {option.label}
+                          </label>
+                        </div>
+                      ))}
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
             {selectedMaterials.includes("other") && (
               <FormField

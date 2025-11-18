@@ -197,7 +197,7 @@ export async function sendPrintMaterialsWaitlistNotification(entry: {
   email: string;
   name?: string | null;
   businessName?: string | null;
-  materialTypes?: string | null;
+  materialTypes?: string[] | null;
   otherMaterialType?: string | null;
   industry?: string | null;
   quantity?: string | null;
@@ -215,7 +215,7 @@ export async function sendPrintMaterialsWaitlistNotification(entry: {
         <p><strong>Email:</strong> ${entry.email}</p>
         ${entry.name ? `<p><strong>Name:</strong> ${entry.name}</p>` : ""}
         ${entry.businessName ? `<p><strong>Business:</strong> ${entry.businessName}</p>` : ""}
-        ${entry.materialTypes ? `<p><strong>Material Types:</strong> ${entry.materialTypes}</p>` : ""}
+        ${entry.materialTypes && entry.materialTypes.length > 0 ? `<p><strong>Material Types:</strong> ${entry.materialTypes.join(", ")}</p>` : ""}
         ${entry.otherMaterialType ? `<p><strong>Other Material Type:</strong> ${entry.otherMaterialType}</p>` : ""}
         ${entry.industry ? `<p><strong>Industry:</strong> ${entry.industry}</p>` : ""}
         ${entry.quantity ? `<p><strong>Quantity:</strong> ${entry.quantity}</p>` : ""}
