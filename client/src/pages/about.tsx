@@ -111,14 +111,128 @@ export default function About() {
 
         {/* Section 2: About Patrick */}
         <section className="py-16 md:py-24 bg-muted/10 border-t">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center space-y-4">
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground" data-testid="text-heading-about-patrick">
-                About Patrick
-              </h2>
-              <p className="text-base leading-relaxed text-muted-foreground" data-testid="text-about-patrick-placeholder">
-                [Section 2 content - to be specified]
-              </p>
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid md:grid-cols-2 gap-12 items-start mb-16">
+              {/* Left: Professional Headshot */}
+              <div className="flex justify-center md:justify-start">
+                <div className="w-full max-w-md aspect-square bg-muted rounded-lg flex items-center justify-center" data-testid="img-headshot-placeholder">
+                  <p className="text-sm text-muted-foreground">[Professional Headshot Image]</p>
+                </div>
+              </div>
+
+              {/* Right: About Patrick Copy */}
+              <div className="space-y-6">
+                <h2 className="text-3xl md:text-4xl font-bold text-foreground" data-testid="text-heading-about-patrick">
+                  About Patrick
+                </h2>
+                
+                <div className="space-y-4 text-base leading-relaxed text-foreground">
+                  <p data-testid="text-about-intro">
+                    I help Alaska businesses become unforgettable.
+                  </p>
+                  
+                  <p data-testid="text-about-p1">
+                    Most business owners come to me wanting more customers. What they actually want? A business that's recognized, respected, and thriving.
+                  </p>
+                  
+                  <p data-testid="text-about-p2">
+                    Here's what I've learned building everything from mobile apps to booking platforms: tactics alone don't work. You can run the perfect campaign, but if you don't know who you are, what makes you different, and why people should care - it's just noise.
+                  </p>
+                  
+                  <p data-testid="text-about-p3">
+                    The tactics work when the foundation is clear. When you know what you want, what you stand for, and how you serve others - the path becomes obvious.
+                  </p>
+                  
+                  <p data-testid="text-about-p4">
+                    That's what I bring to Route Reach AK. I don't just design postcards and coordinate mailings. I help you clarify your message, sharpen your positioning, and amplify what makes your business worth noticing.
+                  </p>
+                  
+                  <p className="font-semibold" data-testid="text-about-conclusion">
+                    You get more than a marketing campaign. You get a strategic partner who pushes you to be better - and when you're better, your business thrives.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Why Route Reach AK Is Different */}
+            <div className="bg-background rounded-lg p-8 md:p-12 border">
+              <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-8 text-center" data-testid="text-heading-why-different">
+                Why Route Reach AK Is Different
+              </h3>
+              
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="flex items-start gap-4">
+                  <div className="flex-shrink-0 w-2 h-2 rounded-full bg-primary mt-2"></div>
+                  <div>
+                    <h4 className="font-semibold text-foreground mb-1" data-testid="text-bullet-local-title">
+                      Local Alaska Focus
+                    </h4>
+                    <p className="text-sm text-muted-foreground" data-testid="text-bullet-local-desc">
+                      I live here, understand this market, and I'm committed to strengthening our local economy
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="flex-shrink-0 w-2 h-2 rounded-full bg-primary mt-2"></div>
+                  <div>
+                    <h4 className="font-semibold text-foreground mb-1" data-testid="text-bullet-full-service-title">
+                      Full-Service Approach
+                    </h4>
+                    <p className="text-sm text-muted-foreground" data-testid="text-bullet-full-service-desc">
+                      You don't need a designer or marketing team - I handle it all
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="flex-shrink-0 w-2 h-2 rounded-full bg-primary mt-2"></div>
+                  <div>
+                    <h4 className="font-semibold text-foreground mb-1" data-testid="text-bullet-pricing-title">
+                      Transparent Pricing
+                    </h4>
+                    <p className="text-sm text-muted-foreground" data-testid="text-bullet-pricing-desc">
+                      What you see is what you pay - no surprises
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="flex-shrink-0 w-2 h-2 rounded-full bg-primary mt-2"></div>
+                  <div>
+                    <h4 className="font-semibold text-foreground mb-1" data-testid="text-bullet-exclusivity-title">
+                      Industry Exclusivity
+                    </h4>
+                    <p className="text-sm text-muted-foreground" data-testid="text-bullet-exclusivity-desc">
+                      Only one business per category per campaign - your competitors won't be in your mailer
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Final CTA */}
+            <div className="mt-16 text-center space-y-6">
+              <h3 className="text-3xl md:text-4xl font-bold text-foreground" data-testid="text-cta-heading">
+                Ready to reach 5,000 Alaska households?
+              </h3>
+              
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a 
+                  href="/contact"
+                  className="inline-flex items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover-elevate active-elevate-2 h-10 px-8"
+                  data-testid="button-reserve-slot"
+                >
+                  Reserve Your Slot
+                </a>
+                <a 
+                  href="tel:+19079474624"
+                  className="text-base text-muted-foreground hover:text-foreground transition-colors"
+                  data-testid="link-phone"
+                >
+                  Questions? Call (907) 947-4624
+                </a>
+              </div>
             </div>
           </div>
         </section>
