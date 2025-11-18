@@ -1,4 +1,5 @@
 import logo from "@assets/Untitled design-5_1763412376461.png";
+import headshot from "@assets/GRAVATAR-CAREER FAIR HEADSHOTS-JRE-0409 copy_1763433381511.jpg";
 
 export default function About() {
   return (
@@ -57,7 +58,7 @@ export default function About() {
         <section className="py-16 md:py-24 bg-background">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="space-y-8">
-              <div className="text-center space-y-4">
+              <div className="text-center space-y-8">
                 <h1 className="text-4xl md:text-5xl font-bold text-foreground" data-testid="text-heading-name">
                   Hi, I'm Patrick Moses Jr.
                 </h1>
@@ -66,7 +67,12 @@ export default function About() {
                 </p>
               </div>
 
-              <div className="bg-primary/5 border-l-4 border-primary p-6 rounded-r-md my-8">
+              <div className="relative bg-primary/5 border-l-4 border-primary p-6 rounded-r-md my-8">
+                <div className="absolute -top-3 left-4 bg-background px-2">
+                  <span className="text-xs font-semibold text-primary" data-testid="text-mission-label">
+                    Route Reach AK's Mission
+                  </span>
+                </div>
                 <p className="text-lg font-semibold text-foreground" data-testid="text-mission-statement">
                   To deliver high-impact marketing strategies that increase your visibility and strengthen your market position.
                 </p>
@@ -115,9 +121,12 @@ export default function About() {
             <div className="grid md:grid-cols-2 gap-12 items-start mb-16">
               {/* Left: Professional Headshot */}
               <div className="flex justify-center md:justify-start">
-                <div className="w-full max-w-md aspect-square bg-muted rounded-lg flex items-center justify-center" data-testid="img-headshot-placeholder">
-                  <p className="text-sm text-muted-foreground">[Professional Headshot Image]</p>
-                </div>
+                <img 
+                  src={headshot} 
+                  alt="Patrick Moses Jr. - Founder of Route Reach AK" 
+                  className="w-full max-w-md rounded-lg"
+                  data-testid="img-headshot"
+                />
               </div>
 
               {/* Right: About Patrick Copy */}
@@ -217,7 +226,7 @@ export default function About() {
                 Ready to reach 5,000 Alaska households?
               </h3>
               
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <div className="flex flex-col items-center justify-center gap-4">
                 <a 
                   href="/contact"
                   className="inline-flex items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover-elevate active-elevate-2 h-10 px-8"
@@ -225,13 +234,23 @@ export default function About() {
                 >
                   Reserve Your Slot
                 </a>
-                <a 
-                  href="tel:+19079474624"
-                  className="text-base text-muted-foreground hover:text-foreground transition-colors"
-                  data-testid="link-phone"
-                >
-                  Questions? Call (907) 947-4624
-                </a>
+                <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
+                  <a 
+                    href="tel:+19079474624"
+                    className="text-base text-muted-foreground hover:text-foreground transition-colors"
+                    data-testid="link-phone"
+                  >
+                    Call (907) 947-4624
+                  </a>
+                  <span className="hidden sm:inline text-muted-foreground">•</span>
+                  <a 
+                    href="mailto:contact@routereachak.com"
+                    className="text-base text-muted-foreground hover:text-foreground transition-colors"
+                    data-testid="link-email"
+                  >
+                    contact@routereachak.com
+                  </a>
+                </div>
               </div>
             </div>
           </div>
