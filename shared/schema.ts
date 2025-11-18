@@ -97,7 +97,7 @@ export const emailMarketingWaitlist = pgTable("email_marketing_waitlist", {
   email: varchar("email", { length: 255 }).notNull().unique(),
   name: varchar("name", { length: 255 }),
   businessName: varchar("business_name", { length: 255 }),
-  serviceType: varchar("service_type", { length: 255 }),
+  serviceTypes: text("service_types").array(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
@@ -108,7 +108,7 @@ export const insertEmailMarketingWaitlistSchema = createInsertSchema(emailMarket
   email: z.string().email("Invalid email address"),
   name: z.string().optional(),
   businessName: z.string().optional(),
-  serviceType: z.string().optional(),
+  serviceTypes: z.array(z.string()).optional(),
 });
 
 export type InsertEmailMarketingWaitlist = z.infer<typeof insertEmailMarketingWaitlistSchema>;

@@ -564,9 +564,35 @@ function EmailMarketingWaitlistCard() {
       email: "",
       name: "",
       businessName: "",
-      serviceType: "",
+      serviceTypes: [],
     },
   });
+
+  const serviceOptions = [
+    { id: "newsletter", label: "Newsletter" },
+    { id: "promotional-campaigns", label: "Promotional campaigns" },
+    { id: "cold-outreach", label: "Cold outreach" },
+    { id: "not-sure", label: "Not sure yet" },
+  ];
+
+  const selectedServices = form.watch("serviceTypes") || [];
+
+  const handleServiceToggle = (serviceId: string, checked: boolean) => {
+    const currentValue = form.getValues("serviceTypes") || [];
+    const currentSet = new Set(currentValue);
+    
+    if (checked) {
+      currentSet.add(serviceId);
+    } else {
+      currentSet.delete(serviceId);
+    }
+    
+    form.setValue("serviceTypes", Array.from(currentSet), {
+      shouldValidate: true,
+      shouldDirty: true,
+      shouldTouch: true,
+    });
+  };
 
   const submitMutation = useMutation({
     mutationFn: async (data: EmailMarketingWaitlistForm) => {
@@ -606,48 +632,27 @@ function EmailMarketingWaitlistCard() {
       <CardContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit((data) => submitMutation.mutate(data))} className="space-y-4">
-            <FormField
-              control={form.control}
-              name="serviceType"
-              render={({ field }) => (
-                <FormItem className="space-y-2">
-                  <FormLabel>I'm interested in:</FormLabel>
-                  <FormControl>
-                    <RadioGroup
-                      onValueChange={field.onChange}
-                      value={field.value}
-                      className="flex flex-col space-y-1"
+            <div className="space-y-2">
+              <FormLabel>I'm interested in: (select all that apply)</FormLabel>
+              <div className="flex flex-col space-y-2">
+                {serviceOptions.map((option) => (
+                  <div key={option.id} className="flex items-center space-x-2">
+                    <Checkbox
+                      id={`service-${option.id}`}
+                      checked={selectedServices.includes(option.id)}
+                      onCheckedChange={(checked) => handleServiceToggle(option.id, checked === true)}
+                      data-testid={`checkbox-${option.id}`}
+                    />
+                    <label
+                      htmlFor={`service-${option.id}`}
+                      className="text-sm font-normal cursor-pointer"
                     >
-                      <FormItem className="flex items-center space-x-2 space-y-0">
-                        <FormControl>
-                          <RadioGroupItem value="Newsletter" data-testid="radio-newsletter" />
-                        </FormControl>
-                        <FormLabel className="font-normal cursor-pointer">Newsletter</FormLabel>
-                      </FormItem>
-                      <FormItem className="flex items-center space-x-2 space-y-0">
-                        <FormControl>
-                          <RadioGroupItem value="Promotional campaigns" data-testid="radio-promotional" />
-                        </FormControl>
-                        <FormLabel className="font-normal cursor-pointer">Promotional campaigns</FormLabel>
-                      </FormItem>
-                      <FormItem className="flex items-center space-x-2 space-y-0">
-                        <FormControl>
-                          <RadioGroupItem value="Cold outreach" data-testid="radio-cold-outreach" />
-                        </FormControl>
-                        <FormLabel className="font-normal cursor-pointer">Cold outreach</FormLabel>
-                      </FormItem>
-                      <FormItem className="flex items-center space-x-2 space-y-0">
-                        <FormControl>
-                          <RadioGroupItem value="Not sure yet" data-testid="radio-not-sure" />
-                        </FormControl>
-                        <FormLabel className="font-normal cursor-pointer">Not sure yet</FormLabel>
-                      </FormItem>
-                    </RadioGroup>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                      {option.label}
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </div>
             <FormField
               control={form.control}
               name="name"
