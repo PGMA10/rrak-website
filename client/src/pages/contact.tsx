@@ -236,7 +236,7 @@ export default function Contact() {
                   disabled={submitMutation.isPending}
                   data-testid="button-submit"
                 >
-                  {submitMutation.isPending ? "Sending..." : "Reserve Your Slot Now"}
+                  {submitMutation.isPending ? "Sending..." : "Submit"}
                 </Button>
               </form>
             </Form>
