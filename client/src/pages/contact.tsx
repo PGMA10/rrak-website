@@ -116,10 +116,10 @@ export default function Contact() {
           <div className="space-y-8">
             <div className="text-center space-y-4">
               <h1 className="text-4xl md:text-5xl font-bold text-foreground" data-testid="heading-contact">
-                Get Started Today
+                Let's Talk
               </h1>
               <p className="text-lg text-muted-foreground">
-                Reserve your spot in the January 5th Anchorage direct mail campaign
+                Got questions about our services? Looking for something specific? Ready to reserve your spot in the January campaign? Reach out below - I'll respond within 24 hours.
               </p>
             </div>
 
