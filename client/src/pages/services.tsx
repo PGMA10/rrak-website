@@ -212,30 +212,6 @@ export default function Services() {
 
                 <Card 
                   className="hover-elevate cursor-pointer" 
-                  onClick={() => scrollToSection('coming-soon')}
-                  data-testid="card-service-coming-soon"
-                >
-                  <CardHeader>
-                    <div className="p-3 rounded-md bg-primary/10 w-fit">
-                      <Printer className="h-6 w-6 text-primary" />
-                    </div>
-                    <div className="text-right absolute top-6 right-6">
-                      <Badge className="bg-primary/10 text-primary border-primary/20">Coming Soon</Badge>
-                    </div>
-                    <CardTitle className="mt-4">Upcoming Services</CardTitle>
-                    <CardDescription>
-                      Email marketing campaigns and print materials. Join our waitlist for early access.
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <Button variant="outline" className="w-full" data-testid="button-join-waitlist">
-                      Join Waitlist <ArrowRight className="ml-2 h-4 w-4" />
-                    </Button>
-                  </CardContent>
-                </Card>
-
-                <Card 
-                  className="hover-elevate cursor-pointer" 
                   onClick={() => scrollToSection('landing-pages')}
                   data-testid="card-service-landing-pages"
                 >
@@ -255,6 +231,30 @@ export default function Services() {
                   <CardContent>
                     <Button variant="outline" className="w-full" data-testid="button-book-consultation">
                       Book Consultation <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </CardContent>
+                </Card>
+
+                <Card 
+                  className="hover-elevate cursor-pointer" 
+                  onClick={() => scrollToSection('coming-soon')}
+                  data-testid="card-service-coming-soon"
+                >
+                  <CardHeader>
+                    <div className="p-3 rounded-md bg-primary/10 w-fit">
+                      <Printer className="h-6 w-6 text-primary" />
+                    </div>
+                    <div className="text-right absolute top-6 right-6">
+                      <Badge className="bg-primary/10 text-primary border-primary/20">Coming Soon</Badge>
+                    </div>
+                    <CardTitle className="mt-4">Upcoming Services</CardTitle>
+                    <CardDescription>
+                      Email marketing campaigns and print materials. Join our waitlist for early access.
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <Button variant="outline" className="w-full" data-testid="button-join-waitlist">
+                      Join Waitlist <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
                   </CardContent>
                 </Card>
