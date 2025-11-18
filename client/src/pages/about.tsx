@@ -67,7 +67,7 @@ export default function About() {
                 </p>
               </div>
 
-              <div className="relative bg-primary/5 border-l-4 border-primary p-6 rounded-r-md my-8">
+              <div className="relative bg-primary/5 border-l-4 border-primary p-6 rounded-r-md my-16">
                 <div className="absolute -top-3 left-4 bg-background px-2">
                   <span className="text-xs font-semibold text-primary" data-testid="text-mission-label">
                     Route Reach AK's Mission
@@ -229,7 +229,7 @@ export default function About() {
               <div className="flex flex-col items-center justify-center gap-4">
                 <a 
                   href="/contact"
-                  className="inline-flex items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover-elevate active-elevate-2 h-10 px-8 my-6"
+                  className="inline-flex items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover-elevate active-elevate-2 h-10 px-8 my-12"
                   data-testid="button-reserve-slot"
                 >
                   Reserve Your Slot
