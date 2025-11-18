@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
@@ -37,6 +38,17 @@ import postcardMockup from "@assets/BackFront Example-2_1763363158551.png";
 import logo from "@assets/Untitled design-5_1763412376461.png";
 
 export default function Services() {
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = 'https://assets.calendly.com/assets/external/widget.js';
+    script.async = true;
+    document.body.appendChild(script);
+    
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
+
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
@@ -499,9 +511,12 @@ function SoloCampaignsSection() {
                   <li>• Timeline and mailing dates</li>
                 </ul>
               </div>
-              <div className="aspect-video w-full bg-muted rounded-md flex items-center justify-center mb-4">
-                <p className="text-sm text-muted-foreground">Calendly Embed - Solo Campaigns</p>
-              </div>
+              <div 
+                className="calendly-inline-widget" 
+                data-url="https://calendly.com/patrick-routereachak/30min"
+                style={{ minWidth: '320px', height: '700px' }}
+                data-testid="calendly-solo-campaigns"
+              />
             </CardContent>
           </Card>
         </div>
@@ -1151,9 +1166,12 @@ function LandingPagesSection() {
                   <li>• How you'll drive traffic (direct mail, social media, events, etc.)</li>
                 </ul>
               </div>
-              <div className="aspect-video w-full bg-muted rounded-md flex items-center justify-center mb-4">
-                <p className="text-sm text-muted-foreground">Calendly Embed - Landing Pages</p>
-              </div>
+              <div 
+                className="calendly-inline-widget" 
+                data-url="https://calendly.com/patrick-routereachak/30min"
+                style={{ minWidth: '320px', height: '700px' }}
+                data-testid="calendly-landing-pages"
+              />
             </CardContent>
           </Card>
         </div>
