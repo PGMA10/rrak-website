@@ -198,31 +198,33 @@ export default function Services() {
               </Card>
 
               {/* Coming Soon Services Card */}
-              <div className="max-w-md mx-auto">
-                <Card 
-                  className="hover-elevate cursor-pointer" 
-                  onClick={() => scrollToSection('coming-soon')}
-                  data-testid="card-service-coming-soon"
-                >
-                  <CardHeader>
-                    <div className="p-3 rounded-md bg-primary/10 w-fit">
-                      <Megaphone className="h-6 w-6 text-primary" />
+              <Card 
+                className="hover-elevate cursor-pointer" 
+                onClick={() => scrollToSection('coming-soon')}
+                data-testid="card-service-coming-soon"
+              >
+                <CardContent className="p-6">
+                  <div className="flex items-center justify-between gap-6 flex-wrap md:flex-nowrap">
+                    <div className="flex items-start gap-4 flex-1 min-w-0">
+                      <div className="p-3 rounded-md bg-primary/10 flex-shrink-0">
+                        <Megaphone className="h-6 w-6 text-primary" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-2">
+                          <h3 className="text-lg font-semibold text-foreground">Upcoming Services</h3>
+                          <Badge className="bg-primary/10 text-primary border-primary/20">Coming Soon</Badge>
+                        </div>
+                        <p className="text-sm text-muted-foreground">
+                          Solo direct mail campaigns, custom landing pages, email marketing, and print materials. Join our waitlist for early access and exclusive early-bird pricing.
+                        </p>
+                      </div>
                     </div>
-                    <div className="text-right absolute top-6 right-6">
-                      <Badge className="bg-primary/10 text-primary border-primary/20">Coming Soon</Badge>
-                    </div>
-                    <CardTitle className="mt-4">Upcoming Services</CardTitle>
-                    <CardDescription>
-                      Solo direct mail campaigns, custom landing pages, email marketing, and print materials. Join our waitlist for early access and exclusive early-bird pricing.
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <Button variant="outline" className="w-full" data-testid="button-join-waitlist">
+                    <Button variant="outline" className="flex-shrink-0 w-full md:w-auto" data-testid="button-join-waitlist">
                       Join Waitlist <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
-                  </CardContent>
-                </Card>
-              </div>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
           </div>
         </section>
