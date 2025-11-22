@@ -8,6 +8,8 @@ import {
   insertConsultationBookingSchema,
   insertEmailMarketingWaitlistSchema,
   insertPrintMaterialsWaitlistSchema,
+  insertSoloMailerWaitlistSchema,
+  insertLandingPagesWaitlistSchema,
 } from "@shared/schema";
 import {
   sendLeadNotification,
@@ -16,6 +18,8 @@ import {
   sendConsultationNotification,
   sendEmailMarketingWaitlistNotification,
   sendPrintMaterialsWaitlistNotification,
+  sendSoloMailerWaitlistNotification,
+  sendLandingPagesWaitlistNotification,
 } from "./email";
 
 // Auth middleware for admin routes
@@ -197,6 +201,44 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Solo Mailer Waitlist
+  app.post("/api/solo-mailer-waitlist", async (req, res) => {
+    try {
+      const validatedData = insertSoloMailerWaitlistSchema.parse(req.body);
+      const entry = await storage.createSoloMailerWaitlist(validatedData);
+      
+      // Send email notification
+      await sendSoloMailerWaitlistNotification(entry);
+      
+      res.json({ success: true, data: entry });
+    } catch (error: any) {
+      console.error("Error adding to solo mailer waitlist:", error);
+      res.status(400).json({ 
+        success: false, 
+        error: error.message || "Failed to join waitlist" 
+      });
+    }
+  });
+
+  // Landing Pages Waitlist
+  app.post("/api/landing-pages-waitlist", async (req, res) => {
+    try {
+      const validatedData = insertLandingPagesWaitlistSchema.parse(req.body);
+      const entry = await storage.createLandingPagesWaitlist(validatedData);
+      
+      // Send email notification
+      await sendLandingPagesWaitlistNotification(entry);
+      
+      res.json({ success: true, data: entry });
+    } catch (error: any) {
+      console.error("Error adding to landing pages waitlist:", error);
+      res.status(400).json({ 
+        success: false, 
+        error: error.message || "Failed to join waitlist" 
+      });
+    }
+  });
+
   // Admin routes - get all submissions (protected)
   app.get("/api/admin/leads", requireAuth, async (req, res) => {
     try {
@@ -269,6 +311,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json({ success: true, data: entries });
     } catch (error: any) {
       console.error("Error fetching print materials waitlist:", error);
+      res.status(500).json({ 
+        success: false, 
+        error: "Failed to fetch waitlist" 
+      });
+    }
+  });
+
+  app.get("/api/admin/solo-mailer-waitlist", requireAuth, async (req, res) => {
+    try {
+      const entries = await storage.getAllSoloMailerWaitlist();
+      res.json({ success: true, data: entries });
+    } catch (error: any) {
+      console.error("Error fetching solo mailer waitlist:", error);
+      res.status(500).json({ 
+        success: false, 
+        error: "Failed to fetch waitlist" 
+      });
+    }
+  });
+
+  app.get("/api/admin/landing-pages-waitlist", requireAuth, async (req, res) => {
+    try {
+      const entries = await storage.getAllLandingPagesWaitlist();
+      res.json({ success: true, data: entries });
+    } catch (error: any) {
+      console.error("Error fetching landing pages waitlist:", error);
       res.status(500).json({ 
         success: false, 
         error: "Failed to fetch waitlist" 

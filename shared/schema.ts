@@ -144,3 +144,49 @@ export const insertPrintMaterialsWaitlistSchema = createInsertSchema(printMateri
 
 export type InsertPrintMaterialsWaitlist = z.infer<typeof insertPrintMaterialsWaitlistSchema>;
 export type PrintMaterialsWaitlist = typeof printMaterialsWaitlist.$inferSelect;
+
+// Solo Mailer Waitlist table
+export const soloMailerWaitlist = pgTable("solo_mailer_waitlist", {
+  id: serial("id").primaryKey(),
+  email: varchar("email", { length: 255 }).notNull().unique(),
+  name: varchar("name", { length: 255 }),
+  businessName: varchar("business_name", { length: 255 }),
+  interestAreas: text("interest_areas").array(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const insertSoloMailerWaitlistSchema = createInsertSchema(soloMailerWaitlist).omit({
+  id: true,
+  createdAt: true,
+}).extend({
+  email: z.string().email("Invalid email address"),
+  name: z.string().optional(),
+  businessName: z.string().optional(),
+  interestAreas: z.array(z.string()).optional(),
+});
+
+export type InsertSoloMailerWaitlist = z.infer<typeof insertSoloMailerWaitlistSchema>;
+export type SoloMailerWaitlist = typeof soloMailerWaitlist.$inferSelect;
+
+// Landing Pages Waitlist table
+export const landingPagesWaitlist = pgTable("landing_pages_waitlist", {
+  id: serial("id").primaryKey(),
+  email: varchar("email", { length: 255 }).notNull().unique(),
+  name: varchar("name", { length: 255 }),
+  businessName: varchar("business_name", { length: 255 }),
+  interestAreas: text("interest_areas").array(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const insertLandingPagesWaitlistSchema = createInsertSchema(landingPagesWaitlist).omit({
+  id: true,
+  createdAt: true,
+}).extend({
+  email: z.string().email("Invalid email address"),
+  name: z.string().optional(),
+  businessName: z.string().optional(),
+  interestAreas: z.array(z.string()).optional(),
+});
+
+export type InsertLandingPagesWaitlist = z.infer<typeof insertLandingPagesWaitlistSchema>;
+export type LandingPagesWaitlist = typeof landingPagesWaitlist.$inferSelect;

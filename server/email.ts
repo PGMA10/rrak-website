@@ -168,7 +168,7 @@ export async function sendEmailMarketingWaitlistNotification(entry: {
   email: string;
   name?: string | null;
   businessName?: string | null;
-  serviceType?: string | null;
+  serviceTypes?: string[] | null;
 }) {
   try {
     const { client, fromEmail } = await getResendClient();
@@ -182,7 +182,7 @@ export async function sendEmailMarketingWaitlistNotification(entry: {
         <p><strong>Email:</strong> ${entry.email}</p>
         ${entry.name ? `<p><strong>Name:</strong> ${entry.name}</p>` : ""}
         ${entry.businessName ? `<p><strong>Business:</strong> ${entry.businessName}</p>` : ""}
-        ${entry.serviceType ? `<p><strong>Service Type:</strong> ${entry.serviceType}</p>` : ""}
+        ${entry.serviceTypes && entry.serviceTypes.length > 0 ? `<p><strong>Service Types:</strong> ${entry.serviceTypes.join(", ")}</p>` : ""}
         <p><em>Joined at: ${new Date().toLocaleString()}</em></p>
       `,
     });
@@ -227,5 +227,63 @@ export async function sendPrintMaterialsWaitlistNotification(entry: {
     console.log("Print materials waitlist notification sent successfully");
   } catch (error) {
     console.error("Failed to send print materials waitlist notification:", error);
+  }
+}
+
+export async function sendSoloMailerWaitlistNotification(entry: {
+  email: string;
+  name?: string | null;
+  businessName?: string | null;
+  interestAreas?: string[] | null;
+}) {
+  try {
+    const { client, fromEmail } = await getResendClient();
+    
+    await client.emails.send({
+      from: fromEmail,
+      to: fromEmail,
+      subject: `New Solo Mailer Waitlist Signup from Rute Reach AK`,
+      html: `
+        <h2>New Solo Mailer Waitlist Signup</h2>
+        <p><strong>Email:</strong> ${entry.email}</p>
+        ${entry.name ? `<p><strong>Name:</strong> ${entry.name}</p>` : ""}
+        ${entry.businessName ? `<p><strong>Business:</strong> ${entry.businessName}</p>` : ""}
+        ${entry.interestAreas && entry.interestAreas.length > 0 ? `<p><strong>Interest Areas:</strong> ${entry.interestAreas.join(", ")}</p>` : ""}
+        <p><em>Joined at: ${new Date().toLocaleString()}</em></p>
+      `,
+    });
+    
+    console.log("Solo mailer waitlist notification sent successfully");
+  } catch (error) {
+    console.error("Failed to send solo mailer waitlist notification:", error);
+  }
+}
+
+export async function sendLandingPagesWaitlistNotification(entry: {
+  email: string;
+  name?: string | null;
+  businessName?: string | null;
+  interestAreas?: string[] | null;
+}) {
+  try {
+    const { client, fromEmail } = await getResendClient();
+    
+    await client.emails.send({
+      from: fromEmail,
+      to: fromEmail,
+      subject: `New Landing Pages Waitlist Signup from Rute Reach AK`,
+      html: `
+        <h2>New Landing Pages Waitlist Signup</h2>
+        <p><strong>Email:</strong> ${entry.email}</p>
+        ${entry.name ? `<p><strong>Name:</strong> ${entry.name}</p>` : ""}
+        ${entry.businessName ? `<p><strong>Business:</strong> ${entry.businessName}</p>` : ""}
+        ${entry.interestAreas && entry.interestAreas.length > 0 ? `<p><strong>Interest Areas:</strong> ${entry.interestAreas.join(", ")}</p>` : ""}
+        <p><em>Joined at: ${new Date().toLocaleString()}</em></p>
+      `,
+    });
+    
+    console.log("Landing pages waitlist notification sent successfully");
+  } catch (error) {
+    console.error("Failed to send landing pages waitlist notification:", error);
   }
 }

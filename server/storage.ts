@@ -6,6 +6,8 @@ import {
   consultationBookings,
   emailMarketingWaitlist,
   printMaterialsWaitlist,
+  soloMailerWaitlist,
+  landingPagesWaitlist,
   type Lead,
   type InsertLead,
   type NewsletterSubscriber,
@@ -18,6 +20,10 @@ import {
   type InsertEmailMarketingWaitlist,
   type PrintMaterialsWaitlist,
   type InsertPrintMaterialsWaitlist,
+  type SoloMailerWaitlist,
+  type InsertSoloMailerWaitlist,
+  type LandingPagesWaitlist,
+  type InsertLandingPagesWaitlist,
 } from "@shared/schema";
 import { desc } from "drizzle-orm";
 
@@ -45,6 +51,14 @@ export interface IStorage {
   // Print Materials Waitlist
   createPrintMaterialsWaitlist(data: InsertPrintMaterialsWaitlist): Promise<PrintMaterialsWaitlist>;
   getAllPrintMaterialsWaitlist(): Promise<PrintMaterialsWaitlist[]>;
+  
+  // Solo Mailer Waitlist
+  createSoloMailerWaitlist(data: InsertSoloMailerWaitlist): Promise<SoloMailerWaitlist>;
+  getAllSoloMailerWaitlist(): Promise<SoloMailerWaitlist[]>;
+  
+  // Landing Pages Waitlist
+  createLandingPagesWaitlist(data: InsertLandingPagesWaitlist): Promise<LandingPagesWaitlist>;
+  getAllLandingPagesWaitlist(): Promise<LandingPagesWaitlist[]>;
 }
 
 export class PostgresStorage implements IStorage {
@@ -106,6 +120,26 @@ export class PostgresStorage implements IStorage {
 
   async getAllPrintMaterialsWaitlist(): Promise<PrintMaterialsWaitlist[]> {
     return db.select().from(printMaterialsWaitlist).orderBy(desc(printMaterialsWaitlist.createdAt));
+  }
+
+  // Solo Mailer Waitlist
+  async createSoloMailerWaitlist(data: InsertSoloMailerWaitlist): Promise<SoloMailerWaitlist> {
+    const [entry] = await db.insert(soloMailerWaitlist).values(data).returning();
+    return entry;
+  }
+
+  async getAllSoloMailerWaitlist(): Promise<SoloMailerWaitlist[]> {
+    return db.select().from(soloMailerWaitlist).orderBy(desc(soloMailerWaitlist.createdAt));
+  }
+
+  // Landing Pages Waitlist
+  async createLandingPagesWaitlist(data: InsertLandingPagesWaitlist): Promise<LandingPagesWaitlist> {
+    const [entry] = await db.insert(landingPagesWaitlist).values(data).returning();
+    return entry;
+  }
+
+  async getAllLandingPagesWaitlist(): Promise<LandingPagesWaitlist[]> {
+    return db.select().from(landingPagesWaitlist).orderBy(desc(landingPagesWaitlist.createdAt));
   }
 }
 

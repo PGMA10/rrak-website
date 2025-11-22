@@ -6,7 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
-import type { Lead, NewsletterSubscriber, PrintQuoteRequest, ConsultationBooking } from "@shared/schema";
+import type { Lead, NewsletterSubscriber, PrintQuoteRequest, ConsultationBooking, SoloMailerWaitlist, LandingPagesWaitlist } from "@shared/schema";
 
 export default function Admin() {
   const [password, setPassword] = useState("");
@@ -115,6 +115,14 @@ function AdminDashboard() {
     queryKey: ["/api/admin/consultation-bookings"],
   });
 
+  const { data: soloMailerWaitlist } = useQuery<{ success: boolean; data: SoloMailerWaitlist[] }>({
+    queryKey: ["/api/admin/solo-mailer-waitlist"],
+  });
+
+  const { data: landingPagesWaitlist } = useQuery<{ success: boolean; data: LandingPagesWaitlist[] }>({
+    queryKey: ["/api/admin/landing-pages-waitlist"],
+  });
+
   const logoutMutation = useMutation({
     mutationFn: async () => {
       const res = await apiRequest("POST", "/api/admin/logout", {});
@@ -160,7 +168,7 @@ function AdminDashboard() {
       <main className="flex-1 py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Tabs defaultValue="leads" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-4">
+            <TabsList className="grid w-full grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
               <TabsTrigger value="leads" data-testid="tab-leads">
                 Leads ({leads?.data?.length || 0})
               </TabsTrigger>
@@ -168,10 +176,16 @@ function AdminDashboard() {
                 Subscribers ({subscribers?.data?.length || 0})
               </TabsTrigger>
               <TabsTrigger value="quotes" data-testid="tab-quotes">
-                Quote Requests ({quotes?.data?.length || 0})
+                Quotes ({quotes?.data?.length || 0})
               </TabsTrigger>
               <TabsTrigger value="bookings" data-testid="tab-bookings">
                 Consultations ({bookings?.data?.length || 0})
+              </TabsTrigger>
+              <TabsTrigger value="solo-mailer" data-testid="tab-solo-mailer">
+                Solo Mailer ({soloMailerWaitlist?.data?.length || 0})
+              </TabsTrigger>
+              <TabsTrigger value="landing-pages" data-testid="tab-landing-pages">
+                Landing Pages ({landingPagesWaitlist?.data?.length || 0})
               </TabsTrigger>
             </TabsList>
 
@@ -335,6 +349,96 @@ function AdminDashboard() {
                           <tr>
                             <td colSpan={6} className="p-4 text-center text-muted-foreground">
                               No consultation bookings yet
+                            </td>
+                          </tr>
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            <TabsContent value="solo-mailer" className="space-y-4">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Solo Direct Mail Waitlist</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-sm">
+                      <thead>
+                        <tr className="border-b">
+                          <th className="text-left p-2">Date</th>
+                          <th className="text-left p-2">Name</th>
+                          <th className="text-left p-2">Email</th>
+                          <th className="text-left p-2">Business</th>
+                          <th className="text-left p-2">Interests</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {soloMailerWaitlist?.data?.map((item) => (
+                          <tr key={item.id} className="border-b" data-testid={`row-solo-mailer-${item.id}`}>
+                            <td className="p-2 text-muted-foreground">{formatDate(item.createdAt)}</td>
+                            <td className="p-2">{item.name || "-"}</td>
+                            <td className="p-2">{item.email}</td>
+                            <td className="p-2">{item.businessName || "-"}</td>
+                            <td className="p-2">
+                              {item.interestAreas && item.interestAreas.length > 0 
+                                ? item.interestAreas.join(", ") 
+                                : "-"}
+                            </td>
+                          </tr>
+                        ))}
+                        {(!soloMailerWaitlist?.data || soloMailerWaitlist.data.length === 0) && (
+                          <tr>
+                            <td colSpan={5} className="p-4 text-center text-muted-foreground">
+                              No solo mailer waitlist signups yet
+                            </td>
+                          </tr>
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            <TabsContent value="landing-pages" className="space-y-4">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Landing Pages Waitlist</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-sm">
+                      <thead>
+                        <tr className="border-b">
+                          <th className="text-left p-2">Date</th>
+                          <th className="text-left p-2">Name</th>
+                          <th className="text-left p-2">Email</th>
+                          <th className="text-left p-2">Business</th>
+                          <th className="text-left p-2">Interests</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {landingPagesWaitlist?.data?.map((item) => (
+                          <tr key={item.id} className="border-b" data-testid={`row-landing-pages-${item.id}`}>
+                            <td className="p-2 text-muted-foreground">{formatDate(item.createdAt)}</td>
+                            <td className="p-2">{item.name || "-"}</td>
+                            <td className="p-2">{item.email}</td>
+                            <td className="p-2">{item.businessName || "-"}</td>
+                            <td className="p-2">
+                              {item.interestAreas && item.interestAreas.length > 0 
+                                ? item.interestAreas.join(", ") 
+                                : "-"}
+                            </td>
+                          </tr>
+                        ))}
+                        {(!landingPagesWaitlist?.data || landingPagesWaitlist.data.length === 0) && (
+                          <tr>
+                            <td colSpan={5} className="p-4 text-center text-muted-foreground">
+                              No landing pages waitlist signups yet
                             </td>
                           </tr>
                         )}

@@ -30,6 +30,8 @@ import {
   type InsertPrintQuoteRequest,
   insertEmailMarketingWaitlistSchema,
   insertPrintMaterialsWaitlistSchema,
+  insertSoloMailerWaitlistSchema,
+  insertLandingPagesWaitlistSchema,
 } from "@shared/schema";
 import { apiRequest } from "@/lib/queryClient";
 import { z } from "zod";
@@ -195,58 +197,8 @@ export default function Services() {
                 </div>
               </Card>
 
-              {/* Other Service Cards in Row */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <Card 
-                  className="hover-elevate cursor-pointer" 
-                  onClick={() => scrollToSection('solo-campaigns')}
-                  data-testid="card-service-solo-campaigns"
-                >
-                  <CardHeader>
-                    <div className="p-3 rounded-md bg-primary/10 w-fit">
-                      <Megaphone className="h-6 w-6 text-primary" />
-                    </div>
-                    <div className="text-right absolute top-6 right-6">
-                      <p className="text-xs text-muted-foreground">Starting at</p>
-                      <p className="text-xl font-bold text-foreground">$2,500</p>
-                    </div>
-                    <CardTitle className="mt-4">Solo Direct Mail</CardTitle>
-                    <CardDescription>
-                      Your business only. Full creative control. Premium postcard stock.
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <Button variant="outline" className="w-full" data-testid="button-learn-more-solo">
-                      Learn More <ArrowRight className="ml-2 h-4 w-4" />
-                    </Button>
-                  </CardContent>
-                </Card>
-
-                <Card 
-                  className="hover-elevate cursor-pointer" 
-                  onClick={() => scrollToSection('landing-pages')}
-                  data-testid="card-service-landing-pages"
-                >
-                  <CardHeader>
-                    <div className="p-3 rounded-md bg-primary/10 w-fit">
-                      <Globe className="h-6 w-6 text-primary" />
-                    </div>
-                    <div className="text-right absolute top-6 right-6">
-                      <p className="text-xs text-muted-foreground">Starting at</p>
-                      <p className="text-xl font-bold text-foreground">$750</p>
-                    </div>
-                    <CardTitle className="mt-4">Landing Pages</CardTitle>
-                    <CardDescription>
-                      Custom landing pages optimized for conversions. Perfect for campaigns and promotions.
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <Button variant="outline" className="w-full" data-testid="button-book-consultation">
-                      Book Consultation <ArrowRight className="ml-2 h-4 w-4" />
-                    </Button>
-                  </CardContent>
-                </Card>
-
+              {/* Coming Soon Services Card */}
+              <div className="max-w-md mx-auto">
                 <Card 
                   className="hover-elevate cursor-pointer" 
                   onClick={() => scrollToSection('coming-soon')}
@@ -254,14 +206,14 @@ export default function Services() {
                 >
                   <CardHeader>
                     <div className="p-3 rounded-md bg-primary/10 w-fit">
-                      <Printer className="h-6 w-6 text-primary" />
+                      <Megaphone className="h-6 w-6 text-primary" />
                     </div>
                     <div className="text-right absolute top-6 right-6">
                       <Badge className="bg-primary/10 text-primary border-primary/20">Coming Soon</Badge>
                     </div>
                     <CardTitle className="mt-4">Upcoming Services</CardTitle>
                     <CardDescription>
-                      Email marketing campaigns and print materials. Join our waitlist for early access.
+                      Solo direct mail campaigns, custom landing pages, email marketing, and print materials. Join our waitlist for early access and exclusive early-bird pricing.
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -277,8 +229,6 @@ export default function Services() {
 
         {/* Detailed Service Sections */}
         <SharedMailerSection />
-        <SoloCampaignsSection />
-        <LandingPagesSection />
         <ComingSoonServicesSection />
       </main>
 
@@ -540,6 +490,8 @@ function ComingSoonServicesSection() {
           </div>
 
           <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+            <SoloMailerWaitlistCard />
+            <LandingPagesWaitlistCard />
             <EmailMarketingWaitlistCard />
             <PrintMaterialsWaitlistCard />
           </div>
@@ -1013,6 +965,364 @@ function PrintMaterialsWaitlistCard() {
                 {submitMutation.isPending ? "Joining..." : "Join Print Materials Waitlist"}
               </Button>
               <p className="text-xs text-center text-muted-foreground" data-testid="text-early-bird-print">
+                Join the waitlist to be first in line when we launch + get exclusive early-bird pricing
+              </p>
+            </div>
+          </form>
+        </Form>
+      </CardContent>
+    </Card>
+  );
+}
+
+function SoloMailerWaitlistCard() {
+  const { toast } = useToast();
+  
+  const soloMailerSchema = insertSoloMailerWaitlistSchema.extend({
+    email: z.string().email("Invalid email address"),
+  });
+  
+  type SoloMailerWaitlistForm = z.infer<typeof soloMailerSchema>;
+
+  const form = useForm<SoloMailerWaitlistForm>({
+    resolver: zodResolver(soloMailerSchema),
+    defaultValues: {
+      email: "",
+      name: "",
+      businessName: "",
+      interestAreas: [],
+    },
+  });
+
+  const interestOptions = [
+    { id: "exclusive-reach", label: "Exclusive campaign (no competitors)" },
+    { id: "target-neighborhoods", label: "Target specific neighborhoods" },
+    { id: "seasonal-promotions", label: "Seasonal promotions" },
+    { id: "new-product-launch", label: "New product/service launch" },
+    { id: "customer-acquisition", label: "Customer acquisition" },
+    { id: "not-sure", label: "Not sure yet" },
+  ];
+
+  const selectedInterests = form.watch("interestAreas") || [];
+
+  const handleInterestToggle = (interestId: string, checked: boolean) => {
+    const currentValue = form.getValues("interestAreas") || [];
+    const currentSet = new Set(currentValue);
+    
+    if (checked) {
+      currentSet.add(interestId);
+    } else {
+      currentSet.delete(interestId);
+    }
+    
+    form.setValue("interestAreas", Array.from(currentSet), {
+      shouldValidate: true,
+      shouldDirty: true,
+      shouldTouch: true,
+    });
+  };
+
+  const submitMutation = useMutation({
+    mutationFn: async (data: SoloMailerWaitlistForm) => {
+      const res = await apiRequest("POST", "/api/solo-mailer-waitlist", data);
+      return res.json();
+    },
+    onSuccess: () => {
+      toast({
+        title: "You're on the list!",
+        description: "We'll notify you when Solo Direct Mail services launch.",
+      });
+      form.reset();
+    },
+    onError: (error: any) => {
+      toast({
+        title: "Error",
+        description: error.message || "Failed to join waitlist. Please try again.",
+        variant: "destructive",
+      });
+    },
+  });
+
+  return (
+    <Card className="hover-elevate" data-testid="card-solo-mailer-waitlist">
+      <CardHeader>
+        <div className="flex items-start justify-between gap-3 mb-2">
+          <Megaphone className="h-8 w-8 text-primary flex-shrink-0" data-testid="icon-solo-mailer" />
+          <Badge className="bg-primary/10 text-primary border-primary/20" data-testid="badge-coming-soon-solo">
+            Coming Soon
+          </Badge>
+        </div>
+        <CardTitle className="text-2xl" data-testid="title-solo-mailer">Solo Direct Mail</CardTitle>
+        <CardDescription data-testid="description-solo-mailer">
+          Own the entire mailer for maximum impact. Exclusive reach to 5,000+ households with your message alone.
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit((data) => submitMutation.mutate(data))} className="space-y-4">
+            <div className="space-y-2">
+              <FormLabel>I'm interested in: (select all that apply)</FormLabel>
+              <div className="flex flex-col space-y-2">
+                {interestOptions.map((option) => (
+                  <div key={option.id} className="flex items-center space-x-2">
+                    <Checkbox
+                      id={`solo-${option.id}`}
+                      checked={selectedInterests.includes(option.id)}
+                      onCheckedChange={(checked) => handleInterestToggle(option.id, checked === true)}
+                      data-testid={`checkbox-solo-${option.id}`}
+                    />
+                    <label
+                      htmlFor={`solo-${option.id}`}
+                      className="text-sm font-normal cursor-pointer"
+                    >
+                      {option.label}
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      type="text"
+                      placeholder="Your name"
+                      {...field}
+                      value={field.value || ""}
+                      data-testid="input-solo-mailer-name"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      type="email"
+                      placeholder="Email"
+                      {...field}
+                      data-testid="input-solo-mailer-email"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="businessName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      type="text"
+                      placeholder="Business name (optional)"
+                      {...field}
+                      value={field.value || ""}
+                      data-testid="input-solo-mailer-business"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <div className="space-y-2">
+              <Button
+                type="submit"
+                className="w-full"
+                disabled={submitMutation.isPending}
+                data-testid="button-join-solo-mailer-waitlist"
+              >
+                {submitMutation.isPending ? "Joining..." : "Join Solo Direct Mail Waitlist"}
+              </Button>
+              <p className="text-xs text-center text-muted-foreground" data-testid="text-early-bird-solo">
+                Join the waitlist to be first in line when we launch + get exclusive early-bird pricing
+              </p>
+            </div>
+          </form>
+        </Form>
+      </CardContent>
+    </Card>
+  );
+}
+
+function LandingPagesWaitlistCard() {
+  const { toast } = useToast();
+  
+  const landingPagesSchema = insertLandingPagesWaitlistSchema.extend({
+    email: z.string().email("Invalid email address"),
+  });
+  
+  type LandingPagesWaitlistForm = z.infer<typeof landingPagesSchema>;
+
+  const form = useForm<LandingPagesWaitlistForm>({
+    resolver: zodResolver(landingPagesSchema),
+    defaultValues: {
+      email: "",
+      name: "",
+      businessName: "",
+      interestAreas: [],
+    },
+  });
+
+  const interestOptions = [
+    { id: "lead-capture", label: "Lead capture forms" },
+    { id: "event-registration", label: "Event registration" },
+    { id: "product-showcase", label: "Product/service showcase" },
+    { id: "service-bookings", label: "Service bookings" },
+    { id: "email-capture", label: "Email list building" },
+    { id: "not-sure", label: "Not sure yet" },
+  ];
+
+  const selectedInterests = form.watch("interestAreas") || [];
+
+  const handleInterestToggle = (interestId: string, checked: boolean) => {
+    const currentValue = form.getValues("interestAreas") || [];
+    const currentSet = new Set(currentValue);
+    
+    if (checked) {
+      currentSet.add(interestId);
+    } else {
+      currentSet.delete(interestId);
+    }
+    
+    form.setValue("interestAreas", Array.from(currentSet), {
+      shouldValidate: true,
+      shouldDirty: true,
+      shouldTouch: true,
+    });
+  };
+
+  const submitMutation = useMutation({
+    mutationFn: async (data: LandingPagesWaitlistForm) => {
+      const res = await apiRequest("POST", "/api/landing-pages-waitlist", data);
+      return res.json();
+    },
+    onSuccess: () => {
+      toast({
+        title: "You're on the list!",
+        description: "We'll notify you when Landing Pages services launch.",
+      });
+      form.reset();
+    },
+    onError: (error: any) => {
+      toast({
+        title: "Error",
+        description: error.message || "Failed to join waitlist. Please try again.",
+        variant: "destructive",
+      });
+    },
+  });
+
+  return (
+    <Card className="hover-elevate" data-testid="card-landing-pages-waitlist">
+      <CardHeader>
+        <div className="flex items-start justify-between gap-3 mb-2">
+          <Globe className="h-8 w-8 text-primary flex-shrink-0" data-testid="icon-landing-pages" />
+          <Badge className="bg-primary/10 text-primary border-primary/20" data-testid="badge-coming-soon-landing">
+            Coming Soon
+          </Badge>
+        </div>
+        <CardTitle className="text-2xl" data-testid="title-landing-pages">Landing Pages</CardTitle>
+        <CardDescription data-testid="description-landing-pages">
+          Custom landing pages that turn your campaigns into trackable conversions. Professionally designed and optimized for results.
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit((data) => submitMutation.mutate(data))} className="space-y-4">
+            <div className="space-y-2">
+              <FormLabel>I'm interested in: (select all that apply)</FormLabel>
+              <div className="flex flex-col space-y-2">
+                {interestOptions.map((option) => (
+                  <div key={option.id} className="flex items-center space-x-2">
+                    <Checkbox
+                      id={`landing-${option.id}`}
+                      checked={selectedInterests.includes(option.id)}
+                      onCheckedChange={(checked) => handleInterestToggle(option.id, checked === true)}
+                      data-testid={`checkbox-landing-${option.id}`}
+                    />
+                    <label
+                      htmlFor={`landing-${option.id}`}
+                      className="text-sm font-normal cursor-pointer"
+                    >
+                      {option.label}
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      type="text"
+                      placeholder="Your name"
+                      {...field}
+                      value={field.value || ""}
+                      data-testid="input-landing-pages-name"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      type="email"
+                      placeholder="Email"
+                      {...field}
+                      data-testid="input-landing-pages-email"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="businessName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      type="text"
+                      placeholder="Business name (optional)"
+                      {...field}
+                      value={field.value || ""}
+                      data-testid="input-landing-pages-business"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <div className="space-y-2">
+              <Button
+                type="submit"
+                className="w-full"
+                disabled={submitMutation.isPending}
+                data-testid="button-join-landing-pages-waitlist"
+              >
+                {submitMutation.isPending ? "Joining..." : "Join Landing Pages Waitlist"}
+              </Button>
+              <p className="text-xs text-center text-muted-foreground" data-testid="text-early-bird-landing">
                 Join the waitlist to be first in line when we launch + get exclusive early-bird pricing
               </p>
             </div>
