@@ -20,7 +20,7 @@ This is a high-converting landing page and lead management system for **Rute Rea
 
 5-page website with full backend:
 1. **Home** - Hero with countdown timer to Dec 26 deadline
-2. **Services** - Shared mailer, landing pages, print services, marketing consultation
+2. **Services** - One active service (Shared Direct Mail Campaign) + Four waitlist services (Solo Mailer, Landing Pages, Email Marketing, Print Materials)
 3. **About** - Company information and mission
 4. **Blog** - Marketing insights and tips
 5. **Contact** - Lead capture form
@@ -29,8 +29,21 @@ This is a high-converting landing page and lead management system for **Rute Rea
 
 - Secure admin dashboard at `/admin`
 - Session-based authentication with PostgreSQL storage
-- Four management tabs: Leads, Newsletter Subscribers, Quote Requests, Consultation Bookings
-- Email notifications via Resend integration
+- Six management tabs: Leads, Newsletter Subscribers, Quotes, Consultations, Solo Mailer Waitlist, Landing Pages Waitlist
+- Additional waitlist tabs: Email Marketing Waitlist, Print Materials Waitlist (previously implemented)
+- Email notifications via Resend integration for all form submissions
+
+## Recent Changes (November 2025)
+
+**Service Strategy Pivot**: Converted Solo Direct Mail and Landing Pages from active services to waitlist services to test market demand before investing in full development.
+
+**Implementation**:
+- Created `solo_mailer_waitlist` and `landing_pages_waitlist` database tables
+- Built waitlist card components with checkbox interest selection (6 options each)
+- Updated Services page: Removed Solo/Landing from hero grid and detailed sections, moved to "Coming Soon" section
+- Expanded admin dashboard to 6 tabs with responsive layout (grid-cols-2 md:grid-cols-3 lg:grid-cols-6)
+- Email notifications configured for new waitlist types
+- Services page now features only Shared Direct Mail Campaign as active service
 
 # User Preferences
 
