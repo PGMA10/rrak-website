@@ -38,6 +38,7 @@ import { z } from "zod";
 import { ArrowRight, Check, Mail, Printer, Globe, Megaphone, FileText, DoorClosed, CreditCard, Flag, BookOpen, SignpostBig, Sticker, Frame } from "lucide-react";
 import postcardMockup from "@assets/BackFront Example-2_1763363158551.png";
 import logo from "@assets/Untitled design-5_1763412376461.png";
+import logoWatermark from "@assets/Mail and Map Connection Logo_1763412132703.png";
 
 export default function Services() {
   useEffect(() => {
@@ -271,8 +272,19 @@ export default function Services() {
 
 function SharedMailerSection() {
   return (
-    <section id="shared-mailer" className="py-20 md:py-24 border-b bg-background">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="shared-mailer" className="relative py-20 md:py-24 border-b bg-background overflow-hidden">
+      <div 
+        className="absolute bottom-0 right-0 w-[600px] h-[600px] pointer-events-none"
+        style={{
+          backgroundImage: `url(${logoWatermark})`,
+          backgroundSize: 'contain',
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'bottom right',
+          opacity: 0.06,
+          transform: 'translate(15%, 15%)',
+        }}
+      />
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="space-y-8">
           <div>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
