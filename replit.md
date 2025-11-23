@@ -1,10 +1,10 @@
 # Overview
 
-This is a high-converting landing page and lead management system for **Rute Reach AK**, an Anchorage, Alaska direct mail marketing service. The application is built with React, Express, and TypeScript, featuring a clean, professional design system based on shadcn/ui components and Tailwind CSS.
+This is a high-converting landing page and lead management system for **Route Reach AK**, an Anchorage, Alaska direct mail marketing service. The application is built with React, Express, and TypeScript, featuring a clean, professional design system based on shadcn/ui components and Tailwind CSS.
 
 ## Business Information
 
-**Business Name:** Rute Reach AK  
+**Business Name:** Route Reach AK  
 **Location:** Anchorage, Alaska  
 **Services:** Direct mail marketing, shared mail campaigns, landing page design, print services  
 **Logo:** Mail and Map Connection Logo (mailbox + location pin with circuit lines)

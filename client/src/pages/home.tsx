@@ -68,7 +68,7 @@ export default function Home() {
           <div className="flex items-center justify-between gap-4 h-16 md:h-20">
             <div className="flex items-center">
               <a href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity duration-200" data-testid="link-logo">
-                <img src={logo} alt="Rute Reach AK" className="h-10 md:h-12 w-auto" />
+                <img src={logo} alt="Route Reach AK" className="h-10 md:h-12 w-auto" />
               </a>
             </div>
             <nav className="hidden md:flex flex-wrap items-center space-x-8">

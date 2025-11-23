@@ -176,7 +176,7 @@ export async function sendEmailMarketingWaitlistNotification(entry: {
     await client.emails.send({
       from: fromEmail,
       to: fromEmail,
-      subject: `New Email Marketing Waitlist Signup from Rute Reach AK`,
+      subject: `New Email Marketing Waitlist Signup from Route Reach AK`,
       html: `
         <h2>New Email Marketing Waitlist Signup</h2>
         <p><strong>Email:</strong> ${entry.email}</p>
@@ -209,7 +209,7 @@ export async function sendPrintMaterialsWaitlistNotification(entry: {
     await client.emails.send({
       from: fromEmail,
       to: fromEmail,
-      subject: `New Print Materials Waitlist Signup from Rute Reach AK`,
+      subject: `New Print Materials Waitlist Signup from Route Reach AK`,
       html: `
         <h2>New Print Materials Waitlist Signup</h2>
         <p><strong>Email:</strong> ${entry.email}</p>
@@ -242,7 +242,7 @@ export async function sendSoloMailerWaitlistNotification(entry: {
     await client.emails.send({
       from: fromEmail,
       to: fromEmail,
-      subject: `New Solo Mailer Waitlist Signup from Rute Reach AK`,
+      subject: `New Solo Mailer Waitlist Signup from Route Reach AK`,
       html: `
         <h2>New Solo Mailer Waitlist Signup</h2>
         <p><strong>Email:</strong> ${entry.email}</p>
@@ -271,7 +271,7 @@ export async function sendLandingPagesWaitlistNotification(entry: {
     await client.emails.send({
       from: fromEmail,
       to: fromEmail,
-      subject: `New Landing Pages Waitlist Signup from Rute Reach AK`,
+      subject: `New Landing Pages Waitlist Signup from Route Reach AK`,
       html: `
         <h2>New Landing Pages Waitlist Signup</h2>
         <p><strong>Email:</strong> ${entry.email}</p>
