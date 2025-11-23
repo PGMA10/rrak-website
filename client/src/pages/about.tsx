@@ -1,6 +1,6 @@
-import logo from "@assets/Untitled design-5_1763412376461.png";
 import headshot from "@assets/GRAVATAR-CAREER FAIR HEADSHOTS-JRE-0409 copy_1763433381511.jpg";
 import { SEO } from "@/components/SEO";
+import { Header } from "@/components/Header";
 
 export default function About() {
   return (
@@ -9,54 +9,7 @@ export default function About() {
         title="About Patrick - Founder of Route Reach AK"
         description="Meet Patrick Moses Jr., founder of Route Reach AK. Helping Alaska businesses become unforgettable through strategic direct mail marketing and brand positioning. Local focus, full-service approach, transparent pricing."
       />
-      <header className="sticky top-0 z-50 backdrop-blur-sm bg-background/80 border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between gap-4 h-16 md:h-20">
-            <div className="flex items-center">
-              <a href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity duration-200" data-testid="link-logo">
-                <img src={logo} alt="Route Reach AK" className="h-10 md:h-12 w-auto" />
-              </a>
-            </div>
-            <nav className="hidden md:flex flex-wrap items-center space-x-8">
-              <a 
-                href="/" 
-                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200"
-                data-testid="link-nav-home"
-              >
-                Home
-              </a>
-              <a 
-                href="/services" 
-                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200"
-                data-testid="link-nav-services"
-              >
-                Services
-              </a>
-              <a 
-                href="/about" 
-                className="text-sm font-medium text-foreground hover:text-primary transition-colors duration-200"
-                data-testid="link-nav-about"
-              >
-                About
-              </a>
-              <a 
-                href="/blog" 
-                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200"
-                data-testid="link-nav-blog"
-              >
-                Blog
-              </a>
-              <a 
-                href="/contact" 
-                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200"
-                data-testid="link-nav-contact"
-              >
-                Contact
-              </a>
-            </nav>
-          </div>
-        </div>
-      </header>
+      <Header currentPage="about" />
       <main className="flex-1">
         {/* Section 1: Mission */}
         <section className="py-16 md:py-24 bg-background">

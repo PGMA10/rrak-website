@@ -44,8 +44,8 @@ import { apiRequest } from "@/lib/queryClient";
 import { z } from "zod";
 import { ArrowRight, Check, Mail, Printer, Globe, Megaphone, FileText, DoorClosed, CreditCard, Flag, BookOpen, SignpostBig, Sticker, Frame } from "lucide-react";
 import postcardMockup from "@assets/BackFront Example-2_1763363158551.png";
-import logo from "@assets/Untitled design-5_1763412376461.png";
 import logoWatermark from "@assets/Mail and Map Connection Logo_1763412132703.png";
+import { Header } from "@/components/Header";
 
 export default function Services() {
   useEffect(() => {
@@ -72,54 +72,7 @@ export default function Services() {
         title="Direct Mail Services"
         description="Route Reach AK offers shared direct mail campaigns reaching 5,000 Anchorage households for $600. Industry-exclusive mailers with full-service design, printing, and mailing. Solo campaigns and landing page design coming soon."
       />
-      <header className="sticky top-0 z-50 backdrop-blur-sm bg-background/80 border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between gap-4 h-16 md:h-20">
-            <div className="flex items-center">
-              <a href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity duration-200" data-testid="link-logo">
-                <img src={logo} alt="Route Reach AK" className="h-10 md:h-12 w-auto" />
-              </a>
-            </div>
-            <nav className="hidden md:flex flex-wrap items-center space-x-8">
-              <a 
-                href="/" 
-                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200"
-                data-testid="link-nav-home"
-              >
-                Home
-              </a>
-              <a 
-                href="/services" 
-                className="text-sm font-medium text-foreground hover:text-primary transition-colors duration-200"
-                data-testid="link-nav-services"
-              >
-                Services
-              </a>
-              <a 
-                href="/about" 
-                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200"
-                data-testid="link-nav-about"
-              >
-                About
-              </a>
-              <a 
-                href="/blog" 
-                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200"
-                data-testid="link-nav-blog"
-              >
-                Blog
-              </a>
-              <a 
-                href="/contact" 
-                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200"
-                data-testid="link-nav-contact"
-              >
-                Contact
-              </a>
-            </nav>
-          </div>
-        </div>
-      </header>
+      <Header currentPage="services" />
 
       <main className="flex-1">
         {/* Hero Section */}
