@@ -19,6 +19,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { useToast } from "@/hooks/use-toast";
 import { insertLeadSchema, type InsertLead } from "@shared/schema";
 import { apiRequest } from "@/lib/queryClient";
@@ -240,6 +246,76 @@ export default function Contact() {
                 </Button>
               </form>
             </Form>
+
+            {/* FAQ Section */}
+            <div className="mt-16 pt-16 border-t space-y-8">
+              <div className="text-center space-y-4">
+                <h2 className="text-3xl md:text-4xl font-bold text-foreground" data-testid="heading-contact-faq">
+                  Still Have Questions?
+                </h2>
+                <p className="text-lg text-muted-foreground" data-testid="text-contact-faq-description">
+                  Here are answers to common concerns before reaching out
+                </p>
+              </div>
+
+              <Accordion type="single" collapsible className="w-full">
+                <AccordionItem value="trust" data-testid="accordion-faq-trust">
+                  <AccordionTrigger className="text-left" data-testid="trigger-faq-trust">Why should I trust you?</AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground">
+                    <p className="mb-4">I'm local to Anchorage. You work directly with me - not an account manager.</p>
+                    <p className="mb-4">I handle everything:</p>
+                    <ul className="space-y-2 ml-4 mb-4">
+                      <li>• Strategy, design, copywriting</li>
+                      <li>• Print, USPS execution, tracking</li>
+                    </ul>
+                    <p className="mb-4"><strong>Transparent pricing.</strong> No hidden fees.</p>
+                    <p className="mb-4"><strong>No long-term traps.</strong> Month-to-month or 3-month max commitment.</p>
+                    <p>Still unsure? Start with one campaign for $600. See the execution and results. Then decide if you want to continue.</p>
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="no-results" data-testid="accordion-faq-no-results">
+                  <AccordionTrigger className="text-left" data-testid="trigger-faq-no-results">What if I don't get results?</AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground">
+                    <p className="mb-4">Let's be realistic: No marketing is guaranteed.</p>
+                    <p className="mb-4"><strong>What I control:</strong> Professional design, compelling copy, flawless execution, performance tracking.</p>
+                    <p className="mb-4"><strong>What I don't control:</strong> Whether your offer resonates, your follow-through, external factors.</p>
+                    <p className="mb-4">If a campaign underperforms: We review the data, adjust messaging/offer, test until we find what works.</p>
+                    <p>Most businesses need 2-3 campaigns to dial in their message. Consistency compounds results.</p>
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="get-started" data-testid="accordion-faq-get-started">
+                  <AccordionTrigger className="text-left" data-testid="trigger-faq-get-started">How do I get started?</AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground">
+                    <ol className="space-y-3 ml-4 mb-4">
+                      <li><strong>1. Reserve Your Slot</strong> - Book your industry category for the next campaign</li>
+                      <li><strong>2. Choose Your Package</strong> - Single campaign ($600) or 3-Month ($1,500)</li>
+                      <li><strong>3. Brief Consultation</strong> - Tell me your goal (10-15 min call)</li>
+                      <li><strong>4. Approve Design</strong> - Review and approve your ad</li>
+                      <li><strong>5. I Handle the Rest</strong> - Print, mail, track, report</li>
+                    </ol>
+                    <p className="mb-4">Questions first? Contact me using the form above or call <strong>(907) 947-4624</strong>.</p>
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+
+              <div className="text-center pt-8">
+                <p className="text-sm text-muted-foreground mb-4" data-testid="text-phone-label">
+                  Prefer to talk? Call us directly:
+                </p>
+                <a 
+                  href="tel:+19079474624" 
+                  className="text-2xl font-bold text-foreground hover:text-primary transition-colors duration-200"
+                  data-testid="link-phone"
+                >
+                  (907) 947-4624
+                </a>
+                <p className="text-sm text-muted-foreground mt-2" data-testid="text-phone-hours">
+                  Monday-Friday, 9am-5pm AKST
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </main>
