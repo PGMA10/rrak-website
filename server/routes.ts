@@ -459,6 +459,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.get("/api/admin/export/email-marketing-waitlist", requireAuth, async (req, res) => {
+    try {
+      const entries = await storage.getAllEmailMarketingWaitlist();
+      const csv = convertToCSV(entries);
+      res.setHeader('Content-Type', 'text/csv');
+      res.setHeader('Content-Disposition', 'attachment; filename=email-marketing-waitlist.csv');
+      res.send(csv);
+    } catch (error: any) {
+      console.error("Error exporting email marketing waitlist:", error);
+      res.status(500).json({ success: false, error: "Failed to export waitlist" });
+    }
+  });
+
+  app.get("/api/admin/export/print-materials-waitlist", requireAuth, async (req, res) => {
+    try {
+      const entries = await storage.getAllPrintMaterialsWaitlist();
+      const csv = convertToCSV(entries);
+      res.setHeader('Content-Type', 'text/csv');
+      res.setHeader('Content-Disposition', 'attachment; filename=print-materials-waitlist.csv');
+      res.send(csv);
+    } catch (error: any) {
+      console.error("Error exporting print materials waitlist:", error);
+      res.status(500).json({ success: false, error: "Failed to export waitlist" });
+    }
+  });
+
   // Blog Post Routes
   app.get("/api/blog-posts", async (req, res) => {
     try {

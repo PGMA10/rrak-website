@@ -13,7 +13,7 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { Pencil, Trash2, Plus, Download } from "lucide-react";
-import type { Lead, NewsletterSubscriber, PrintQuoteRequest, ConsultationBooking, SoloMailerWaitlist, LandingPagesWaitlist, BlogPost, InsertBlogPost, CampaignSetting, InsertCampaignSetting } from "@shared/schema";
+import type { Lead, NewsletterSubscriber, PrintQuoteRequest, ConsultationBooking, SoloMailerWaitlist, LandingPagesWaitlist, EmailMarketingWaitlist, PrintMaterialsWaitlist, BlogPost, InsertBlogPost, CampaignSetting, InsertCampaignSetting } from "@shared/schema";
 
 export default function Admin() {
   const [password, setPassword] = useState("");
@@ -130,6 +130,14 @@ function AdminDashboard() {
     queryKey: ["/api/admin/landing-pages-waitlist"],
   });
 
+  const { data: emailMarketingWaitlist } = useQuery<{ success: boolean; data: EmailMarketingWaitlist[] }>({
+    queryKey: ["/api/admin/email-marketing-waitlist"],
+  });
+
+  const { data: printMaterialsWaitlist } = useQuery<{ success: boolean; data: PrintMaterialsWaitlist[] }>({
+    queryKey: ["/api/admin/print-materials-waitlist"],
+  });
+
   const { data: blogPosts } = useQuery<{ success: boolean; data: BlogPost[] }>({
     queryKey: ["/api/admin/blog-posts"],
   });
@@ -188,7 +196,7 @@ function AdminDashboard() {
       <main className="flex-1 py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Tabs defaultValue="leads" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 lg:grid-cols-8">
+            <TabsList className="grid w-full grid-cols-2 md:grid-cols-5 lg:grid-cols-10">
               <TabsTrigger value="leads" data-testid="tab-leads">
                 Leads ({leads?.data?.length || 0})
               </TabsTrigger>
@@ -206,6 +214,12 @@ function AdminDashboard() {
               </TabsTrigger>
               <TabsTrigger value="landing-pages" data-testid="tab-landing-pages">
                 Landing Pages ({landingPagesWaitlist?.data?.length || 0})
+              </TabsTrigger>
+              <TabsTrigger value="email-marketing" data-testid="tab-email-marketing">
+                Email Marketing ({emailMarketingWaitlist?.data?.length || 0})
+              </TabsTrigger>
+              <TabsTrigger value="print-materials" data-testid="tab-print-materials">
+                Print Materials ({printMaterialsWaitlist?.data?.length || 0})
               </TabsTrigger>
               <TabsTrigger value="blog-posts" data-testid="tab-blog-posts">
                 Blog Posts ({blogPosts?.data?.length || 0})
@@ -519,6 +533,118 @@ function AdminDashboard() {
                           <tr>
                             <td colSpan={5} className="p-4 text-center text-muted-foreground">
                               No landing pages waitlist signups yet
+                            </td>
+                          </tr>
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            <TabsContent value="email-marketing" className="space-y-4">
+              <Card>
+                <CardHeader className="flex flex-row items-center justify-between gap-4 space-y-0">
+                  <CardTitle>Email Marketing Waitlist</CardTitle>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={() => handleExport('email-marketing-waitlist')}
+                    data-testid="button-export-email-marketing"
+                  >
+                    <Download className="w-4 h-4 mr-2" />
+                    Export CSV
+                  </Button>
+                </CardHeader>
+                <CardContent>
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-sm">
+                      <thead>
+                        <tr className="border-b">
+                          <th className="text-left p-2">Date</th>
+                          <th className="text-left p-2">Name</th>
+                          <th className="text-left p-2">Email</th>
+                          <th className="text-left p-2">Business</th>
+                          <th className="text-left p-2">Service Types</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {emailMarketingWaitlist?.data?.map((item) => (
+                          <tr key={item.id} className="border-b" data-testid={`row-email-marketing-${item.id}`}>
+                            <td className="p-2 text-muted-foreground">{formatDate(item.createdAt)}</td>
+                            <td className="p-2">{item.name || "-"}</td>
+                            <td className="p-2">{item.email}</td>
+                            <td className="p-2">{item.businessName || "-"}</td>
+                            <td className="p-2">
+                              {item.serviceTypes && item.serviceTypes.length > 0 
+                                ? item.serviceTypes.join(", ") 
+                                : "-"}
+                            </td>
+                          </tr>
+                        ))}
+                        {(!emailMarketingWaitlist?.data || emailMarketingWaitlist.data.length === 0) && (
+                          <tr>
+                            <td colSpan={5} className="p-4 text-center text-muted-foreground">
+                              No email marketing waitlist signups yet
+                            </td>
+                          </tr>
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            <TabsContent value="print-materials" className="space-y-4">
+              <Card>
+                <CardHeader className="flex flex-row items-center justify-between gap-4 space-y-0">
+                  <CardTitle>Print Materials Waitlist</CardTitle>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={() => handleExport('print-materials-waitlist')}
+                    data-testid="button-export-print-materials"
+                  >
+                    <Download className="w-4 h-4 mr-2" />
+                    Export CSV
+                  </Button>
+                </CardHeader>
+                <CardContent>
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-sm">
+                      <thead>
+                        <tr className="border-b">
+                          <th className="text-left p-2">Date</th>
+                          <th className="text-left p-2">Name</th>
+                          <th className="text-left p-2">Email</th>
+                          <th className="text-left p-2">Business</th>
+                          <th className="text-left p-2">Material Types</th>
+                          <th className="text-left p-2">Industry</th>
+                          <th className="text-left p-2">Quantity</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {printMaterialsWaitlist?.data?.map((item) => (
+                          <tr key={item.id} className="border-b" data-testid={`row-print-materials-${item.id}`}>
+                            <td className="p-2 text-muted-foreground">{formatDate(item.createdAt)}</td>
+                            <td className="p-2">{item.name || "-"}</td>
+                            <td className="p-2">{item.email}</td>
+                            <td className="p-2">{item.businessName || "-"}</td>
+                            <td className="p-2">
+                              {item.materialTypes && item.materialTypes.length > 0 
+                                ? item.materialTypes.join(", ") 
+                                : "-"}
+                            </td>
+                            <td className="p-2">{item.industry || "-"}</td>
+                            <td className="p-2">{item.quantity || "-"}</td>
+                          </tr>
+                        ))}
+                        {(!printMaterialsWaitlist?.data || printMaterialsWaitlist.data.length === 0) && (
+                          <tr>
+                            <td colSpan={7} className="p-4 text-center text-muted-foreground">
+                              No print materials waitlist signups yet
                             </td>
                           </tr>
                         )}

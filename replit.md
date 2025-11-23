@@ -29,9 +29,19 @@ This is a high-converting landing page and lead management system for **Route Re
 
 - Secure admin dashboard at `/admin`
 - Session-based authentication with PostgreSQL storage
-- Six management tabs: Leads, Newsletter Subscribers, Quotes, Consultations, Solo Mailer Waitlist, Landing Pages Waitlist
-- Additional waitlist tabs: Email Marketing Waitlist, Print Materials Waitlist (previously implemented)
+- Ten management tabs with CSV export functionality:
+  - Leads (contact form submissions)
+  - Newsletter Subscribers
+  - Print Quote Requests
+  - Consultation Bookings
+  - Solo Mailer Waitlist
+  - Landing Pages Waitlist
+  - Email Marketing Waitlist
+  - Print Materials Waitlist
+  - Blog Posts (content management)
+  - Campaign Settings (countdown timer configuration)
 - Email notifications via Resend integration for all form submissions
+- CSV export available for all data types with proper handling of optional fields
 
 ## Recent Changes (November 2025)
 
