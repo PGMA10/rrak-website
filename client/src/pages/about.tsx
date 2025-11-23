@@ -59,7 +59,7 @@ export default function About() {
             <div className="space-y-8">
               <div className="text-center space-y-8">
                 <h1 className="text-4xl md:text-5xl font-bold text-foreground" data-testid="text-heading-name">
-                  Hi, I'm Patrick Moses Jr.
+                  Hi, I'm Patrick!
                 </h1>
                 <p className="text-xl text-muted-foreground" data-testid="text-subheadline">
                   I help Alaska businesses grow through strategic direct mail marketing and brand positioning.
