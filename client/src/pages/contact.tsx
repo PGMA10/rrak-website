@@ -368,11 +368,6 @@ export default function Contact() {
               </h3>
               <ul className="space-y-3">
                 <li>
-                  <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200" data-testid="link-footer-help">
-                    Help Center
-                  </a>
-                </li>
-                <li>
                   <a href="/contact" className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200" data-testid="link-footer-contact">
                     Contact
                   </a>
