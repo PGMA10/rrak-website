@@ -8,6 +8,8 @@ import {
   printMaterialsWaitlist,
   soloMailerWaitlist,
   landingPagesWaitlist,
+  blogPosts,
+  campaignSettings,
   type Lead,
   type InsertLead,
   type NewsletterSubscriber,
@@ -24,8 +26,12 @@ import {
   type InsertSoloMailerWaitlist,
   type LandingPagesWaitlist,
   type InsertLandingPagesWaitlist,
+  type BlogPost,
+  type InsertBlogPost,
+  type CampaignSetting,
+  type InsertCampaignSetting,
 } from "@shared/schema";
-import { desc } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 
 export interface IStorage {
   // Leads
@@ -59,6 +65,19 @@ export interface IStorage {
   // Landing Pages Waitlist
   createLandingPagesWaitlist(data: InsertLandingPagesWaitlist): Promise<LandingPagesWaitlist>;
   getAllLandingPagesWaitlist(): Promise<LandingPagesWaitlist[]>;
+  
+  // Blog Posts
+  createBlogPost(data: InsertBlogPost): Promise<BlogPost>;
+  updateBlogPost(id: number, data: Partial<InsertBlogPost>): Promise<BlogPost>;
+  deleteBlogPost(id: number): Promise<void>;
+  getBlogPostById(id: number): Promise<BlogPost | undefined>;
+  getBlogPostBySlug(slug: string): Promise<BlogPost | undefined>;
+  getAllBlogPosts(): Promise<BlogPost[]>;
+  getPublishedBlogPosts(): Promise<BlogPost[]>;
+  
+  // Campaign Settings
+  getCampaignSettings(): Promise<CampaignSetting | undefined>;
+  updateCampaignSettings(data: InsertCampaignSetting): Promise<CampaignSetting>;
 }
 
 export class PostgresStorage implements IStorage {
@@ -140,6 +159,65 @@ export class PostgresStorage implements IStorage {
 
   async getAllLandingPagesWaitlist(): Promise<LandingPagesWaitlist[]> {
     return db.select().from(landingPagesWaitlist).orderBy(desc(landingPagesWaitlist.createdAt));
+  }
+
+  // Blog Posts
+  async createBlogPost(data: InsertBlogPost): Promise<BlogPost> {
+    const [post] = await db.insert(blogPosts).values(data).returning();
+    return post;
+  }
+
+  async updateBlogPost(id: number, data: Partial<InsertBlogPost>): Promise<BlogPost> {
+    const [post] = await db.update(blogPosts)
+      .set({ ...data, updatedAt: new Date() })
+      .where(eq(blogPosts.id, id))
+      .returning();
+    return post;
+  }
+
+  async deleteBlogPost(id: number): Promise<void> {
+    await db.delete(blogPosts).where(eq(blogPosts.id, id));
+  }
+
+  async getBlogPostById(id: number): Promise<BlogPost | undefined> {
+    const [post] = await db.select().from(blogPosts).where(eq(blogPosts.id, id));
+    return post;
+  }
+
+  async getBlogPostBySlug(slug: string): Promise<BlogPost | undefined> {
+    const [post] = await db.select().from(blogPosts).where(eq(blogPosts.slug, slug));
+    return post;
+  }
+
+  async getAllBlogPosts(): Promise<BlogPost[]> {
+    return db.select().from(blogPosts).orderBy(desc(blogPosts.createdAt));
+  }
+
+  async getPublishedBlogPosts(): Promise<BlogPost[]> {
+    return db.select().from(blogPosts)
+      .where(eq(blogPosts.published, true))
+      .orderBy(desc(blogPosts.publishedAt));
+  }
+
+  // Campaign Settings
+  async getCampaignSettings(): Promise<CampaignSetting | undefined> {
+    const [settings] = await db.select().from(campaignSettings).orderBy(desc(campaignSettings.createdAt)).limit(1);
+    return settings;
+  }
+
+  async updateCampaignSettings(data: InsertCampaignSetting): Promise<CampaignSetting> {
+    const existing = await this.getCampaignSettings();
+    
+    if (existing) {
+      const [updated] = await db.update(campaignSettings)
+        .set({ ...data, updatedAt: new Date() })
+        .where(eq(campaignSettings.id, existing.id))
+        .returning();
+      return updated;
+    } else {
+      const [created] = await db.insert(campaignSettings).values(data).returning();
+      return created;
+    }
   }
 }
 

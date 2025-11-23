@@ -190,3 +190,51 @@ export const insertLandingPagesWaitlistSchema = createInsertSchema(landingPagesW
 
 export type InsertLandingPagesWaitlist = z.infer<typeof insertLandingPagesWaitlistSchema>;
 export type LandingPagesWaitlist = typeof landingPagesWaitlist.$inferSelect;
+
+// Blog Posts table
+export const blogPosts = pgTable("blog_posts", {
+  id: serial("id").primaryKey(),
+  title: varchar("title", { length: 255 }).notNull(),
+  slug: varchar("slug", { length: 255 }).notNull().unique(),
+  excerpt: text("excerpt").notNull(),
+  content: text("content").notNull(),
+  published: boolean("published").notNull().default(false),
+  publishedAt: timestamp("published_at"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const insertBlogPostSchema = createInsertSchema(blogPosts).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+}).extend({
+  title: z.string().min(1, "Title is required"),
+  slug: z.string().min(1, "Slug is required").regex(/^[a-z0-9-]+$/, "Slug must be lowercase letters, numbers, and hyphens only"),
+  excerpt: z.string().min(1, "Excerpt is required"),
+  content: z.string().min(1, "Content is required"),
+  published: z.boolean().default(false),
+  publishedAt: z.date().nullable().optional(),
+});
+
+export type InsertBlogPost = z.infer<typeof insertBlogPostSchema>;
+export type BlogPost = typeof blogPosts.$inferSelect;
+
+// Campaign Settings table
+export const campaignSettings = pgTable("campaign_settings", {
+  id: serial("id").primaryKey(),
+  deadlineDate: timestamp("deadline_date").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const insertCampaignSettingSchema = createInsertSchema(campaignSettings).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+}).extend({
+  deadlineDate: z.date(),
+});
+
+export type InsertCampaignSetting = z.infer<typeof insertCampaignSettingSchema>;
+export type CampaignSetting = typeof campaignSettings.$inferSelect;

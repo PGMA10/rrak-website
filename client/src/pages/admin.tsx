@@ -4,9 +4,16 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { Badge } from "@/components/ui/badge";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from "@/components/ui/dialog";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
-import type { Lead, NewsletterSubscriber, PrintQuoteRequest, ConsultationBooking, SoloMailerWaitlist, LandingPagesWaitlist } from "@shared/schema";
+import { Pencil, Trash2, Plus } from "lucide-react";
+import type { Lead, NewsletterSubscriber, PrintQuoteRequest, ConsultationBooking, SoloMailerWaitlist, LandingPagesWaitlist, BlogPost, InsertBlogPost, CampaignSetting, InsertCampaignSetting } from "@shared/schema";
 
 export default function Admin() {
   const [password, setPassword] = useState("");
@@ -123,6 +130,14 @@ function AdminDashboard() {
     queryKey: ["/api/admin/landing-pages-waitlist"],
   });
 
+  const { data: blogPosts } = useQuery<{ success: boolean; data: BlogPost[] }>({
+    queryKey: ["/api/admin/blog-posts"],
+  });
+
+  const { data: campaignSettings } = useQuery<{ success: boolean; data: CampaignSetting }>({
+    queryKey: ["/api/campaign-settings"],
+  });
+
   const logoutMutation = useMutation({
     mutationFn: async () => {
       const res = await apiRequest("POST", "/api/admin/logout", {});
@@ -168,7 +183,7 @@ function AdminDashboard() {
       <main className="flex-1 py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Tabs defaultValue="leads" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
+            <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 lg:grid-cols-8">
               <TabsTrigger value="leads" data-testid="tab-leads">
                 Leads ({leads?.data?.length || 0})
               </TabsTrigger>
@@ -186,6 +201,12 @@ function AdminDashboard() {
               </TabsTrigger>
               <TabsTrigger value="landing-pages" data-testid="tab-landing-pages">
                 Landing Pages ({landingPagesWaitlist?.data?.length || 0})
+              </TabsTrigger>
+              <TabsTrigger value="blog-posts" data-testid="tab-blog-posts">
+                Blog Posts ({blogPosts?.data?.length || 0})
+              </TabsTrigger>
+              <TabsTrigger value="campaign-settings" data-testid="tab-campaign-settings">
+                Campaign Settings
               </TabsTrigger>
             </TabsList>
 
@@ -448,9 +469,469 @@ function AdminDashboard() {
                 </CardContent>
               </Card>
             </TabsContent>
+
+            <TabsContent value="blog-posts" className="space-y-4">
+              <BlogPostsTab posts={blogPosts?.data || []} />
+            </TabsContent>
+
+            <TabsContent value="campaign-settings" className="space-y-4">
+              <CampaignSettingsTab settings={campaignSettings?.data} />
+            </TabsContent>
           </Tabs>
         </div>
       </main>
     </div>
+  );
+}
+
+function BlogPostsTab({ posts }: { posts: BlogPost[] }) {
+  const { toast } = useToast();
+  const [editingPost, setEditingPost] = useState<BlogPost | null>(null);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const deleteMutation = useMutation({
+    mutationFn: async (id: number) => {
+      const res = await apiRequest("DELETE", `/api/admin/blog-posts/${id}`, null);
+      return res.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/blog-posts"] });
+      toast({
+        title: "Blog post deleted",
+        description: "The blog post has been deleted successfully",
+      });
+    },
+    onError: (error: any) => {
+      toast({
+        title: "Delete failed",
+        description: error.message || "Failed to delete blog post",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const formatDate = (date: string | Date) => {
+    return new Date(date).toLocaleString();
+  };
+
+  const handleNewPost = () => {
+    setEditingPost(null);
+    setIsDialogOpen(true);
+  };
+
+  const handleEditPost = (post: BlogPost) => {
+    setEditingPost(post);
+    setIsDialogOpen(true);
+  };
+
+  const handleCloseDialog = () => {
+    setIsDialogOpen(false);
+    setEditingPost(null);
+  };
+
+  return (
+    <Card>
+      <CardHeader className="flex flex-row items-center justify-between gap-4 space-y-0">
+        <CardTitle>Blog Posts</CardTitle>
+        <BlogPostDialog 
+          post={editingPost} 
+          open={isDialogOpen}
+          onOpenChange={(open) => {
+            setIsDialogOpen(open);
+            if (!open) setEditingPost(null);
+          }}
+          trigger={
+            <Button onClick={handleNewPost} data-testid="button-new-post">
+              <Plus className="w-4 h-4 mr-2" />
+              New Post
+            </Button>
+          }
+        />
+      </CardHeader>
+      <CardContent>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b">
+                <th className="text-left p-2">Title</th>
+                <th className="text-left p-2">Status</th>
+                <th className="text-left p-2">Created</th>
+                <th className="text-left p-2">Updated</th>
+                <th className="text-left p-2">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {posts.map((post) => (
+                <tr key={post.id} className="border-b" data-testid={`row-blog-post-${post.id}`}>
+                  <td className="p-2">{post.title}</td>
+                  <td className="p-2">
+                    <Badge 
+                      variant={post.published ? "default" : "secondary"}
+                      data-testid={`badge-status-${post.id}`}
+                    >
+                      {post.published ? "Published" : "Draft"}
+                    </Badge>
+                  </td>
+                  <td className="p-2 text-muted-foreground">{formatDate(post.createdAt)}</td>
+                  <td className="p-2 text-muted-foreground">{formatDate(post.updatedAt)}</td>
+                  <td className="p-2">
+                    <div className="flex gap-2">
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => handleEditPost(post)}
+                        data-testid={`button-edit-${post.id}`}
+                      >
+                        <Pencil className="w-4 h-4" />
+                      </Button>
+                      <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            data-testid={`button-delete-${post.id}`}
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle>Delete Blog Post</AlertDialogTitle>
+                            <AlertDialogDescription>
+                              Are you sure you want to delete "{post.title}"? This action cannot be undone.
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel data-testid="button-cancel-delete">Cancel</AlertDialogCancel>
+                            <AlertDialogAction
+                              onClick={() => deleteMutation.mutate(post.id)}
+                              data-testid="button-confirm-delete"
+                            >
+                              Delete
+                            </AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+              {posts.length === 0 && (
+                <tr>
+                  <td colSpan={5} className="p-4 text-center text-muted-foreground">
+                    No blog posts yet
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
+function BlogPostDialog({ 
+  post, 
+  open, 
+  onOpenChange, 
+  trigger 
+}: { 
+  post: BlogPost | null; 
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  trigger?: React.ReactNode;
+}) {
+  const { toast } = useToast();
+  const [formData, setFormData] = useState<Partial<InsertBlogPost>>({
+    title: "",
+    slug: "",
+    excerpt: "",
+    content: "",
+    published: false,
+  });
+
+  useEffect(() => {
+    if (post) {
+      setFormData({
+        title: post.title,
+        slug: post.slug,
+        excerpt: post.excerpt,
+        content: post.content,
+        published: post.published,
+      });
+    } else {
+      setFormData({
+        title: "",
+        slug: "",
+        excerpt: "",
+        content: "",
+        published: false,
+      });
+    }
+  }, [post, open]);
+
+  const generateSlug = (title: string) => {
+    return title
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "");
+  };
+
+  const handleTitleChange = (title: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      title,
+      slug: generateSlug(title),
+    }));
+  };
+
+  const saveMutation = useMutation({
+    mutationFn: async (data: Partial<InsertBlogPost>) => {
+      const payload = {
+        ...data,
+        publishedAt: data.published ? new Date() : null,
+      };
+      
+      if (post) {
+        const res = await apiRequest("PATCH", `/api/admin/blog-posts/${post.id}`, payload);
+        return res.json();
+      } else {
+        const res = await apiRequest("POST", "/api/admin/blog-posts", payload);
+        return res.json();
+      }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/blog-posts"] });
+      toast({
+        title: post ? "Blog post updated" : "Blog post created",
+        description: `The blog post has been ${post ? "updated" : "created"} successfully`,
+      });
+      onOpenChange(false);
+    },
+    onError: (error: any) => {
+      toast({
+        title: "Save failed",
+        description: error.message || "Failed to save blog post",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!formData.title || !formData.slug || !formData.excerpt || !formData.content) {
+      toast({
+        title: "Validation error",
+        description: "Please fill in all required fields",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    saveMutation.mutate(formData);
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      {trigger && <DialogTrigger asChild>{trigger}</DialogTrigger>}
+      <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle>{post ? "Edit Blog Post" : "New Blog Post"}</DialogTitle>
+        </DialogHeader>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="title" data-testid="label-title">Title *</Label>
+            <Input
+              id="title"
+              value={formData.title}
+              onChange={(e) => handleTitleChange(e.target.value)}
+              placeholder="Enter post title"
+              data-testid="input-title"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="slug" data-testid="label-slug">Slug *</Label>
+            <Input
+              id="slug"
+              value={formData.slug}
+              onChange={(e) => setFormData((prev) => ({ ...prev, slug: e.target.value }))}
+              placeholder="auto-generated-from-title"
+              data-testid="input-slug"
+            />
+            <p className="text-xs text-muted-foreground">
+              URL-friendly version of the title (lowercase, hyphens only)
+            </p>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="excerpt" data-testid="label-excerpt">Excerpt *</Label>
+            <Textarea
+              id="excerpt"
+              value={formData.excerpt}
+              onChange={(e) => setFormData((prev) => ({ ...prev, excerpt: e.target.value }))}
+              placeholder="Brief summary of the post"
+              rows={3}
+              data-testid="input-excerpt"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="content" data-testid="label-content">Content (Markdown) *</Label>
+            <Textarea
+              id="content"
+              value={formData.content}
+              onChange={(e) => setFormData((prev) => ({ ...prev, content: e.target.value }))}
+              placeholder="Write your post content in markdown..."
+              rows={12}
+              data-testid="input-content"
+            />
+          </div>
+
+          <div className="flex items-center space-x-2">
+            <Checkbox
+              id="published"
+              checked={formData.published}
+              onCheckedChange={(checked) => 
+                setFormData((prev) => ({ ...prev, published: checked === true }))
+              }
+              data-testid="checkbox-published"
+            />
+            <Label htmlFor="published" className="cursor-pointer">
+              Published
+            </Label>
+          </div>
+
+          <DialogFooter>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => onOpenChange(false)}
+              data-testid="button-cancel"
+            >
+              Cancel
+            </Button>
+            <Button 
+              type="submit" 
+              disabled={saveMutation.isPending}
+              data-testid="button-save"
+            >
+              {saveMutation.isPending ? "Saving..." : "Save"}
+            </Button>
+          </DialogFooter>
+        </form>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+function CampaignSettingsTab({ settings }: { settings?: CampaignSetting }) {
+  const { toast } = useToast();
+  const [deadlineDate, setDeadlineDate] = useState("");
+  const [deadlineTime, setDeadlineTime] = useState("");
+
+  useEffect(() => {
+    if (settings?.deadlineDate) {
+      const date = new Date(settings.deadlineDate);
+      const dateStr = date.toISOString().split('T')[0];
+      const timeStr = date.toTimeString().split(' ')[0].substring(0, 5);
+      setDeadlineDate(dateStr);
+      setDeadlineTime(timeStr);
+    }
+  }, [settings]);
+
+  const updateMutation = useMutation({
+    mutationFn: async (data: { deadlineDate: string }) => {
+      const res = await apiRequest("PUT", "/api/admin/campaign-settings", data);
+      return res.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/campaign-settings"] });
+      toast({
+        title: "Campaign settings updated",
+        description: "The countdown deadline has been updated successfully",
+      });
+    },
+    onError: (error: any) => {
+      toast({
+        title: "Update failed",
+        description: error.message || "Failed to update campaign settings",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!deadlineDate || !deadlineTime) {
+      toast({
+        title: "Validation error",
+        description: "Please select both date and time",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const dateTimeString = `${deadlineDate}T${deadlineTime}:00`;
+    updateMutation.mutate({ deadlineDate: dateTimeString });
+  };
+
+  const formatDateTime = (date: Date | string) => {
+    return new Date(date).toLocaleString();
+  };
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Campaign Countdown Timer</CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-6">
+        {settings?.deadlineDate && (
+          <div className="p-4 rounded-lg bg-muted/50">
+            <p className="text-sm text-muted-foreground mb-1">Current Deadline</p>
+            <p className="text-lg font-semibold" data-testid="text-current-deadline">
+              {formatDateTime(settings.deadlineDate)}
+            </p>
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="deadline-date" data-testid="label-deadline-date">Deadline Date *</Label>
+              <Input
+                id="deadline-date"
+                type="date"
+                value={deadlineDate}
+                onChange={(e) => setDeadlineDate(e.target.value)}
+                data-testid="input-deadline-date"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="deadline-time" data-testid="label-deadline-time">Deadline Time *</Label>
+              <Input
+                id="deadline-time"
+                type="time"
+                value={deadlineTime}
+                onChange={(e) => setDeadlineTime(e.target.value)}
+                data-testid="input-deadline-time"
+              />
+            </div>
+          </div>
+
+          <Button 
+            type="submit" 
+            disabled={updateMutation.isPending}
+            data-testid="button-save-deadline"
+          >
+            {updateMutation.isPending ? "Saving..." : "Update Deadline"}
+          </Button>
+        </form>
+      </CardContent>
+    </Card>
   );
 }

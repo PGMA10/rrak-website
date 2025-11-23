@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Clock, CheckCircle2, Mail, TrendingUp, Eye, Calendar } from "lucide-react";
 import postcardImage from "@assets/BackFront Example-2_1763355311870.png";
 import logo from "@assets/Untitled design-5_1763412376461.png";
+import { SEO } from "@/components/SEO";
+import type { CampaignSetting } from "@shared/schema";
 
 function CountdownTimer() {
   const [timeLeft, setTimeLeft] = useState({
@@ -13,12 +16,20 @@ function CountdownTimer() {
     seconds: 0
   });
 
+  const { data: settingsData } = useQuery<{ success: boolean; data: CampaignSetting }>({
+    queryKey: ["/api/campaign-settings"],
+  });
+
+  const deadline = settingsData?.data?.deadlineDate;
+
   useEffect(() => {
-    const deadline = new Date("2025-12-26T23:59:59").getTime();
+    if (!deadline) return;
+
+    const deadlineTime = new Date(deadline).getTime();
 
     const updateTimer = () => {
       const now = new Date().getTime();
-      const distance = deadline - now;
+      const distance = deadlineTime - now;
 
       if (distance > 0) {
         setTimeLeft({
@@ -36,7 +47,7 @@ function CountdownTimer() {
     const interval = setInterval(updateTimer, 1000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [deadline]);
 
   return (
     <div className="flex items-center justify-center gap-4 md:gap-6" data-testid="countdown-timer">
@@ -63,6 +74,10 @@ function CountdownTimer() {
 export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
+      <SEO 
+        title="Affordable Direct Mail Marketing"
+        description="Reach 5,000 Anchorage households for just $600 with Route Reach AK's shared direct mail campaigns. Full-service design, printing, and mailing. January 5, 2026 mail date. Reserve your industry-exclusive slot today."
+      />
       <header className="sticky top-0 z-50 backdrop-blur-sm bg-background/80 border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between gap-4 h-16 md:h-20">

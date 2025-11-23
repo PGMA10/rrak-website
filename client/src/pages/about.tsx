@@ -1,9 +1,14 @@
 import logo from "@assets/Untitled design-5_1763412376461.png";
 import headshot from "@assets/GRAVATAR-CAREER FAIR HEADSHOTS-JRE-0409 copy_1763433381511.jpg";
+import { SEO } from "@/components/SEO";
 
 export default function About() {
   return (
     <div className="flex flex-col min-h-screen">
+      <SEO 
+        title="About Patrick - Founder of Route Reach AK"
+        description="Meet Patrick Moses Jr., founder of Route Reach AK. Helping Alaska businesses become unforgettable through strategic direct mail marketing and brand positioning. Local focus, full-service approach, transparent pricing."
+      />
       <header className="sticky top-0 z-50 backdrop-blur-sm bg-background/80 border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between gap-4 h-16 md:h-20">

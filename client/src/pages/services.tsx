@@ -11,6 +11,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { SEO } from "@/components/SEO";
 import {
   Form,
   FormControl,
@@ -67,6 +68,10 @@ export default function Services() {
 
   return (
     <div className="flex flex-col min-h-screen">
+      <SEO 
+        title="Direct Mail Services"
+        description="Route Reach AK offers shared direct mail campaigns reaching 5,000 Anchorage households for $600. Industry-exclusive mailers with full-service design, printing, and mailing. Solo campaigns and landing page design coming soon."
+      />
       <header className="sticky top-0 z-50 backdrop-blur-sm bg-background/80 border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between gap-4 h-16 md:h-20">

@@ -1,8 +1,186 @@
+import { useQuery } from "@tanstack/react-query";
+import { useRoute } from "wouter";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Calendar, Clock } from "lucide-react";
 import logo from "@assets/Untitled design-5_1763412376461.png";
+import { SEO } from "@/components/SEO";
+import type { BlogPost } from "@shared/schema";
+import { marked } from "marked";
+import DOMPurify from "dompurify";
+
+function BlogList() {
+  const { data: postsData, isLoading } = useQuery<{ success: boolean; data: BlogPost[] }>({
+    queryKey: ["/api/blog-posts"],
+  });
+
+  const posts = postsData?.data || [];
+
+  const formatDate = (date: string | Date | null | undefined) => {
+    if (!date) return "No date";
+    return new Date(date).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  };
+
+  return (
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+      <div className="text-center space-y-4 mb-12">
+        <h1 className="text-4xl md:text-5xl font-bold text-foreground" data-testid="text-heading">
+          Blog
+        </h1>
+        <p className="text-lg text-muted-foreground max-w-2xl mx-auto" data-testid="text-description">
+          Direct mail marketing tips, strategies, and insights for Alaska businesses.
+        </p>
+      </div>
+
+      {isLoading && (
+        <div className="text-center py-12">
+          <p className="text-muted-foreground">Loading posts...</p>
+        </div>
+      )}
+
+      {!isLoading && posts.length === 0 && (
+        <div className="text-center py-12">
+          <p className="text-muted-foreground">No blog posts yet. Check back soon!</p>
+        </div>
+      )}
+
+      <div className="space-y-6">
+        {posts.map((post) => (
+          <a
+            key={post.id}
+            href={`/blog/${post.slug}`}
+            className="block"
+            data-testid={`link-post-${post.slug}`}
+          >
+            <Card className="hover-elevate active-elevate-2 transition-all duration-200">
+              <CardHeader>
+                <div className="flex items-start justify-between gap-4">
+                  <div className="flex-1">
+                    <CardTitle className="text-2xl mb-2" data-testid={`text-post-title-${post.slug}`}>
+                      {post.title}
+                    </CardTitle>
+                    <CardDescription className="text-base" data-testid={`text-post-excerpt-${post.slug}`}>
+                      {post.excerpt}
+                    </CardDescription>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                  <div className="flex items-center gap-1">
+                    <Calendar className="w-4 h-4" />
+                    <span>{formatDate(post.publishedAt)}</span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </a>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function BlogPost() {
+  const [, params] = useRoute("/blog/:slug");
+  const slug = params?.slug || "";
+
+  const { data: postData, isLoading } = useQuery<{ success: boolean; data: BlogPost }>({
+    queryKey: [`/api/blog-posts/${slug}`],
+    enabled: !!slug,
+  });
+
+  const post = postData?.data;
+
+  const formatDate = (date: string | Date | null | undefined) => {
+    if (!date) return "No date";
+    return new Date(date).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  };
+
+  const renderMarkdown = (markdown: string) => {
+    const html = marked.parse(markdown);
+    return DOMPurify.sanitize(html as string);
+  };
+
+  if (isLoading) {
+    return (
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <p className="text-center text-muted-foreground">Loading...</p>
+      </div>
+    );
+  }
+
+  if (!post) {
+    return (
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="text-center space-y-4">
+          <h1 className="text-4xl font-bold text-foreground">Post Not Found</h1>
+          <p className="text-muted-foreground">The blog post you're looking for doesn't exist.</p>
+          <a href="/blog" className="inline-block text-primary hover:underline">
+            ← Back to Blog
+          </a>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+      <SEO
+        title={post.title}
+        description={post.excerpt}
+      />
+      
+      <div className="mb-8">
+        <a
+          href="/blog"
+          className="inline-flex items-center text-sm text-primary hover:underline mb-6"
+          data-testid="link-back-to-blog"
+        >
+          ← Back to Blog
+        </a>
+        
+        <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4" data-testid="text-post-title">
+          {post.title}
+        </h1>
+        
+        <div className="flex items-center gap-4 text-sm text-muted-foreground mb-8">
+          <div className="flex items-center gap-1">
+            <Calendar className="w-4 h-4" />
+            <span>{formatDate(post.publishedAt)}</span>
+          </div>
+        </div>
+      </div>
+
+      <div
+        className="prose prose-lg max-w-none prose-headings:text-foreground prose-p:text-foreground prose-strong:text-foreground prose-a:text-primary prose-li:text-foreground"
+        dangerouslySetInnerHTML={{ __html: renderMarkdown(post.content) }}
+        data-testid="div-post-content"
+      />
+    </article>
+  );
+}
 
 export default function Blog() {
+  const [match] = useRoute("/blog/:slug");
+
   return (
     <div className="flex flex-col min-h-screen">
+      {!match && (
+        <SEO
+          title="Marketing Insights Blog"
+          description="Direct mail marketing tips, strategies, and insights for Alaska businesses. Learn how to grow your business with effective marketing campaigns in Anchorage and beyond."
+        />
+      )}
+      
       <header className="sticky top-0 z-50 backdrop-blur-sm bg-background/80 border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between gap-4 h-16 md:h-20">
@@ -12,36 +190,36 @@ export default function Blog() {
               </a>
             </div>
             <nav className="hidden md:flex flex-wrap items-center space-x-8">
-              <a 
-                href="/" 
+              <a
+                href="/"
                 className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200"
                 data-testid="link-nav-home"
               >
                 Home
               </a>
-              <a 
-                href="/services" 
+              <a
+                href="/services"
                 className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200"
                 data-testid="link-nav-services"
               >
                 Services
               </a>
-              <a 
-                href="/about" 
+              <a
+                href="/about"
                 className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200"
                 data-testid="link-nav-about"
               >
                 About
               </a>
-              <a 
-                href="/blog" 
+              <a
+                href="/blog"
                 className="text-sm font-medium text-foreground hover:text-primary transition-colors duration-200"
                 data-testid="link-nav-blog"
               >
                 Blog
               </a>
-              <a 
-                href="/contact" 
+              <a
+                href="/contact"
                 className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200"
                 data-testid="link-nav-contact"
               >
@@ -53,16 +231,7 @@ export default function Blog() {
       </header>
 
       <main className="flex-1">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-24">
-          <div className="text-center space-y-8">
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground" data-testid="text-heading">
-              Blog
-            </h2>
-            <p className="text-base leading-relaxed text-muted-foreground max-w-2xl mx-auto" data-testid="text-description">
-              Read our latest articles and insights.
-            </p>
-          </div>
-        </div>
+        {match ? <BlogPost /> : <BlogList />}
       </main>
 
       <footer className="border-t bg-background">
@@ -74,12 +243,12 @@ export default function Blog() {
               </h3>
               <ul className="space-y-3">
                 <li>
-                  <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200" data-testid="link-footer-features">
-                    Features
+                  <a href="/services" className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200" data-testid="link-footer-features">
+                    Services
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200" data-testid="link-footer-pricing">
+                  <a href="/#pricing" className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200" data-testid="link-footer-pricing">
                     Pricing
                   </a>
                 </li>
@@ -107,11 +276,6 @@ export default function Blog() {
                 Support
               </h3>
               <ul className="space-y-3">
-                <li>
-                  <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200" data-testid="link-footer-help">
-                    Help Center
-                  </a>
-                </li>
                 <li>
                   <a href="/contact" className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200" data-testid="link-footer-contact">
                     Contact

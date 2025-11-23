@@ -344,6 +344,97 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Blog Post Routes
+  app.get("/api/blog-posts", async (req, res) => {
+    try {
+      const posts = await storage.getPublishedBlogPosts();
+      res.json({ success: true, data: posts });
+    } catch (error: any) {
+      console.error("Error fetching blog posts:", error);
+      res.status(500).json({ success: false, error: "Failed to fetch blog posts" });
+    }
+  });
+
+  app.get("/api/blog-posts/:slug", async (req, res) => {
+    try {
+      const { slug } = req.params;
+      const post = await storage.getBlogPostBySlug(slug);
+      
+      if (!post || !post.published) {
+        res.status(404).json({ success: false, error: "Post not found" });
+        return;
+      }
+      
+      res.json({ success: true, data: post });
+    } catch (error: any) {
+      console.error("Error fetching blog post:", error);
+      res.status(500).json({ success: false, error: "Failed to fetch blog post" });
+    }
+  });
+
+  app.get("/api/admin/blog-posts", requireAuth, async (req, res) => {
+    try {
+      const posts = await storage.getAllBlogPosts();
+      res.json({ success: true, data: posts });
+    } catch (error: any) {
+      console.error("Error fetching blog posts:", error);
+      res.status(500).json({ success: false, error: "Failed to fetch blog posts" });
+    }
+  });
+
+  app.post("/api/admin/blog-posts", requireAuth, async (req, res) => {
+    try {
+      const post = await storage.createBlogPost(req.body);
+      res.json({ success: true, data: post });
+    } catch (error: any) {
+      console.error("Error creating blog post:", error);
+      res.status(500).json({ success: false, error: "Failed to create blog post" });
+    }
+  });
+
+  app.patch("/api/admin/blog-posts/:id", requireAuth, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const post = await storage.updateBlogPost(id, req.body);
+      res.json({ success: true, data: post });
+    } catch (error: any) {
+      console.error("Error updating blog post:", error);
+      res.status(500).json({ success: false, error: "Failed to update blog post" });
+    }
+  });
+
+  app.delete("/api/admin/blog-posts/:id", requireAuth, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      await storage.deleteBlogPost(id);
+      res.json({ success: true });
+    } catch (error: any) {
+      console.error("Error deleting blog post:", error);
+      res.status(500).json({ success: false, error: "Failed to delete blog post" });
+    }
+  });
+
+  // Campaign Settings Routes
+  app.get("/api/campaign-settings", async (req, res) => {
+    try {
+      const settings = await storage.getCampaignSettings();
+      res.json({ success: true, data: settings });
+    } catch (error: any) {
+      console.error("Error fetching campaign settings:", error);
+      res.status(500).json({ success: false, error: "Failed to fetch campaign settings" });
+    }
+  });
+
+  app.put("/api/admin/campaign-settings", requireAuth, async (req, res) => {
+    try {
+      const settings = await storage.updateCampaignSettings(req.body);
+      res.json({ success: true, data: settings });
+    } catch (error: any) {
+      console.error("Error updating campaign settings:", error);
+      res.status(500).json({ success: false, error: "Failed to update campaign settings" });
+    }
+  });
+
   const httpServer = createServer(app);
 
   return httpServer;
