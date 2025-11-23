@@ -52,7 +52,6 @@ export default function About() {
           </div>
         </div>
       </header>
-
       <main className="flex-1">
         {/* Section 1: Mission */}
         <section className="py-16 md:py-24 bg-background">
@@ -176,9 +175,7 @@ export default function About() {
                     <h4 className="font-semibold text-foreground mb-1" data-testid="text-bullet-local-title">
                       Local Alaska Focus
                     </h4>
-                    <p className="text-sm text-muted-foreground" data-testid="text-bullet-local-desc">
-                      I live here, understand this market, and I'm committed to strengthening our local economy
-                    </p>
+                    <p className="text-sm text-muted-foreground" data-testid="text-bullet-local-desc">I live here, understand this market, and I'm committed to helping businesses reach customers</p>
                   </div>
                 </div>
 
@@ -256,7 +253,6 @@ export default function About() {
           </div>
         </section>
       </main>
-
       <footer className="border-t bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
