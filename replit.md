@@ -44,6 +44,22 @@ This is a high-converting landing page and lead management system for **Rute Rea
 - Expanded admin dashboard to 6 tabs with responsive layout (grid-cols-2 md:grid-cols-3 lg:grid-cols-6)
 - Email notifications configured for new waitlist types
 - Services page now features only Shared Direct Mail Campaign as active service
+- Added semi-transparent logo watermark (6% opacity) to Shared Mailer Section background for visual depth
+
+**FAQ Integration** (November 23, 2025):
+- Added comprehensive FAQ accordion section to Services page with 19 questions covering:
+  - Understanding Shared Mailers (what it is, differentiators, target audience)
+  - How It Works (process, requirements, ad slot size, design approval)
+  - Pricing & Packages (costs, inclusions, 3-month benefits, cancellation)
+  - Industry Exclusivity (guarantees, categories, booking alternatives)
+  - Results & ROI (expectations, tracking methods, timelines)
+  - Targeting & Logistics (campaign timing, neighborhoods, photo requirements)
+- Added trust-focused FAQ section to Contact page with 3 key questions:
+  - Why should I trust you?
+  - What if I don't get results?
+  - How do I get started?
+- Contact page includes prominent phone number display: (907) 947-4624 with business hours
+- All FAQ elements include proper data-testid attributes for testing compliance
 
 # User Preferences
 
