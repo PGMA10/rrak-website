@@ -306,7 +306,12 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Social Proof Section */}
+        {/* 
+          TESTIMONIALS SECTION - Currently Hidden
+          Uncomment this section when you have real testimonials from campaign participants.
+          Simply remove the opening and closing comment tags to display it.
+        */}
+        {/*
         <section className="py-16 md:py-20 lg:py-24" data-testid="section-social-proof">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center space-y-4 mb-12">
@@ -340,6 +345,7 @@ export default function Home() {
             </div>
           </div>
         </section>
+        */}
 
         {/* Final CTA Section */}
         <section className="py-16 md:py-20 lg:py-24 bg-gradient-to-b from-muted/20 to-background" data-testid="section-final-cta">
