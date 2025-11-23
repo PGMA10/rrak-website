@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Clock, CheckCircle2, Mail, TrendingUp, Eye, Calendar } from "lucide-react";
 import postcardImage from "@assets/BackFront Example-2_1763355311870.png";
 import logo from "@assets/Untitled design-5_1763412376461.png";
+import directMailBg from "@assets/stock_images/professional_direct__a3eef2aa.jpg";
 import { SEO } from "@/components/SEO";
 import type { CampaignSetting } from "@shared/schema";
 
