@@ -56,9 +56,9 @@ export default function About() {
                   <strong>Shared Direct Mail Campaigns</strong> let you reach 5,000 households for just $600 - with full-service design, copywriting, printing, and mailing. Professional reach that cuts through the digital noise.
                 </p>
                 
-                <p className="text-base leading-relaxed" data-testid="text-body-6">
+                {/* <p className="text-base leading-relaxed" data-testid="text-body-6">
                   <strong>Solo Campaigns</strong> give you exclusive reach when you're ready to own the entire mailer - starting at $2,500.
-                </p>
+                </p> */}
                 
                 <p className="text-base leading-relaxed" data-testid="text-body-7">
                   <strong>Landing Pages</strong> turn your campaigns into trackable conversions - custom-built for $750-$1,500.
