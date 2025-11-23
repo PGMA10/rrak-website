@@ -196,7 +196,7 @@ function AdminDashboard() {
       <main className="flex-1 py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Tabs defaultValue="leads" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-2 md:grid-cols-5 lg:grid-cols-10">
+            <TabsList className="flex flex-wrap gap-2 w-full justify-start">
               <TabsTrigger value="leads" data-testid="tab-leads">
                 Leads ({leads?.data?.length || 0})
               </TabsTrigger>
