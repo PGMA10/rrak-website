@@ -90,8 +90,15 @@ function BlogPost() {
   const slug = params?.slug || "";
 
   const { data: postData, isLoading } = useQuery<{ success: boolean; data: BlogPost }>({
-    queryKey: [`/api/blog-posts/${slug}`],
+    queryKey: ["/api/blog-posts", slug],
     enabled: !!slug,
+    queryFn: async () => {
+      const response = await fetch(`/api/blog-posts/${slug}`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch blog post");
+      }
+      return response.json();
+    },
   });
 
   const post = postData?.data;
