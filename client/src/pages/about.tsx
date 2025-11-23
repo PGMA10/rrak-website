@@ -117,18 +117,22 @@ export default function About() {
         {/* Section 2: About Patrick */}
         <section className="py-16 md:py-24 bg-muted/10 border-t">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="mb-16">
+            <div className="mb-24">
               <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6" data-testid="text-heading-about-patrick">
                 About Patrick
               </h2>
               
               {/* Professional Headshot - floats right on desktop */}
-              <img 
-                src={headshot} 
-                alt="Patrick Moses Jr. - Founder of Route Reach AK" 
-                className="w-full max-w-xs md:float-right md:ml-8 md:mb-4 mb-6 rounded-lg"
-                data-testid="img-headshot"
-              />
+              <div className="w-full max-w-xs md:float-right md:ml-8 md:mb-4 mb-6">
+                <div className="aspect-square overflow-hidden rounded-full">
+                  <img 
+                    src={headshot} 
+                    alt="Patrick Moses Jr. - Founder of Route Reach AK" 
+                    className="w-full h-full object-cover"
+                    data-testid="img-headshot"
+                  />
+                </div>
+              </div>
               
               <div className="space-y-4 text-base leading-relaxed text-foreground">
                 <p data-testid="text-about-intro">
@@ -158,7 +162,7 @@ export default function About() {
             </div>
 
             {/* Why Route Reach AK Is Different */}
-            <div className="bg-background rounded-lg p-8 md:p-12 border">
+            <div className="bg-background rounded-lg p-8 md:p-12 border mb-24">
               <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-8 text-center" data-testid="text-heading-why-different">
                 Why Route Reach AK Is Different
               </h3>
@@ -213,7 +217,7 @@ export default function About() {
             </div>
 
             {/* Final CTA */}
-            <div className="mt-16 text-center space-y-6">
+            <div className="text-center space-y-6">
               <h3 className="text-3xl md:text-4xl font-bold text-foreground" data-testid="text-cta-heading">
                 Ready to reach 5,000 Alaska households?
               </h3>
