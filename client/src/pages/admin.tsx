@@ -12,7 +12,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, Dialog
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
-import { Pencil, Trash2, Plus } from "lucide-react";
+import { Pencil, Trash2, Plus, Download } from "lucide-react";
 import type { Lead, NewsletterSubscriber, PrintQuoteRequest, ConsultationBooking, SoloMailerWaitlist, LandingPagesWaitlist, BlogPost, InsertBlogPost, CampaignSetting, InsertCampaignSetting } from "@shared/schema";
 
 export default function Admin() {
@@ -156,6 +156,11 @@ function AdminDashboard() {
     return new Date(date).toLocaleString();
   };
 
+  const handleExport = (exportType: string) => {
+    const url = `/api/admin/export/${exportType}`;
+    window.open(url, '_blank');
+  };
+
   return (
     <div className="flex flex-col min-h-screen bg-muted/20">
       <header className="sticky top-0 z-50 backdrop-blur-sm bg-background/80 border-b">
@@ -212,8 +217,17 @@ function AdminDashboard() {
 
             <TabsContent value="leads" className="space-y-4">
               <Card>
-                <CardHeader>
+                <CardHeader className="flex flex-row items-center justify-between gap-4 space-y-0">
                   <CardTitle>Contact Form Submissions</CardTitle>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={() => handleExport('leads')}
+                    data-testid="button-export-leads"
+                  >
+                    <Download className="w-4 h-4 mr-2" />
+                    Export CSV
+                  </Button>
                 </CardHeader>
                 <CardContent>
                   <div className="overflow-x-auto">
@@ -257,8 +271,17 @@ function AdminDashboard() {
 
             <TabsContent value="subscribers" className="space-y-4">
               <Card>
-                <CardHeader>
+                <CardHeader className="flex flex-row items-center justify-between gap-4 space-y-0">
                   <CardTitle>Newsletter Subscribers</CardTitle>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={() => handleExport('newsletter')}
+                    data-testid="button-export-newsletter"
+                  >
+                    <Download className="w-4 h-4 mr-2" />
+                    Export CSV
+                  </Button>
                 </CardHeader>
                 <CardContent>
                   <div className="overflow-x-auto">
@@ -294,8 +317,17 @@ function AdminDashboard() {
 
             <TabsContent value="quotes" className="space-y-4">
               <Card>
-                <CardHeader>
+                <CardHeader className="flex flex-row items-center justify-between gap-4 space-y-0">
                   <CardTitle>Print Quote Requests</CardTitle>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={() => handleExport('quotes')}
+                    data-testid="button-export-quotes"
+                  >
+                    <Download className="w-4 h-4 mr-2" />
+                    Export CSV
+                  </Button>
                 </CardHeader>
                 <CardContent>
                   <div className="overflow-x-auto">
@@ -339,8 +371,17 @@ function AdminDashboard() {
 
             <TabsContent value="bookings" className="space-y-4">
               <Card>
-                <CardHeader>
+                <CardHeader className="flex flex-row items-center justify-between gap-4 space-y-0">
                   <CardTitle>Consultation Bookings</CardTitle>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={() => handleExport('consultations')}
+                    data-testid="button-export-consultations"
+                  >
+                    <Download className="w-4 h-4 mr-2" />
+                    Export CSV
+                  </Button>
                 </CardHeader>
                 <CardContent>
                   <div className="overflow-x-auto">
@@ -382,8 +423,17 @@ function AdminDashboard() {
 
             <TabsContent value="solo-mailer" className="space-y-4">
               <Card>
-                <CardHeader>
+                <CardHeader className="flex flex-row items-center justify-between gap-4 space-y-0">
                   <CardTitle>Solo Direct Mail Waitlist</CardTitle>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={() => handleExport('solo-mailer-waitlist')}
+                    data-testid="button-export-solo-mailer"
+                  >
+                    <Download className="w-4 h-4 mr-2" />
+                    Export CSV
+                  </Button>
                 </CardHeader>
                 <CardContent>
                   <div className="overflow-x-auto">
@@ -427,8 +477,17 @@ function AdminDashboard() {
 
             <TabsContent value="landing-pages" className="space-y-4">
               <Card>
-                <CardHeader>
+                <CardHeader className="flex flex-row items-center justify-between gap-4 space-y-0">
                   <CardTitle>Landing Pages Waitlist</CardTitle>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={() => handleExport('landing-pages-waitlist')}
+                    data-testid="button-export-landing-pages"
+                  >
+                    <Download className="w-4 h-4 mr-2" />
+                    Export CSV
+                  </Button>
                 </CardHeader>
                 <CardContent>
                   <div className="overflow-x-auto">

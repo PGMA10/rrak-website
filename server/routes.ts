@@ -344,6 +344,121 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // CSV Export Helper Function
+  function convertToCSV(data: any[]): string {
+    if (!data || data.length === 0) {
+      return 'No data available';
+    }
+
+    // Gather all unique keys from all records to handle optional fields
+    const allKeys = new Set<string>();
+    for (const row of data) {
+      Object.keys(row).forEach(key => allKeys.add(key));
+    }
+    const headers = Array.from(allKeys).sort();
+    const csvRows = [];
+
+    // Add header row
+    csvRows.push(headers.join(','));
+
+    // Add data rows
+    for (const row of data) {
+      const values = headers.map(header => {
+        const value = row[header];
+        if (value === null || value === undefined) {
+          return '';
+        }
+        const stringValue = String(value);
+        if (stringValue.includes(',') || stringValue.includes('"') || stringValue.includes('\n')) {
+          return `"${stringValue.replace(/"/g, '""')}"`;
+        }
+        return stringValue;
+      });
+      csvRows.push(values.join(','));
+    }
+
+    return csvRows.join('\n');
+  }
+
+  // CSV Export Routes
+  app.get("/api/admin/export/leads", requireAuth, async (req, res) => {
+    try {
+      const leads = await storage.getAllLeads();
+      const csv = convertToCSV(leads);
+      res.setHeader('Content-Type', 'text/csv');
+      res.setHeader('Content-Disposition', 'attachment; filename=leads.csv');
+      res.send(csv);
+    } catch (error: any) {
+      console.error("Error exporting leads:", error);
+      res.status(500).json({ success: false, error: "Failed to export leads" });
+    }
+  });
+
+  app.get("/api/admin/export/newsletter", requireAuth, async (req, res) => {
+    try {
+      const subscribers = await storage.getAllNewsletterSubscribers();
+      const csv = convertToCSV(subscribers);
+      res.setHeader('Content-Type', 'text/csv');
+      res.setHeader('Content-Disposition', 'attachment; filename=newsletter-subscribers.csv');
+      res.send(csv);
+    } catch (error: any) {
+      console.error("Error exporting newsletter subscribers:", error);
+      res.status(500).json({ success: false, error: "Failed to export subscribers" });
+    }
+  });
+
+  app.get("/api/admin/export/quotes", requireAuth, async (req, res) => {
+    try {
+      const quotes = await storage.getAllPrintQuoteRequests();
+      const csv = convertToCSV(quotes);
+      res.setHeader('Content-Type', 'text/csv');
+      res.setHeader('Content-Disposition', 'attachment; filename=quote-requests.csv');
+      res.send(csv);
+    } catch (error: any) {
+      console.error("Error exporting quote requests:", error);
+      res.status(500).json({ success: false, error: "Failed to export quotes" });
+    }
+  });
+
+  app.get("/api/admin/export/consultations", requireAuth, async (req, res) => {
+    try {
+      const bookings = await storage.getAllConsultationBookings();
+      const csv = convertToCSV(bookings);
+      res.setHeader('Content-Type', 'text/csv');
+      res.setHeader('Content-Disposition', 'attachment; filename=consultation-bookings.csv');
+      res.send(csv);
+    } catch (error: any) {
+      console.error("Error exporting consultation bookings:", error);
+      res.status(500).json({ success: false, error: "Failed to export bookings" });
+    }
+  });
+
+  app.get("/api/admin/export/solo-mailer-waitlist", requireAuth, async (req, res) => {
+    try {
+      const entries = await storage.getAllSoloMailerWaitlist();
+      const csv = convertToCSV(entries);
+      res.setHeader('Content-Type', 'text/csv');
+      res.setHeader('Content-Disposition', 'attachment; filename=solo-mailer-waitlist.csv');
+      res.send(csv);
+    } catch (error: any) {
+      console.error("Error exporting solo mailer waitlist:", error);
+      res.status(500).json({ success: false, error: "Failed to export waitlist" });
+    }
+  });
+
+  app.get("/api/admin/export/landing-pages-waitlist", requireAuth, async (req, res) => {
+    try {
+      const entries = await storage.getAllLandingPagesWaitlist();
+      const csv = convertToCSV(entries);
+      res.setHeader('Content-Type', 'text/csv');
+      res.setHeader('Content-Disposition', 'attachment; filename=landing-pages-waitlist.csv');
+      res.send(csv);
+    } catch (error: any) {
+      console.error("Error exporting landing pages waitlist:", error);
+      res.status(500).json({ success: false, error: "Failed to export waitlist" });
+    }
+  });
+
   // Blog Post Routes
   app.get("/api/blog-posts", async (req, res) => {
     try {
