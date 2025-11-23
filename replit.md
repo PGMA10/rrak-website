@@ -47,19 +47,35 @@ This is a high-converting landing page and lead management system for **Rute Rea
 - Added semi-transparent logo watermark (6% opacity) to Shared Mailer Section background for visual depth
 
 **FAQ Integration** (November 23, 2025):
-- Added comprehensive FAQ accordion section to Services page with 19 questions covering:
-  - Understanding Shared Mailers (what it is, differentiators, target audience)
-  - How It Works (process, requirements, ad slot size, design approval)
-  - Pricing & Packages (costs, inclusions, 3-month benefits, cancellation)
-  - Industry Exclusivity (guarantees, categories, booking alternatives)
-  - Results & ROI (expectations, tracking methods, timelines)
-  - Targeting & Logistics (campaign timing, neighborhoods, photo requirements)
-- Added trust-focused FAQ section to Contact page with 3 key questions:
+
+*Strategic FAQ Reorganization - Version 2* (November 23, 2025):
+- **Embedded FAQs in Shared Direct Mail Section**: 4 conversion-focused questions integrated directly into the service description
+  - How much does it cost?
+  - What's included in $600?
+  - How does the shared mailer process work?
+  - What do I need to provide?
+  - Includes "Have more questions? Contact us" link to /contact
+- **Main Services Page FAQ**: 7 strategic questions positioned ABOVE "Coming Soon" services
+  - What is a shared mailer campaign?
+  - Why do the 3-month package?
+  - How do you guarantee no competitors?
+  - What kind of results should I expect?
+  - How do I track results?
+  - When is the next campaign?
+  - What neighborhoods do you target?
+  - Includes "Have more questions? Contact us" link to /contact
+- **Contact Page FAQ**: Expanded to 7 trust-building and objection-handling questions
   - Why should I trust you?
   - What if I don't get results?
   - How do I get started?
+  - What if I don't like my design?
+  - Can I cancel after 3 months?
+  - What if my industry is already booked?
+  - How long until I see results?
+- **Page Flow**: Services page now follows: Shared Mailer Section → FAQ Section → Coming Soon Services
 - Contact page includes prominent phone number display: (907) 947-4624 with business hours
 - All FAQ elements include proper data-testid attributes for testing compliance
+- Maximum 7 FAQs per section to prevent visitor overwhelm (user preference)
 
 # User Preferences
 
