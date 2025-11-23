@@ -236,10 +236,7 @@ export default function About() {
                     href="tel:+19079474624"
                     className="text-base text-muted-foreground hover:text-foreground transition-colors"
                     data-testid="link-phone"
-                  >
-                    Call (907) 947-4624
-                  </a>
-                  <span className="hidden sm:inline text-muted-foreground">•</span>
+                  >Got Questions?</a>
                   <a 
                     href="mailto:contact@routereachak.com"
                     className="text-base text-muted-foreground hover:text-foreground transition-colors"
