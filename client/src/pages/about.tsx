@@ -117,48 +117,43 @@ export default function About() {
         {/* Section 2: About Patrick */}
         <section className="py-16 md:py-24 bg-muted/10 border-t">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid md:grid-cols-2 gap-12 items-start mb-16">
-              {/* Left: Professional Headshot */}
-              <div className="flex justify-center md:justify-start">
-                <img 
-                  src={headshot} 
-                  alt="Patrick Moses Jr. - Founder of Route Reach AK" 
-                  className="w-full max-w-md rounded-lg"
-                  data-testid="img-headshot"
-                />
-              </div>
-
-              {/* Right: About Patrick Copy */}
-              <div className="space-y-6">
-                <h2 className="text-3xl md:text-4xl font-bold text-foreground" data-testid="text-heading-about-patrick">
-                  About Patrick
-                </h2>
+            <div className="mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6" data-testid="text-heading-about-patrick">
+                About Patrick
+              </h2>
+              
+              {/* Professional Headshot - floats right on desktop */}
+              <img 
+                src={headshot} 
+                alt="Patrick Moses Jr. - Founder of Route Reach AK" 
+                className="w-full max-w-xs md:float-right md:ml-8 md:mb-4 mb-6 rounded-lg"
+                data-testid="img-headshot"
+              />
+              
+              <div className="space-y-4 text-base leading-relaxed text-foreground">
+                <p data-testid="text-about-intro">
+                  I help Alaska businesses become unforgettable.
+                </p>
                 
-                <div className="space-y-4 text-base leading-relaxed text-foreground">
-                  <p data-testid="text-about-intro">
-                    I help Alaska businesses become unforgettable.
-                  </p>
-                  
-                  <p data-testid="text-about-p1">
-                    Most business owners come to me wanting more customers. What they actually want? A business that's recognized, respected, and thriving.
-                  </p>
-                  
-                  <p data-testid="text-about-p2">
-                    Here's what I've learned building everything from mobile apps to booking platforms: tactics alone don't work. You can run the perfect campaign, but if you don't know who you are, what makes you different, and why people should care - it's just noise.
-                  </p>
-                  
-                  <p data-testid="text-about-p3">
-                    The tactics work when the foundation is clear. When you know what you want, what you stand for, and how you serve others - the path becomes obvious.
-                  </p>
-                  
-                  <p data-testid="text-about-p4">
-                    That's what I bring to Route Reach AK. I don't just design postcards and coordinate mailings. I help you clarify your message, sharpen your positioning, and amplify what makes your business worth noticing.
-                  </p>
-                  
-                  <p className="font-semibold" data-testid="text-about-conclusion">
-                    You get more than a marketing campaign. You get a strategic partner who pushes you to be better - and when you're better, your business thrives.
-                  </p>
-                </div>
+                <p data-testid="text-about-p1">
+                  Most business owners come to me wanting more customers. What they actually want? A business that's recognized, respected, and thriving.
+                </p>
+                
+                <p data-testid="text-about-p2">
+                  Here's what I've learned building everything from mobile apps to booking platforms: tactics alone don't work. You can run the perfect campaign, but if you don't know who you are, what makes you different, and why people should care - it's just noise.
+                </p>
+                
+                <p data-testid="text-about-p3">
+                  The tactics work when the foundation is clear. When you know what you want, what you stand for, and how you serve others - the path becomes obvious.
+                </p>
+                
+                <p data-testid="text-about-p4">
+                  That's what I bring to Route Reach AK. I don't just design postcards and coordinate mailings. I help you clarify your message, sharpen your positioning, and amplify what makes your business worth noticing.
+                </p>
+                
+                <p className="font-semibold" data-testid="text-about-conclusion">
+                  You get more than a marketing campaign. You get a strategic partner who pushes you to be better - and when you're better, your business thrives.
+                </p>
               </div>
             </div>
 
