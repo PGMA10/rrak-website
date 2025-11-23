@@ -298,6 +298,53 @@ export default function Contact() {
                     <p className="mb-4">Questions first? Contact me using the form above or call <strong>(907) 947-4624</strong>.</p>
                   </AccordionContent>
                 </AccordionItem>
+
+                <AccordionItem value="design-approval" data-testid="accordion-faq-design-approval">
+                  <AccordionTrigger className="text-left" data-testid="trigger-faq-design-approval">
+                    What if I don't like my design?
+                  </AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground">
+                    You approve everything before it prints. I send you a proof, you request changes (included), we iterate until you're satisfied. Your ad doesn't mail unless you're happy with it.
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="cancel" data-testid="accordion-faq-cancel">
+                  <AccordionTrigger className="text-left" data-testid="trigger-faq-cancel">
+                    Can I cancel after 3 months?
+                  </AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground">
+                    Yes. After 3 months, choose to continue month-to-month ($600), commit to another 3-month package (save $300), or stop. No automatic renewals.
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="industry-booked" data-testid="accordion-faq-booked">
+                  <AccordionTrigger className="text-left" data-testid="trigger-faq-booked">
+                    What if my industry is already booked?
+                  </AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground">
+                    <p className="mb-4">Three options:</p>
+                    <ol className="space-y-2 ml-4">
+                      <li><strong>1. Book another route</strong> - Each campaign runs multiple routes</li>
+                      <li><strong>2. Join the waitlist</strong> - Get notified if a spot opens</li>
+                      <li><strong>3. Book next month's campaign</strong> - Lock in your category for the next mailing</li>
+                    </ol>
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="timeline" data-testid="accordion-faq-timeline">
+                  <AccordionTrigger className="text-left" data-testid="trigger-faq-timeline">
+                    How long until I see results?
+                  </AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground">
+                    <ul className="space-y-2 ml-4 mb-4">
+                      <li><strong>Days 1-7:</strong> Immediate responses (QR scans, calls)</li>
+                      <li><strong>Weeks 2-4:</strong> Secondary responses (people who saved the postcard)</li>
+                      <li><strong>Months 2-3:</strong> Delayed responses (remembered when they needed you)</li>
+                    </ul>
+                    <p className="mb-4">Peak response is in the first 2 weeks. Activity continues for months.</p>
+                    <p>This is why 3-month campaigns work - each builds on the last.</p>
+                  </AccordionContent>
+                </AccordionItem>
               </Accordion>
 
               <div className="text-center pt-8">

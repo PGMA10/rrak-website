@@ -238,8 +238,8 @@ export default function Services() {
 
         {/* Detailed Service Sections */}
         <SharedMailerSection />
-        <ComingSoonServicesSection />
         <FAQSection />
+        <ComingSoonServicesSection />
       </main>
 
       <footer className="border-t bg-background">
@@ -401,6 +401,89 @@ function SharedMailerSection() {
               </Button>
             </CardContent>
           </Card>
+
+          {/* Embedded FAQs */}
+          <div className="space-y-6 pt-8">
+            <h3 className="text-2xl font-bold text-foreground" data-testid="heading-shared-mailer-faqs">
+              Common Questions
+            </h3>
+            
+            <Accordion type="single" collapsible className="w-full">
+              <AccordionItem value="cost" data-testid="accordion-faq-embedded-cost">
+                <AccordionTrigger className="text-left" data-testid="trigger-faq-embedded-cost">
+                  How much does it cost?
+                </AccordionTrigger>
+                <AccordionContent className="text-muted-foreground">
+                  <p className="mb-4"><strong>Single Campaign:</strong> $600</p>
+                  <p><strong>3-Month Package:</strong> $1,500 ($500/month - save $300)</p>
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="whats-included" data-testid="accordion-faq-embedded-included">
+                <AccordionTrigger className="text-left" data-testid="trigger-faq-embedded-included">
+                  What's included in $600?
+                </AccordionTrigger>
+                <AccordionContent className="text-muted-foreground">
+                  <ul className="space-y-2 ml-4">
+                    <li>✅ Strategy consultation</li>
+                    <li>✅ Professional design & copywriting</li>
+                    <li>✅ Revisions until you're satisfied</li>
+                    <li>✅ Premium printing (9×12" postcard)</li>
+                    <li>✅ Mailing to 5,000 households</li>
+                    <li>✅ QR code tracking</li>
+                    <li>✅ Post-campaign report</li>
+                  </ul>
+                  <p className="mt-4">You provide: Logo, offer details, photos (optional), design approval.</p>
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="how-it-works" data-testid="accordion-faq-embedded-process">
+                <AccordionTrigger className="text-left" data-testid="trigger-faq-embedded-process">
+                  How does the shared mailer process work?
+                </AccordionTrigger>
+                <AccordionContent className="text-muted-foreground">
+                  <p className="mb-4">Four steps:</p>
+                  <ol className="space-y-3 ml-4">
+                    <li><strong>1. Book Your Slot</strong> - Choose your industry category (first-come, first-served)</li>
+                    <li><strong>2. Submit Your Info</strong> - Logo, offer, photos (optional), contact details</li>
+                    <li><strong>3. Design & Approval</strong> - We create your ad, you approve it (revisions included)</li>
+                    <li><strong>4. Print & Mail</strong> - We handle everything, your ad hits 5,000 mailboxes</li>
+                  </ol>
+                  <p className="mt-4">Timeline: 3-4 weeks from booking to mailboxes.</p>
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="what-to-provide" data-testid="accordion-faq-embedded-provide">
+                <AccordionTrigger className="text-left" data-testid="trigger-faq-embedded-provide">
+                  What do I need to provide?
+                </AccordionTrigger>
+                <AccordionContent className="text-muted-foreground">
+                  <p className="mb-4"><strong>Required:</strong></p>
+                  <ul className="space-y-2 ml-4 mb-4">
+                    <li>• Business logo (any format)</li>
+                    <li>• Your offer or key message</li>
+                    <li>• Contact info (phone, website, etc.)</li>
+                  </ul>
+                  <p className="mb-4"><strong>Optional but helpful:</strong></p>
+                  <ul className="space-y-2 ml-4">
+                    <li>• Photos of your work, products, or team</li>
+                    <li>• Preferred colors or brand guidelines</li>
+                  </ul>
+                  <p>Your time: ~30 minutes total.</p>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+
+            <div className="text-center pt-4">
+              <a 
+                href="/contact"
+                className="inline-flex items-center text-primary hover:text-primary/80 font-medium transition-colors duration-200"
+                data-testid="link-more-questions-embedded"
+              >
+                Have more questions? Contact us <ArrowRight className="ml-2 h-4 w-4" />
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -1531,9 +1614,10 @@ function FAQSection() {
           </div>
 
           <Accordion type="single" collapsible className="w-full">
-            {/* Understanding Shared Mailers */}
             <AccordionItem value="what-is" data-testid="accordion-faq-what-is">
-              <AccordionTrigger className="text-left" data-testid="trigger-faq-what-is">What is a shared mailer campaign?</AccordionTrigger>
+              <AccordionTrigger className="text-left" data-testid="trigger-faq-what-is">
+                What is a shared mailer campaign?
+              </AccordionTrigger>
               <AccordionContent className="text-muted-foreground">
                 <p className="mb-4">
                   16 businesses share one premium 9×12" postcard mailed to 5,000 Anchorage households. Each business gets a 2.8" × 3.8" ad slot with industry exclusivity - only ONE business per category per card.
@@ -1544,111 +1628,10 @@ function FAQSection() {
               </AccordionContent>
             </AccordionItem>
 
-            <AccordionItem value="what-makes-different" data-testid="accordion-faq-different">
-              <AccordionTrigger className="text-left" data-testid="trigger-faq-different">What makes Route Reach AK different?</AccordionTrigger>
-              <AccordionContent className="text-muted-foreground">
-                <p className="mb-4">I handle everything. You provide your goal, logo, and photos (if you have them). I handle:</p>
-                <ul className="space-y-2 ml-4 mb-4">
-                  <li>• Strategy & copywriting</li>
-                  <li>• Professional design</li>
-                  <li>• Print coordination</li>
-                  <li>• USPS mailing execution</li>
-                  <li>• QR code tracking</li>
-                </ul>
-                <p>You spend ~30 minutes total. I do the rest. You focus on running your business.</p>
-              </AccordionContent>
-            </AccordionItem>
-
-            <AccordionItem value="who-for" data-testid="accordion-faq-who-for">
-              <AccordionTrigger className="text-left" data-testid="trigger-faq-who-for">Who is this for?</AccordionTrigger>
-              <AccordionContent className="text-muted-foreground">
-                Business owners who are great at their craft but don't want to become marketing experts. If marketing feels overwhelming or draining, this is for you. I take the entire process off your plate and deliver professional results.
-              </AccordionContent>
-            </AccordionItem>
-
-            {/* How It Works */}
-            <AccordionItem value="how-it-works" data-testid="accordion-faq-how-it-works">
-              <AccordionTrigger className="text-left" data-testid="trigger-faq-how-it-works">How does the shared mailer process work?</AccordionTrigger>
-              <AccordionContent className="text-muted-foreground">
-                <p className="mb-4">Four steps:</p>
-                <ol className="space-y-3 ml-4">
-                  <li><strong>1. Book Your Slot</strong> - Choose your industry category (first-come, first-served)</li>
-                  <li><strong>2. Fill Out Design Brief</strong> - Submit brand material (logo, colors and fonts), image (if you have one), tagline (if you have one) and a brief message</li>
-                  <li><strong>3. Design & Approval</strong> - I create your ad. You approve it (2 revisions included)</li>
-                  <li><strong>4. Print & Mail</strong> - I coordinate printing and USPS EDDM delivery to 5,000 households</li>
-                  <li><strong>5. Track Results</strong> - Your unique QR code shows how many people engaged</li>
-                </ol>
-                <p className="mt-4">Timeline: 3-4 weeks from booking to mailboxes.</p>
-              </AccordionContent>
-            </AccordionItem>
-
-            <AccordionItem value="what-to-provide" data-testid="accordion-faq-provide">
-              <AccordionTrigger className="text-left" data-testid="trigger-faq-provide">What do I need to provide?</AccordionTrigger>
-              <AccordionContent className="text-muted-foreground">
-                <p className="mb-4"><strong>Required:</strong></p>
-                <ul className="space-y-2 ml-4 mb-4">
-                  <li>• Business logo (any format)</li>
-                  <li>• What you want to promote (your offer/goal)</li>
-                  <li>• Contact info (phone OR website)</li>
-                </ul>
-                <p className="mb-4"><strong>Optional:</strong></p>
-                <ul className="space-y-2 ml-4 mb-4">
-                  <li>• Photos of your work/products/team</li>
-                  <li>• Brand colors</li>
-                  <li>• Existing marketing materials</li>
-                </ul>
-                <p>Your time: ~30 minutes total.</p>
-              </AccordionContent>
-            </AccordionItem>
-
-            <AccordionItem value="ad-slot-size" data-testid="accordion-faq-slot-size">
-              <AccordionTrigger className="text-left" data-testid="trigger-faq-slot-size">Is my ad slot big enough?</AccordionTrigger>
-              <AccordionContent className="text-muted-foreground">
-                <p className="mb-4">Yes. Each slot is 2.8" × 3.8" - designed to include:</p>
-                <ul className="space-y-2 ml-4 mb-4">
-                  <li>• Logo</li>
-                  <li>• Headline (6-10 words)</li>
-                  <li>• Core offer (1-2 lines)</li>
-                  <li>• QR code (your conversion tool)</li>
-                  <li>• Phone OR website</li>
-                </ul>
-                <p>The QR code links to your website, contact page, booking page, or landing page with full details. Your ad creates awareness and drives action. Clarity beats clutter.</p>
-              </AccordionContent>
-            </AccordionItem>
-
-            <AccordionItem value="design-approval" data-testid="accordion-faq-design-approval">
-              <AccordionTrigger className="text-left" data-testid="trigger-faq-design-approval">What if I don't like my design?</AccordionTrigger>
-              <AccordionContent className="text-muted-foreground">
-                You approve everything before it prints. I send you a proof, you request changes (included), we iterate until you're satisfied. Your ad doesn't mail unless you're happy with it.
-              </AccordionContent>
-            </AccordionItem>
-
-            {/* Pricing & Packages */}
-            <AccordionItem value="cost" data-testid="accordion-faq-cost">
-              <AccordionTrigger className="text-left" data-testid="trigger-faq-cost">How much does it cost?</AccordionTrigger>
-              <AccordionContent className="text-muted-foreground">
-                <p className="mb-4"><strong>Single Campaign:</strong> $600</p>
-                <p><strong>3-Month Package:</strong> $1,500 ($500/month - save $300)</p>
-              </AccordionContent>
-            </AccordionItem>
-
-            <AccordionItem value="whats-included" data-testid="accordion-faq-included">
-              <AccordionTrigger className="text-left" data-testid="trigger-faq-included">What's included in $600?</AccordionTrigger>
-              <AccordionContent className="text-muted-foreground">
-                <ul className="space-y-2 ml-4">
-                  <li>✅ Strategy consultation</li>
-                  <li>✅ Professional design & copywriting</li>
-                  <li>✅ QR code setup & tracking</li>
-                  <li>✅ Premium glossy printing</li>
-                  <li>✅ USPS EDDM to 5,000 households</li>
-                  <li>✅ Post-campaign performance report</li>
-                </ul>
-                <p className="mt-4">You provide: Logo, offer details, photos (optional), design approval.</p>
-              </AccordionContent>
-            </AccordionItem>
-
             <AccordionItem value="why-3-month" data-testid="accordion-faq-3-month">
-              <AccordionTrigger className="text-left" data-testid="trigger-faq-3-month">Why do the 3-month package?</AccordionTrigger>
+              <AccordionTrigger className="text-left" data-testid="trigger-faq-3-month">
+                Why do the 3-month package?
+              </AccordionTrigger>
               <AccordionContent className="text-muted-foreground">
                 <p className="mb-4">Three reasons:</p>
                 <ol className="space-y-2 ml-4">
@@ -1660,51 +1643,20 @@ function FAQSection() {
               </AccordionContent>
             </AccordionItem>
 
-            <AccordionItem value="cancel" data-testid="accordion-faq-cancel">
-              <AccordionTrigger className="text-left" data-testid="trigger-faq-cancel">Can I cancel after 3 months?</AccordionTrigger>
-              <AccordionContent className="text-muted-foreground">
-                Yes. After 3 months, choose to continue month-to-month ($600), commit to another 3-month package (save $300), or stop. No automatic renewals.
-              </AccordionContent>
-            </AccordionItem>
-
-            {/* Industry Exclusivity */}
             <AccordionItem value="no-competitors" data-testid="accordion-faq-competitors">
-              <AccordionTrigger className="text-left" data-testid="trigger-faq-competitors">How do you guarantee no competitors?</AccordionTrigger>
+              <AccordionTrigger className="text-left" data-testid="trigger-faq-competitors">
+                How do you guarantee no competitors?
+              </AccordionTrigger>
               <AccordionContent className="text-muted-foreground">
                 <p className="mb-4">Each postcard has 16 slots. When you book your industry category (e.g., "HVAC," "Dentist," "Real Estate"), it's locked for that campaign. First-come, first-served.</p>
                 <p>Competitors who try to book after you see your category is unavailable.</p>
               </AccordionContent>
             </AccordionItem>
 
-            <AccordionItem value="categories" data-testid="accordion-faq-categories">
-              <AccordionTrigger className="text-left" data-testid="trigger-faq-categories">How specific are industry categories?</AccordionTrigger>
-              <AccordionContent className="text-muted-foreground">
-                <p className="mb-4">Very specific. Examples:</p>
-                <ul className="space-y-2 ml-4">
-                  <li><strong>Home Services:</strong> HVAC, Plumbing, Electrical, Roofing, Landscaping, House Cleaning, Pest Control</li>
-                  <li><strong>Health:</strong> Dentists, Chiropractors, Physical Therapy, Med Spas, Fitness</li>
-                  <li><strong>Professional:</strong> Law (by specialty), Financial Planning, Real Estate, Insurance</li>
-                  <li><strong>Food:</strong> Restaurants (by cuisine), Catering, Coffee Shops, Bakeries</li>
-                </ul>
-                <p className="mt-4">Unsure where you fit? I'll help you choose.</p>
-              </AccordionContent>
-            </AccordionItem>
-
-            <AccordionItem value="industry-booked" data-testid="accordion-faq-booked">
-              <AccordionTrigger className="text-left" data-testid="trigger-faq-booked">What if my industry is already booked?</AccordionTrigger>
-              <AccordionContent className="text-muted-foreground">
-                <p className="mb-4">Three options:</p>
-                <ol className="space-y-2 ml-4">
-                  <li><strong>1. Book another route</strong> - Each campaign runs multiple routes</li>
-                  <li><strong>2. Join the waitlist</strong> - Get notified if a spot opens</li>
-                  <li><strong>3. Book next month's campaign</strong> - Lock in your category for the next mailing</li>
-                </ol>
-              </AccordionContent>
-            </AccordionItem>
-
-            {/* Results & ROI */}
             <AccordionItem value="results" data-testid="accordion-faq-results">
-              <AccordionTrigger className="text-left" data-testid="trigger-faq-results">What kind of results should I expect?</AccordionTrigger>
+              <AccordionTrigger className="text-left" data-testid="trigger-faq-results">
+                What kind of results should I expect?
+              </AccordionTrigger>
               <AccordionContent className="text-muted-foreground">
                 <p className="mb-4">Direct mail averages 1-3% response rate. Here's what that means:</p>
                 <ul className="space-y-2 ml-4 mb-4">
@@ -1721,7 +1673,9 @@ function FAQSection() {
             </AccordionItem>
 
             <AccordionItem value="tracking" data-testid="accordion-faq-tracking">
-              <AccordionTrigger className="text-left" data-testid="trigger-faq-tracking">How do I track results?</AccordionTrigger>
+              <AccordionTrigger className="text-left" data-testid="trigger-faq-tracking">
+                How do I track results?
+              </AccordionTrigger>
               <AccordionContent className="text-muted-foreground">
                 <p className="mb-4">Three ways:</p>
                 <ol className="space-y-2 ml-4 mb-4">
@@ -1733,43 +1687,35 @@ function FAQSection() {
               </AccordionContent>
             </AccordionItem>
 
-            <AccordionItem value="timeline" data-testid="accordion-faq-timeline">
-              <AccordionTrigger className="text-left" data-testid="trigger-faq-timeline">How long until I see results?</AccordionTrigger>
-              <AccordionContent className="text-muted-foreground">
-                <ul className="space-y-2 ml-4 mb-4">
-                  <li><strong>Days 1-7:</strong> Immediate responses (QR scans, calls)</li>
-                  <li><strong>Weeks 2-4:</strong> Secondary responses (people who saved the postcard)</li>
-                  <li><strong>Months 2-3:</strong> Delayed responses (remembered when they needed you)</li>
-                </ul>
-                <p className="mb-4">Peak response is in the first 2 weeks. Activity continues for months.</p>
-                <p>This is why 3-month campaigns work - each builds on the last.</p>
-              </AccordionContent>
-            </AccordionItem>
-
-            {/* Targeting & Logistics */}
             <AccordionItem value="next-campaign" data-testid="accordion-faq-next-campaign">
-              <AccordionTrigger className="text-left" data-testid="trigger-faq-next-campaign">When is the next campaign?</AccordionTrigger>
+              <AccordionTrigger className="text-left" data-testid="trigger-faq-next-campaign">
+                When is the next campaign?
+              </AccordionTrigger>
               <AccordionContent className="text-muted-foreground">
                 Campaigns run monthly. Miss this one? Next one mails the first week of February 2026.
               </AccordionContent>
             </AccordionItem>
 
             <AccordionItem value="neighborhoods" data-testid="accordion-faq-neighborhoods">
-              <AccordionTrigger className="text-left" data-testid="trigger-faq-neighborhoods">What neighborhoods do you target?</AccordionTrigger>
+              <AccordionTrigger className="text-left" data-testid="trigger-faq-neighborhoods">
+                What neighborhoods do you target?
+              </AccordionTrigger>
               <AccordionContent className="text-muted-foreground">
                 <p className="mb-4">Affluent Anchorage areas with $100K-$200K+ household incomes. Homeowners with disposable income - your ideal customers.</p>
                 <p><strong>Current routes:</strong> Abbott Loop, Hillside, Goldenview, Kincaid, Sand Lake, Jewel Lake, and Turnagain.</p>
               </AccordionContent>
             </AccordionItem>
-
-            <AccordionItem value="photos" data-testid="accordion-faq-photos">
-              <AccordionTrigger className="text-left" data-testid="trigger-faq-photos">Do I need professional photos?</AccordionTrigger>
-              <AccordionContent className="text-muted-foreground">
-                <p className="mb-4">No. Many high-performing ads use stock photos (I source them), smartphone photos (with good lighting), or logo-only designs.</p>
-                <p>Your offer matters more than fancy photography.</p>
-              </AccordionContent>
-            </AccordionItem>
           </Accordion>
+
+          <div className="text-center pt-8">
+            <a 
+              href="/contact"
+              className="inline-flex items-center text-primary hover:text-primary/80 font-medium transition-colors duration-200"
+              data-testid="link-more-questions-main"
+            >
+              Have more questions? Contact us <ArrowRight className="ml-2 h-4 w-4" />
+            </a>
+          </div>
         </div>
       </div>
     </section>
