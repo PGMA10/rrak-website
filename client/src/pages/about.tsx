@@ -233,9 +233,9 @@ export default function About() {
                 </a>
                 <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
                   <a 
-                    href="tel:+19079474624"
+                    href="/contact"
                     className="text-base text-muted-foreground hover:text-foreground transition-colors"
-                    data-testid="link-phone"
+                    data-testid="link-contact"
                   >Got Questions?</a>
                   <a 
                     href="mailto:contact@routereachak.com"
