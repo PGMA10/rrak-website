@@ -234,7 +234,7 @@ export default function About() {
                 <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
                   <a 
                     href="/contact"
-                    className="text-base text-muted-foreground hover:text-foreground transition-colors"
+                    className="text-base text-primary underline hover:text-primary/80 transition-colors"
                     data-testid="link-contact"
                   >Got Questions?</a>
                   <a 
