@@ -334,12 +334,12 @@ export default function Contact() {
               </h3>
               <ul className="space-y-3">
                 <li>
-                  <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200" data-testid="link-footer-features">
-                    Features
+                  <a href="/services" className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200" data-testid="link-footer-features">
+                    Services
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200" data-testid="link-footer-pricing">
+                  <a href="/#pricing" className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200" data-testid="link-footer-pricing">
                     Pricing
                   </a>
                 </li>

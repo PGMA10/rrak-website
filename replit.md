@@ -69,6 +69,16 @@ This is a high-converting landing page and lead management system for **Route Re
 - Contact page includes prominent phone number display: (907) 947-4624 with business hours
 - All FAQ elements include proper data-testid attributes for testing compliance
 
+**Navigation & UI Updates** (November 23, 2025):
+- **Reusable Header Component**: Created Header component with mobile menu using shadcn Sheet drawer
+  - Desktop: Full navigation bar visible on md breakpoint and above
+  - Mobile: Hamburger menu button that opens slide-out drawer from right
+  - Active page highlighting based on currentPage prop
+  - Used across all pages (home, services, about, blog, contact)
+- **Footer Updates**: Changed "Features" to "Services" and linked to /services page across all pages
+  - "Pricing" link now points to /#pricing anchor on home page
+- **About Page Content**: Hidden Solo Campaigns and Landing Pages service descriptions to align with waitlist-only strategy
+
 # User Preferences
 
 Preferred communication style: Simple, everyday language.
