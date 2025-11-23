@@ -44,7 +44,7 @@ This is a high-converting landing page and lead management system for **Rute Rea
 - Expanded admin dashboard to 6 tabs with responsive layout (grid-cols-2 md:grid-cols-3 lg:grid-cols-6)
 - Email notifications configured for new waitlist types
 - Services page now features only Shared Direct Mail Campaign as active service
-- Added semi-transparent logo watermark (6% opacity) to Shared Mailer Section background for visual depth
+- Added semi-transparent logo watermark (4% opacity) to Timeline card background for subtle visual interest
 
 **FAQ Integration** (November 23, 2025):
 

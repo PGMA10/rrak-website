@@ -279,19 +279,8 @@ export default function Services() {
 
 function SharedMailerSection() {
   return (
-    <section id="shared-mailer" className="relative py-20 md:py-24 border-b bg-background overflow-hidden">
-      <div 
-        className="absolute bottom-0 right-0 w-[600px] h-[600px] pointer-events-none"
-        style={{
-          backgroundImage: `url(${logoWatermark})`,
-          backgroundSize: 'contain',
-          backgroundRepeat: 'no-repeat',
-          backgroundPosition: 'bottom right',
-          opacity: 0.06,
-          transform: 'translate(15%, 15%)',
-        }}
-      />
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <section id="shared-mailer" className="py-20 md:py-24 border-b bg-background">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="space-y-8">
           <div>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
@@ -340,11 +329,22 @@ function SharedMailerSection() {
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="relative overflow-hidden">
+            <div 
+              className="absolute bottom-0 right-0 w-[400px] h-[400px] pointer-events-none"
+              style={{
+                backgroundImage: `url(${logoWatermark})`,
+                backgroundSize: 'contain',
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'bottom right',
+                opacity: 0.04,
+                transform: 'translate(20%, 20%)',
+              }}
+            />
             <CardHeader>
               <CardTitle>Timeline</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-3">
+            <CardContent className="space-y-3 relative z-10">
               <div className="flex items-start gap-4">
                 <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
                   <span className="text-sm font-semibold text-primary">1</span>
