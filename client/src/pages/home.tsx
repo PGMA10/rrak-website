@@ -105,13 +105,15 @@ export default function Home() {
                 </div>
 
                 <div>
-                  <Button 
-                    size="lg"
-                    className="text-lg px-8 py-6 h-auto font-bold shadow-lg hover:shadow-xl transition-all duration-200"
-                    data-testid="button-cta-hero"
-                  >
-                    Reserve Your Slot Now
-                  </Button>
+                  <a href="https://route-reach-ak-1-patrick575.replit.app/">
+                    <Button 
+                      size="lg"
+                      className="text-lg px-8 py-6 h-auto font-bold shadow-lg hover:shadow-xl transition-all duration-200"
+                      data-testid="button-cta-hero"
+                    >
+                      Reserve Your Slot Now
+                    </Button>
+                  </a>
                   <p className="text-sm text-muted-foreground mt-3" data-testid="text-cta-subtext">
                     Limited spots available per industry
                   </p>
@@ -320,13 +322,15 @@ export default function Home() {
             </div>
 
             <div className="flex flex-col items-center gap-4">
-              <Button 
-                size="lg"
-                className="text-lg px-8 py-6 h-auto font-bold shadow-lg hover:shadow-xl transition-all duration-200"
-                data-testid="button-cta-final"
-              >
-                Reserve Your Slot Now
-              </Button>
+              <a href="https://route-reach-ak-1-patrick575.replit.app/">
+                <Button 
+                  size="lg"
+                  className="text-lg px-8 py-6 h-auto font-bold shadow-lg hover:shadow-xl transition-all duration-200"
+                  data-testid="button-cta-final"
+                >
+                  Reserve Your Slot Now
+                </Button>
+              </a>
               <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-muted-foreground">
                 <div className="flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 text-primary flex-shrink-0" />

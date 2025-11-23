@@ -76,8 +76,13 @@ This is a high-converting landing page and lead management system for **Route Re
   - Active page highlighting based on currentPage prop
   - Used across all pages (home, services, about, blog, contact)
 - **Footer Updates**: Changed "Features" to "Services" and linked to /services page across all pages
-  - "Pricing" link now points to /#pricing anchor on home page
+  - "Reserve a Slot" link now points to booking platform: https://route-reach-ak-1-patrick575.replit.app/
+  - Removed "Help Center" from Support section
 - **About Page Content**: Hidden Solo Campaigns and Landing Pages service descriptions to align with waitlist-only strategy
+- **CTA Buttons**: All "Reserve Your Slot" and "Reserve Your Slot Now" buttons now link to booking platform
+  - Home page: 2 CTA buttons (hero section, final CTA)
+  - Services page: 2 pricing card buttons (single campaign, 3-month package)
+  - About page: 1 CTA button (final section)
 
 # User Preferences
 

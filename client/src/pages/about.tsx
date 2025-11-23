@@ -182,7 +182,7 @@ export default function About() {
               
               <div className="flex flex-col items-center justify-center gap-4">
                 <a 
-                  href="/contact"
+                  href="https://route-reach-ak-1-patrick575.replit.app/"
                   className="inline-flex items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover-elevate active-elevate-2 h-10 px-8 my-12"
                   data-testid="button-reserve-slot"
                 >

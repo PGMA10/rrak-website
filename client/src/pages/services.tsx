@@ -355,9 +355,11 @@ function SharedMailerSection() {
                 <p className="text-sm text-muted-foreground mb-6">
                   Perfect for testing direct mail. Reach 5,000 households for 85% less than a solo campaign.
                 </p>
-                <Button size="lg" className="w-full" data-testid="button-reserve-single">
-                  Reserve Your Slot
-                </Button>
+                <a href="https://route-reach-ak-1-patrick575.replit.app/" className="block">
+                  <Button size="lg" className="w-full" data-testid="button-reserve-single">
+                    Reserve Your Slot
+                  </Button>
+                </a>
               </CardContent>
             </Card>
 
@@ -376,9 +378,11 @@ function SharedMailerSection() {
                 <p className="text-sm text-muted-foreground mb-6">
                   Build momentum with consistency. Lock in your industry category for 3 campaigns.
                 </p>
-                <Button size="lg" className="w-full" data-testid="button-reserve-3month">
-                  Reserve Your Slot
-                </Button>
+                <a href="https://route-reach-ak-1-patrick575.replit.app/" className="block">
+                  <Button size="lg" className="w-full" data-testid="button-reserve-3month">
+                    Reserve Your Slot
+                  </Button>
+                </a>
               </CardContent>
             </Card>
           </div>
