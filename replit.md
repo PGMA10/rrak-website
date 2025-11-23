@@ -48,23 +48,16 @@ This is a high-converting landing page and lead management system for **Rute Rea
 
 **FAQ Integration** (November 23, 2025):
 
-*Strategic FAQ Reorganization - Version 2* (November 23, 2025):
-- **Embedded FAQs in Shared Direct Mail Section**: 4 conversion-focused questions integrated directly into the service description
-  - How much does it cost?
-  - What's included in $600?
-  - How does the shared mailer process work?
-  - What do I need to provide?
-  - Includes "Have more questions? Contact us" link to /contact
-- **Main Services Page FAQ**: 7 strategic questions positioned ABOVE "Coming Soon" services
-  - What is a shared mailer campaign?
-  - Why do the 3-month package?
-  - How do you guarantee no competitors?
-  - What kind of results should I expect?
-  - How do I track results?
-  - When is the next campaign?
-  - What neighborhoods do you target?
-  - Includes "Have more questions? Contact us" link to /contact
-- **Contact Page FAQ**: Expanded to 7 trust-building and objection-handling questions
+*Clean FAQ Consolidation - Version 3* (November 23, 2025):
+- **Removed embedded FAQs**: Eliminated redundant "Common Questions" section from Shared Direct Mail section to prevent visual clutter
+- **Dual Pricing Cards**: Added side-by-side pricing display for transparency
+  - Single Campaign: $600 one-time
+  - 3-Month Package: $1,500 ($500/month) with "Save $300" badge
+- **Main Services Page FAQ**: Single "Frequently Asked Questions" section with 10 questions and progressive disclosure
+  - Shows 4 questions initially, "Show More Questions" button reveals 4 more at a time
+  - Questions: What is a shared mailer campaign?, What's included in $600?, How does the shared mailer process work?, What do I need to provide?, Why do the 3-month package?, How do you guarantee no competitors?, What kind of results should I expect?, How do I track results?, When is the next campaign?, What neighborhoods do you target?
+  - Includes "Have more questions? Contact us" link to /contact at the bottom
+- **Contact Page FAQ**: 7 trust-building and objection-handling questions
   - Why should I trust you?
   - What if I don't get results?
   - How do I get started?
@@ -72,10 +65,9 @@ This is a high-converting landing page and lead management system for **Rute Rea
   - Can I cancel after 3 months?
   - What if my industry is already booked?
   - How long until I see results?
-- **Page Flow**: Services page now follows: Shared Mailer Section → FAQ Section → Coming Soon Services
+- **Page Flow**: Services page now follows: Shared Mailer Section → FAQ Section (progressive disclosure) → Coming Soon Services
 - Contact page includes prominent phone number display: (907) 947-4624 with business hours
 - All FAQ elements include proper data-testid attributes for testing compliance
-- Maximum 7 FAQs per section to prevent visitor overwhelm (user preference)
 
 # User Preferences
 
