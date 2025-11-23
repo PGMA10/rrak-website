@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
@@ -384,105 +384,45 @@ function SharedMailerSection() {
             </CardContent>
           </Card>
 
-          <Card className="bg-primary/5 border-primary/20">
-            <CardHeader>
-              <CardTitle>Pricing</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="flex items-baseline gap-2 mb-4">
-                <span className="text-4xl font-bold text-primary">$600</span>
-                <span className="text-muted-foreground">per campaign</span>
-              </div>
-              <p className="text-sm text-muted-foreground mb-6">
-                Compare to $4,000 for a solo campaign. Shared mailers give you the same reach at 85% savings.
-              </p>
-              <Button size="lg" className="w-full md:w-auto" data-testid="button-reserve-slot">
-                Reserve Your Slot Now
-              </Button>
-            </CardContent>
-          </Card>
+          <div className="grid md:grid-cols-2 gap-6">
+            <Card className="bg-primary/5 border-primary/20">
+              <CardHeader>
+                <CardTitle>Single Campaign</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="flex items-baseline gap-2 mb-4">
+                  <span className="text-4xl font-bold text-primary">$600</span>
+                  <span className="text-muted-foreground">one-time</span>
+                </div>
+                <p className="text-sm text-muted-foreground mb-6">
+                  Perfect for testing direct mail. Reach 5,000 households for 85% less than a solo campaign.
+                </p>
+                <Button size="lg" className="w-full" data-testid="button-reserve-single">
+                  Reserve Your Slot
+                </Button>
+              </CardContent>
+            </Card>
 
-          {/* Embedded FAQs */}
-          <div className="space-y-6 pt-8">
-            <h3 className="text-2xl font-bold text-foreground" data-testid="heading-shared-mailer-faqs">
-              Common Questions
-            </h3>
-            
-            <Accordion type="single" collapsible className="w-full">
-              <AccordionItem value="cost" data-testid="accordion-faq-embedded-cost">
-                <AccordionTrigger className="text-left" data-testid="trigger-faq-embedded-cost">
-                  How much does it cost?
-                </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground">
-                  <p className="mb-4"><strong>Single Campaign:</strong> $600</p>
-                  <p><strong>3-Month Package:</strong> $1,500 ($500/month - save $300)</p>
-                </AccordionContent>
-              </AccordionItem>
-
-              <AccordionItem value="whats-included" data-testid="accordion-faq-embedded-included">
-                <AccordionTrigger className="text-left" data-testid="trigger-faq-embedded-included">
-                  What's included in $600?
-                </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground">
-                  <ul className="space-y-2 ml-4">
-                    <li>✅ Strategy consultation</li>
-                    <li>✅ Professional design & copywriting</li>
-                    <li>✅ Revisions until you're satisfied</li>
-                    <li>✅ Premium printing (9×12" postcard)</li>
-                    <li>✅ Mailing to 5,000 households</li>
-                    <li>✅ QR code tracking</li>
-                    <li>✅ Post-campaign report</li>
-                  </ul>
-                  <p className="mt-4">You provide: Logo, offer details, photos (optional), design approval.</p>
-                </AccordionContent>
-              </AccordionItem>
-
-              <AccordionItem value="how-it-works" data-testid="accordion-faq-embedded-process">
-                <AccordionTrigger className="text-left" data-testid="trigger-faq-embedded-process">
-                  How does the shared mailer process work?
-                </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground">
-                  <p className="mb-4">Four steps:</p>
-                  <ol className="space-y-3 ml-4">
-                    <li><strong>1. Book Your Slot</strong> - Choose your industry category (first-come, first-served)</li>
-                    <li><strong>2. Submit Your Info</strong> - Logo, offer, photos (optional), contact details</li>
-                    <li><strong>3. Design & Approval</strong> - We create your ad, you approve it (revisions included)</li>
-                    <li><strong>4. Print & Mail</strong> - We handle everything, your ad hits 5,000 mailboxes</li>
-                  </ol>
-                  <p className="mt-4">Timeline: 3-4 weeks from booking to mailboxes.</p>
-                </AccordionContent>
-              </AccordionItem>
-
-              <AccordionItem value="what-to-provide" data-testid="accordion-faq-embedded-provide">
-                <AccordionTrigger className="text-left" data-testid="trigger-faq-embedded-provide">
-                  What do I need to provide?
-                </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground">
-                  <p className="mb-4"><strong>Required:</strong></p>
-                  <ul className="space-y-2 ml-4 mb-4">
-                    <li>• Business logo (any format)</li>
-                    <li>• Your offer or key message</li>
-                    <li>• Contact info (phone, website, etc.)</li>
-                  </ul>
-                  <p className="mb-4"><strong>Optional but helpful:</strong></p>
-                  <ul className="space-y-2 ml-4">
-                    <li>• Photos of your work, products, or team</li>
-                    <li>• Preferred colors or brand guidelines</li>
-                  </ul>
-                  <p>Your time: ~30 minutes total.</p>
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
-
-            <div className="text-center pt-4">
-              <a 
-                href="/contact"
-                className="inline-flex items-center text-primary hover:text-primary/80 font-medium transition-colors duration-200"
-                data-testid="link-more-questions-embedded"
-              >
-                Have more questions? Contact us <ArrowRight className="ml-2 h-4 w-4" />
-              </a>
-            </div>
+            <Card className="bg-primary/5 border-primary/20">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  3-Month Package
+                  <Badge className="bg-primary text-primary-foreground">Save $300</Badge>
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="flex items-baseline gap-2 mb-4">
+                  <span className="text-4xl font-bold text-primary">$1,500</span>
+                  <span className="text-muted-foreground">$500/month</span>
+                </div>
+                <p className="text-sm text-muted-foreground mb-6">
+                  Build momentum with consistency. Lock in your industry category for 3 campaigns.
+                </p>
+                <Button size="lg" className="w-full" data-testid="button-reserve-3month">
+                  Reserve Your Slot
+                </Button>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </div>
@@ -1600,6 +1540,160 @@ function LandingPagesSection() {
 }
 
 function FAQSection() {
+  const [visibleCount, setVisibleCount] = useState(4);
+
+  const allFAQs = [
+    {
+      id: "what-is",
+      question: "What is a shared mailer campaign?",
+      answer: (
+        <>
+          <p className="mb-4">
+            16 businesses share one premium 9×12" postcard mailed to 5,000 Anchorage households. Each business gets a 2.8" × 3.8" ad slot with industry exclusivity - only ONE business per category per card.
+          </p>
+          <p>
+            You reach 5,000 potential customers for $600 instead of $4,000+ for a solo campaign.
+          </p>
+        </>
+      )
+    },
+    {
+      id: "whats-included",
+      question: "What's included in $600?",
+      answer: (
+        <>
+          <ul className="space-y-2 ml-4">
+            <li>✅ Strategy consultation</li>
+            <li>✅ Professional design & copywriting</li>
+            <li>✅ Revisions until you're satisfied</li>
+            <li>✅ Premium printing (9×12" postcard)</li>
+            <li>✅ Mailing to 5,000 households</li>
+            <li>✅ QR code tracking</li>
+            <li>✅ Post-campaign report</li>
+          </ul>
+          <p className="mt-4">You provide: Logo, offer details, photos (optional), design approval.</p>
+        </>
+      )
+    },
+    {
+      id: "how-it-works",
+      question: "How does the shared mailer process work?",
+      answer: (
+        <>
+          <p className="mb-4">Four steps:</p>
+          <ol className="space-y-3 ml-4">
+            <li><strong>1. Book Your Slot</strong> - Choose your industry category (first-come, first-served)</li>
+            <li><strong>2. Submit Your Info</strong> - Logo, offer, photos (optional), contact details</li>
+            <li><strong>3. Design & Approval</strong> - We create your ad, you approve it (revisions included)</li>
+            <li><strong>4. Print & Mail</strong> - We handle everything, your ad hits 5,000 mailboxes</li>
+          </ol>
+          <p className="mt-4">Timeline: 3-4 weeks from booking to mailboxes.</p>
+        </>
+      )
+    },
+    {
+      id: "what-to-provide",
+      question: "What do I need to provide?",
+      answer: (
+        <>
+          <p className="mb-4"><strong>Required:</strong></p>
+          <ul className="space-y-2 ml-4 mb-4">
+            <li>• Business logo (any format)</li>
+            <li>• Your offer or key message</li>
+            <li>• Contact info (phone, website, etc.)</li>
+          </ul>
+          <p className="mb-4"><strong>Optional but helpful:</strong></p>
+          <ul className="space-y-2 ml-4">
+            <li>• Photos of your work, products, or team</li>
+            <li>• Preferred colors or brand guidelines</li>
+          </ul>
+          <p>Your time: ~30 minutes total.</p>
+        </>
+      )
+    },
+    {
+      id: "why-3-month",
+      question: "Why do the 3-month package?",
+      answer: (
+        <>
+          <p className="mb-4">Three reasons:</p>
+          <ol className="space-y-2 ml-4">
+            <li><strong>1. Save $300</strong> ($1,500 vs $1,800)</li>
+            <li><strong>2. Build momentum</strong> - People need 3-7 exposures before acting. Consistency wins.</li>
+            <li><strong>3. Lock your category</strong> - Guarantee industry exclusivity for 3 straight campaigns</li>
+          </ol>
+          <p className="mt-4">Most clients see significantly better ROI with 3 months vs one-off tests.</p>
+        </>
+      )
+    },
+    {
+      id: "no-competitors",
+      question: "How do you guarantee no competitors?",
+      answer: (
+        <>
+          <p className="mb-4">Each postcard has 16 slots. When you book your industry category (e.g., "HVAC," "Dentist," "Real Estate"), it's locked for that campaign. First-come, first-served.</p>
+          <p>Competitors who try to book after you see your category is unavailable.</p>
+        </>
+      )
+    },
+    {
+      id: "results",
+      question: "What kind of results should I expect?",
+      answer: (
+        <>
+          <p className="mb-4">Direct mail averages 1-3% response rate. Here's what that means:</p>
+          <ul className="space-y-2 ml-4 mb-4">
+            <li>• 5,000 households see your ad</li>
+            <li>• 50-150 people take action (QR scan, call, visit)</li>
+            <li>• 10-30% convert to customers</li>
+            <li>• Result: 5-45 new customers from one $600 campaign</li>
+          </ul>
+          <p className="mb-4"><strong>ROI Example:</strong></p>
+          <p className="mb-2">If your average customer is worth $200, you need 3 customers to break even. Everything beyond that is profit.</p>
+          <p className="mb-4">If your average customer is worth $500 (HVAC, dental, legal), 3 customers = $1,500 revenue = 2.5x ROI on $600.</p>
+          <p>Results vary by industry and offer. First campaigns dial in messaging. Repeat campaigns compound results.</p>
+        </>
+      )
+    },
+    {
+      id: "tracking",
+      question: "How do I track results?",
+      answer: (
+        <>
+          <p className="mb-4">Three ways:</p>
+          <ol className="space-y-2 ml-4 mb-4">
+            <li><strong>1. QR code analytics</strong> - See how many people scanned, when, and what device</li>
+            <li><strong>2. Phone tracking</strong> - Ask callers "How did you hear about us?"</li>
+            <li><strong>3. Website traffic spike</strong> - If QR links to your site, you'll see the surge</li>
+          </ol>
+          <p>I provide a post-campaign report with your data and optimization recommendations.</p>
+        </>
+      )
+    },
+    {
+      id: "next-campaign",
+      question: "When is the next campaign?",
+      answer: <>Campaigns run monthly. Miss this one? Next one mails the first week of February 2026.</>
+    },
+    {
+      id: "neighborhoods",
+      question: "What neighborhoods do you target?",
+      answer: (
+        <>
+          <p className="mb-4">Affluent Anchorage areas with $100K-$200K+ household incomes. Homeowners with disposable income - your ideal customers.</p>
+          <p><strong>Current routes:</strong> Abbott Loop, Hillside, Goldenview, Kincaid, Sand Lake, Jewel Lake, and Turnagain.</p>
+        </>
+      )
+    }
+  ];
+
+  const showMore = () => {
+    setVisibleCount((prev: number) => Math.min(prev + 4, allFAQs.length));
+  };
+
+  const visibleFAQs = allFAQs.slice(0, visibleCount);
+  const hasMore = visibleCount < allFAQs.length;
+
   return (
     <section className="py-20 md:py-24 border-b bg-background">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -1614,98 +1708,30 @@ function FAQSection() {
           </div>
 
           <Accordion type="single" collapsible className="w-full">
-            <AccordionItem value="what-is" data-testid="accordion-faq-what-is">
-              <AccordionTrigger className="text-left" data-testid="trigger-faq-what-is">
-                What is a shared mailer campaign?
-              </AccordionTrigger>
-              <AccordionContent className="text-muted-foreground">
-                <p className="mb-4">
-                  16 businesses share one premium 9×12" postcard mailed to 5,000 Anchorage households. Each business gets a 2.8" × 3.8" ad slot with industry exclusivity - only ONE business per category per card.
-                </p>
-                <p>
-                  You reach 5,000 potential customers for $600 instead of $4,000+ for a solo campaign.
-                </p>
-              </AccordionContent>
-            </AccordionItem>
-
-            <AccordionItem value="why-3-month" data-testid="accordion-faq-3-month">
-              <AccordionTrigger className="text-left" data-testid="trigger-faq-3-month">
-                Why do the 3-month package?
-              </AccordionTrigger>
-              <AccordionContent className="text-muted-foreground">
-                <p className="mb-4">Three reasons:</p>
-                <ol className="space-y-2 ml-4">
-                  <li><strong>1. Save $300</strong> ($1,500 vs $1,800)</li>
-                  <li><strong>2. Build momentum</strong> - People need 3-7 exposures before acting. Consistency wins.</li>
-                  <li><strong>3. Lock your category</strong> - Guarantee industry exclusivity for 3 straight campaigns</li>
-                </ol>
-                <p className="mt-4">Most clients see significantly better ROI with 3 months vs one-off tests.</p>
-              </AccordionContent>
-            </AccordionItem>
-
-            <AccordionItem value="no-competitors" data-testid="accordion-faq-competitors">
-              <AccordionTrigger className="text-left" data-testid="trigger-faq-competitors">
-                How do you guarantee no competitors?
-              </AccordionTrigger>
-              <AccordionContent className="text-muted-foreground">
-                <p className="mb-4">Each postcard has 16 slots. When you book your industry category (e.g., "HVAC," "Dentist," "Real Estate"), it's locked for that campaign. First-come, first-served.</p>
-                <p>Competitors who try to book after you see your category is unavailable.</p>
-              </AccordionContent>
-            </AccordionItem>
-
-            <AccordionItem value="results" data-testid="accordion-faq-results">
-              <AccordionTrigger className="text-left" data-testid="trigger-faq-results">
-                What kind of results should I expect?
-              </AccordionTrigger>
-              <AccordionContent className="text-muted-foreground">
-                <p className="mb-4">Direct mail averages 1-3% response rate. Here's what that means:</p>
-                <ul className="space-y-2 ml-4 mb-4">
-                  <li>• 5,000 households see your ad</li>
-                  <li>• 50-150 people take action (QR scan, call, visit)</li>
-                  <li>• 10-30% convert to customers</li>
-                  <li>• Result: 5-45 new customers from one $600 campaign</li>
-                </ul>
-                <p className="mb-4"><strong>ROI Example:</strong></p>
-                <p className="mb-2">If your average customer is worth $200, you need 3 customers to break even. Everything beyond that is profit.</p>
-                <p className="mb-4">If your average customer is worth $500 (HVAC, dental, legal), 3 customers = $1,500 revenue = 2.5x ROI on $600.</p>
-                <p>Results vary by industry and offer. First campaigns dial in messaging. Repeat campaigns compound results.</p>
-              </AccordionContent>
-            </AccordionItem>
-
-            <AccordionItem value="tracking" data-testid="accordion-faq-tracking">
-              <AccordionTrigger className="text-left" data-testid="trigger-faq-tracking">
-                How do I track results?
-              </AccordionTrigger>
-              <AccordionContent className="text-muted-foreground">
-                <p className="mb-4">Three ways:</p>
-                <ol className="space-y-2 ml-4 mb-4">
-                  <li><strong>1. QR code analytics</strong> - See how many people scanned, when, and what device</li>
-                  <li><strong>2. Phone tracking</strong> - Ask callers "How did you hear about us?"</li>
-                  <li><strong>3. Website traffic spike</strong> - If QR links to your site, you'll see the surge</li>
-                </ol>
-                <p>I provide a post-campaign report with your data and optimization recommendations.</p>
-              </AccordionContent>
-            </AccordionItem>
-
-            <AccordionItem value="next-campaign" data-testid="accordion-faq-next-campaign">
-              <AccordionTrigger className="text-left" data-testid="trigger-faq-next-campaign">
-                When is the next campaign?
-              </AccordionTrigger>
-              <AccordionContent className="text-muted-foreground">
-                Campaigns run monthly. Miss this one? Next one mails the first week of February 2026.
-              </AccordionContent>
-            </AccordionItem>
-
-            <AccordionItem value="neighborhoods" data-testid="accordion-faq-neighborhoods">
-              <AccordionTrigger className="text-left" data-testid="trigger-faq-neighborhoods">
-                What neighborhoods do you target?
-              </AccordionTrigger>
-              <AccordionContent className="text-muted-foreground">
-                <p className="mb-4">Affluent Anchorage areas with $100K-$200K+ household incomes. Homeowners with disposable income - your ideal customers.</p>
-                <p><strong>Current routes:</strong> Abbott Loop, Hillside, Goldenview, Kincaid, Sand Lake, Jewel Lake, and Turnagain.</p>
-              </AccordionContent>
-            </AccordionItem>
+            {visibleFAQs.map((faq) => (
+              <AccordionItem key={faq.id} value={faq.id} data-testid={`accordion-faq-${faq.id}`}>
+                <AccordionTrigger className="text-left" data-testid={`trigger-faq-${faq.id}`}>
+                  {faq.question}
+                </AccordionTrigger>
+                <AccordionContent className="text-muted-foreground">
+                  {faq.answer}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
           </Accordion>
+
+          {hasMore && (
+            <div className="text-center">
+              <Button 
+                variant="outline" 
+                size="lg"
+                onClick={showMore}
+                data-testid="button-show-more-faqs"
+              >
+                Show More Questions
+              </Button>
+            </div>
+          )}
 
           <div className="text-center pt-8">
             <a 
