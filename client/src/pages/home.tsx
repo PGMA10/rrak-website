@@ -51,7 +51,7 @@ function CountdownTimer() {
   }, [deadline]);
 
   return (
-    <div className="flex items-center justify-center gap-4 md:gap-6" data-testid="countdown-timer">
+    <div className="flex items-center justify-start gap-4 md:gap-6" data-testid="countdown-timer">
       <div className="flex flex-col items-center bg-card border border-card-border rounded-md px-4 py-3 min-w-[70px]">
         <span className="text-3xl md:text-4xl font-bold text-primary" data-testid="countdown-days">{timeLeft.days}</span>
         <span className="text-xs md:text-sm text-muted-foreground uppercase tracking-wide">Days</span>
