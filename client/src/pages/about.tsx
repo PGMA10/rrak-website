@@ -60,9 +60,9 @@ export default function About() {
                   <strong>Solo Campaigns</strong> give you exclusive reach when you're ready to own the entire mailer - starting at $2,500.
                 </p> */}
                 
-                <p className="text-base leading-relaxed" data-testid="text-body-7">
+                {/* <p className="text-base leading-relaxed" data-testid="text-body-7">
                   <strong>Landing Pages</strong> turn your campaigns into trackable conversions - custom-built for $750-$1,500.
-                </p>
+                </p> */}
                 
                 <p className="text-base leading-relaxed" data-testid="text-body-8">
                   Whatever your growth stage, I handle the strategy, design, and execution. You focus on running your business. I'll make sure Alaska sees what makes you worth choosing.
