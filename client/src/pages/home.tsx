@@ -236,13 +236,19 @@ export default function Home() {
         </section>
 
         {/* Why Direct Mail Section */}
-        <section className="py-16 md:py-20 lg:py-24 bg-muted/30" data-testid="section-why-direct-mail">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="relative py-24 md:py-28 lg:py-32 overflow-hidden" data-testid="section-why-direct-mail">
+          <div 
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{ backgroundImage: `url(${directMailBg})` }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-br from-black/85 via-black/80 to-black/85" />
+          
+          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center space-y-4 mb-12 md:mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground" data-testid="heading-why-direct-mail">
+              <h2 className="text-3xl md:text-4xl font-bold text-white" data-testid="heading-why-direct-mail">
                 Why Direct Mail Crushes Digital
               </h2>
-              <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+              <p className="text-lg text-white/80 max-w-3xl mx-auto">
                 While your competitors fight over expensive clicks, direct mail delivers guaranteed visibility
               </p>
             </div>
