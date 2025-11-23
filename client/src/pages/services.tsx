@@ -268,7 +268,7 @@ export default function Services() {
           </div>
           <div className="pt-8 border-t">
             <p className="text-sm text-muted-foreground text-center">
-              © {new Date().getFullYear()} Anchorage Direct Mail. All rights reserved.
+              © {new Date().getFullYear()} Route Reach AK. All rights reserved.
             </p>
           </div>
         </div>

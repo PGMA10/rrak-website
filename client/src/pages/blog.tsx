@@ -122,7 +122,7 @@ export default function Blog() {
           </div>
           <div className="pt-8 border-t">
             <p className="text-sm text-muted-foreground text-center" data-testid="text-copyright">
-              © {new Date().getFullYear()} Your Brand. All rights reserved.
+              © {new Date().getFullYear()} Route Reach AK. All rights reserved.
             </p>
           </div>
         </div>
