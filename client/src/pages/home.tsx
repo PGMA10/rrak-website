@@ -115,7 +115,7 @@ export default function Home() {
                     </Button>
                   </a>
                   <p className="text-sm text-muted-foreground mt-3" data-testid="text-cta-subtext">
-                    Limited spots available per industry
+                    One slot per industry, first come, first served
                   </p>
                 </div>
               </div>
