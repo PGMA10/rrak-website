@@ -207,7 +207,7 @@ export default function Services() {
               <h3 className="text-sm font-semibold text-foreground mb-4">Product</h3>
               <ul className="space-y-3">
                 <li><a href="/services" className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200">Services</a></li>
-                <li><a href="/#pricing" className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200">Pricing</a></li>
+                <li><a href="https://route-reach-ak-1-patrick575.replit.app" className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200">Reserve a Slot</a></li>
               </ul>
             </div>
             <div>

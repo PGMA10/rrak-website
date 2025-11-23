@@ -208,8 +208,8 @@ export default function Blog() {
                   </a>
                 </li>
                 <li>
-                  <a href="/#pricing" className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200" data-testid="link-footer-pricing">
-                    Pricing
+                  <a href="https://route-reach-ak-1-patrick575.replit.app" className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200" data-testid="link-footer-pricing">
+                    Reserve a Slot
                   </a>
                 </li>
               </ul>
