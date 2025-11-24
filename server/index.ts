@@ -35,6 +35,10 @@ if (!process.env.ADMIN_PASSWORD) {
   process.exit(1);
 }
 
+// Trust proxy for Replit Autoscale deployment
+// This allows Express to trust the HTTPS proxy and set secure cookies correctly
+app.set("trust proxy", 1);
+
 // Session configuration with strong security settings
 app.use(session({
   secret: process.env.SESSION_SECRET,
