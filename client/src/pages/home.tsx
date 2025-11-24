@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Clock, CheckCircle2, Mail, TrendingUp, Eye, Calendar } from "lucide-react";
+import { Clock, CheckCircle2, Mail, TrendingUp, Eye, Calendar, Calculator, ArrowRight } from "lucide-react";
 import postcardImage from "@assets/BackFront Example-2_1763355311870.png";
 import directMailBg from "@assets/stock_images/professional_direct__a3eef2aa.jpg";
 import { SEO } from "@/components/SEO";
@@ -187,6 +187,71 @@ export default function Home() {
                 </CardContent>
               </Card>
             </div>
+          </div>
+        </section>
+
+        {/* ROI Calculator Section */}
+        <section className="py-16 md:py-20 lg:py-24 bg-gradient-to-b from-background to-primary/5" data-testid="section-roi-calculator">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <Card className="border-2 border-primary/20 shadow-xl">
+              <CardContent className="p-8 md:p-12">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                  <div className="space-y-6">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary rounded-md text-sm font-semibold">
+                      <Calculator className="w-4 h-4" />
+                      ROI Calculator
+                    </div>
+                    <div className="space-y-4">
+                      <h2 className="text-3xl md:text-4xl font-bold text-foreground" data-testid="heading-roi-calculator">
+                        Just <span className="text-primary">12¢ Per Household</span>
+                      </h2>
+                      <p className="text-lg text-muted-foreground leading-relaxed">
+                        Can't visualize the ROI? Use our free calculator to see exactly how much revenue you need to generate to make direct mail profitable for your business.
+                      </p>
+                      <p className="text-muted-foreground">
+                        Most businesses break even with just 5-10 responses. Calculate your numbers and see why shared mailers are the smartest marketing investment.
+                      </p>
+                    </div>
+                    <div>
+                      <a href="https://mailroi.com" target="_blank" rel="noopener noreferrer">
+                        <Button 
+                          size="lg"
+                          className="text-base px-6 py-6 h-auto font-semibold gap-2 shadow-lg hover:shadow-xl transition-all duration-200"
+                          data-testid="button-roi-calculator"
+                        >
+                          Calculate Your ROI
+                          <ArrowRight className="w-5 h-5" />
+                        </Button>
+                      </a>
+                      <p className="text-sm text-muted-foreground mt-3">
+                        Free tool - no signup required
+                      </p>
+                    </div>
+                  </div>
+                  <div className="bg-muted/50 rounded-md p-6 space-y-4">
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between pb-3 border-b border-border">
+                        <span className="text-sm text-muted-foreground">Campaign Cost</span>
+                        <span className="text-2xl font-bold text-foreground" data-testid="text-campaign-cost">$600</span>
+                      </div>
+                      <div className="flex items-center justify-between pb-3 border-b border-border">
+                        <span className="text-sm text-muted-foreground">Households Reached</span>
+                        <span className="text-2xl font-bold text-foreground" data-testid="text-households-reached">5,000</span>
+                      </div>
+                      <div className="flex items-center justify-between pb-3 border-b border-border">
+                        <span className="text-sm text-muted-foreground">Cost Per Household</span>
+                        <span className="text-3xl font-bold text-primary" data-testid="text-cost-per-household">12¢</span>
+                      </div>
+                    </div>
+                    <div className="pt-4">
+                      <p className="text-sm text-muted-foreground italic">
+                        "At just 12 cents per household, you're getting the most cost-effective reach in Anchorage. Use our calculator to see your potential return."
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </section>
 

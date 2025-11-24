@@ -42,7 +42,7 @@ import {
 } from "@shared/schema";
 import { apiRequest } from "@/lib/queryClient";
 import { z } from "zod";
-import { ArrowRight, Check, Mail, Printer, Globe, Megaphone, FileText, DoorClosed, CreditCard, Flag, BookOpen, SignpostBig, Sticker, Frame } from "lucide-react";
+import { ArrowRight, Check, Mail, Printer, Globe, Megaphone, FileText, DoorClosed, CreditCard, Flag, BookOpen, SignpostBig, Sticker, Frame, Calculator } from "lucide-react";
 import postcardMockup from "@assets/BackFront Example-2_1763363158551.png";
 import logoWatermark from "@assets/Mail and Map Connection Logo_1763412132703.png";
 import { Header } from "@/components/Header";
@@ -352,6 +352,10 @@ function SharedMailerSection() {
                   <span className="text-4xl font-bold text-primary">$600</span>
                   <span className="text-muted-foreground">one-time</span>
                 </div>
+                <div className="bg-background/60 rounded-md p-3 mb-4">
+                  <p className="text-sm font-semibold text-foreground mb-1">Cost Per Household</p>
+                  <p className="text-2xl font-bold text-primary" data-testid="text-cost-per-household-single">12¢</p>
+                </div>
                 <p className="text-sm text-muted-foreground mb-6">
                   Perfect for testing direct mail. Reach 5,000 households for 85% less than a solo campaign.
                 </p>
@@ -360,6 +364,18 @@ function SharedMailerSection() {
                     Reserve Your Slot
                   </Button>
                 </a>
+                <div className="mt-4 text-center">
+                  <a 
+                    href="https://mailroi.com" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-sm text-primary hover:text-primary/80 transition-colors"
+                    data-testid="link-roi-calculator-single"
+                  >
+                    <Calculator className="w-4 h-4" />
+                    Calculate Your ROI
+                  </a>
+                </div>
               </CardContent>
             </Card>
 
@@ -375,6 +391,10 @@ function SharedMailerSection() {
                   <span className="text-4xl font-bold text-primary">$1,500</span>
                   <span className="text-muted-foreground">$500/month</span>
                 </div>
+                <div className="bg-background/60 rounded-md p-3 mb-4">
+                  <p className="text-sm font-semibold text-foreground mb-1">Cost Per Household</p>
+                  <p className="text-2xl font-bold text-primary" data-testid="text-cost-per-household-3month">12¢</p>
+                </div>
                 <p className="text-sm text-muted-foreground mb-6">
                   Build momentum with consistency. Lock in your industry category for 3 campaigns.
                 </p>
@@ -383,6 +403,18 @@ function SharedMailerSection() {
                     Reserve Your Slot
                   </Button>
                 </a>
+                <div className="mt-4 text-center">
+                  <a 
+                    href="https://mailroi.com" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-sm text-primary hover:text-primary/80 transition-colors"
+                    data-testid="link-roi-calculator-3month"
+                  >
+                    <Calculator className="w-4 h-4" />
+                    Calculate Your ROI
+                  </a>
+                </div>
               </CardContent>
             </Card>
           </div>
@@ -1614,6 +1646,23 @@ function FAQSection() {
           <p className="mb-2">If your average customer is worth $200, you need 3 customers to break even. Everything beyond that is profit.</p>
           <p className="mb-4">If your average customer is worth $500 (HVAC, dental, legal), 3 customers = $1,500 revenue = 2.5x ROI on $600.</p>
           <p>Results vary by industry and offer. First campaigns dial in messaging. Repeat campaigns compound results.</p>
+        </>
+      )
+    },
+    {
+      id: "calculate-roi",
+      question: "How do I calculate my potential ROI?",
+      answer: (
+        <>
+          <p className="mb-4">At just <strong>12¢ per household</strong>, you're getting incredible reach for your investment. But don't just take our word for it - see the numbers yourself.</p>
+          <p className="mb-4">Use our free ROI calculator at <a href="https://mailroi.com" target="_blank" rel="noopener noreferrer" className="text-primary hover:text-primary/80 font-medium underline" data-testid="link-roi-calculator-faq">MailRoi.com</a> to:</p>
+          <ul className="space-y-2 ml-4 mb-4">
+            <li>• Input your average customer value</li>
+            <li>• Adjust expected response rates</li>
+            <li>• See your break-even point</li>
+            <li>• Calculate projected revenue and ROI</li>
+          </ul>
+          <p>Most businesses discover they only need 3-5 new customers to make direct mail incredibly profitable. The calculator helps you visualize the exact numbers for your business.</p>
         </>
       )
     },
