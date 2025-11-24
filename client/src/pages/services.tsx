@@ -44,7 +44,6 @@ import { apiRequest } from "@/lib/queryClient";
 import { z } from "zod";
 import { ArrowRight, Check, Mail, Printer, Globe, Megaphone, FileText, DoorClosed, CreditCard, Flag, BookOpen, SignpostBig, Sticker, Frame, Calculator } from "lucide-react";
 import postcardMockup from "@assets/BackFront Example-2_1763363158551.png";
-import logoWatermark from "@assets/Mail and Map Connection Logo_1763412132703.png";
 import { Header } from "@/components/Header";
 
 export default function Services() {
@@ -287,18 +286,7 @@ function SharedMailerSection() {
             </CardContent>
           </Card>
 
-          <Card className="relative overflow-hidden">
-            <div 
-              className="absolute bottom-0 right-0 w-[400px] h-[400px] pointer-events-none"
-              style={{
-                backgroundImage: `url(${logoWatermark})`,
-                backgroundSize: 'contain',
-                backgroundRepeat: 'no-repeat',
-                backgroundPosition: 'bottom right',
-                opacity: 0.04,
-                transform: 'translate(20%, 20%)',
-              }}
-            />
+          <Card>
             <CardHeader>
               <CardTitle>Timeline</CardTitle>
             </CardHeader>
