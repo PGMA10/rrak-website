@@ -381,7 +381,7 @@ function SharedMailerSection() {
                 </div>
                 <div className="bg-background/60 rounded-md p-3 mb-4">
                   <p className="text-sm font-semibold text-foreground mb-1">Cost Per Household</p>
-                  <p className="text-2xl font-bold text-primary" data-testid="text-cost-per-household-3month">12¢</p>
+                  <p className="text-2xl font-bold text-primary" data-testid="text-cost-per-household-3month">10¢</p>
                 </div>
                 <p className="text-sm text-muted-foreground mb-6">
                   Build momentum with consistency. Lock in your industry category for 3 campaigns.
