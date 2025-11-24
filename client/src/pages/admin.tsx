@@ -196,35 +196,35 @@ function AdminDashboard() {
       <main className="flex-1 py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Tabs defaultValue="leads" className="space-y-6">
-            <TabsList className="flex flex-wrap gap-2 w-full justify-start">
-              <TabsTrigger value="leads" data-testid="tab-leads">
+            <TabsList className="flex flex-wrap h-auto w-full justify-start">
+              <TabsTrigger value="leads" data-testid="tab-leads" className="flex-shrink-0">
                 Leads ({leads?.data?.length || 0})
               </TabsTrigger>
-              <TabsTrigger value="subscribers" data-testid="tab-subscribers">
+              <TabsTrigger value="subscribers" data-testid="tab-subscribers" className="flex-shrink-0">
                 Subscribers ({subscribers?.data?.length || 0})
               </TabsTrigger>
-              <TabsTrigger value="quotes" data-testid="tab-quotes">
+              <TabsTrigger value="quotes" data-testid="tab-quotes" className="flex-shrink-0">
                 Quotes ({quotes?.data?.length || 0})
               </TabsTrigger>
-              <TabsTrigger value="bookings" data-testid="tab-bookings">
+              <TabsTrigger value="bookings" data-testid="tab-bookings" className="flex-shrink-0">
                 Consultations ({bookings?.data?.length || 0})
               </TabsTrigger>
-              <TabsTrigger value="solo-mailer" data-testid="tab-solo-mailer">
+              <TabsTrigger value="solo-mailer" data-testid="tab-solo-mailer" className="flex-shrink-0">
                 Solo Mailer ({soloMailerWaitlist?.data?.length || 0})
               </TabsTrigger>
-              <TabsTrigger value="landing-pages" data-testid="tab-landing-pages">
+              <TabsTrigger value="landing-pages" data-testid="tab-landing-pages" className="flex-shrink-0">
                 Landing Pages ({landingPagesWaitlist?.data?.length || 0})
               </TabsTrigger>
-              <TabsTrigger value="email-marketing" data-testid="tab-email-marketing">
+              <TabsTrigger value="email-marketing" data-testid="tab-email-marketing" className="flex-shrink-0">
                 Email Marketing ({emailMarketingWaitlist?.data?.length || 0})
               </TabsTrigger>
-              <TabsTrigger value="print-materials" data-testid="tab-print-materials">
+              <TabsTrigger value="print-materials" data-testid="tab-print-materials" className="flex-shrink-0">
                 Print Materials ({printMaterialsWaitlist?.data?.length || 0})
               </TabsTrigger>
-              <TabsTrigger value="blog-posts" data-testid="tab-blog-posts">
+              <TabsTrigger value="blog-posts" data-testid="tab-blog-posts" className="flex-shrink-0">
                 Blog Posts ({blogPosts?.data?.length || 0})
               </TabsTrigger>
-              <TabsTrigger value="campaign-settings" data-testid="tab-campaign-settings">
+              <TabsTrigger value="campaign-settings" data-testid="tab-campaign-settings" className="flex-shrink-0">
                 Campaign Settings
               </TabsTrigger>
             </TabsList>
